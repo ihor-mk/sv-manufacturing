@@ -1,0 +1,91 @@
+.header-wrp
+    position: fixed
+    top: 0
+    background: white
+    color: gray
+    padding: 0
+    box-shadow: 0 2px 4px 2px rgba(71, 83, 108, 0.06)
+    box-sizing: border-box
+    width: 100%
+    height: 120px
+    z-index: 1000
+
+    
+.header
+    display: flex
+    justify-content: space-between
+    padding: 0 30px 0 30px
+    height: 100%
+    width: 100%
+
+.header-content
+    display: flex
+    width: 33%
+    flex-direction: row
+    align-items: center
+    height: 100%
+    &:focus
+        outline: none
+
+.main-area
+    justify-content: center
+
+.right-area
+    justify-content: right
+
+.title img
+    padding-right: 20px
+    height: 115px
+    width: 115px
+
+.title
+    font-weight: 700
+    font-size: 16px
+    line-height: 146%
+    &:hover
+      cursor: pointer
+
+.main-area p
+    margin: 0 10px
+    font-weight: 500
+    font-size: 16px
+    line-height: 150%
+    &:hover
+      cursor: pointer
+.user-area
+    display: flex
+    align-items: center
+    padding-left: 20px
+    &:hover
+      cursor: pointer
+
+.user-area span
+    padding: 0 10px
+    font-weight: 500
+    font-size: 16px
+    line-height: 150%
+
+.menu-element
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    min-height: 28px
+
+.menu-icon
+    padding-right: 10px
+    width: 18px
+
+.menu-text
+    font-weight: 400
+    font-size: 14px
+    line-height: 146%
+
+::ng-deep .mdc-list-item__primary-text
+    display: flex
+    align-items: center
+
+::ng-deep.cdk-overlay-container .notifications-menu
+    margin-top: 0.5em
+
+::ng-deep.cdk-overlay-container .user-menu
+    margin-top: 0.5em

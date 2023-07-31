@@ -1,0 +1,35 @@
+<mat-toolbar class="header-wrp">
+    <div class="header">
+        <div class="header-content left-area">
+            <div class="header-content title" [routerLink]="['/']">
+                <img src="https://www.sunvitagroup.com/wp-content/uploads/2022/05/logo-blue.svg" />
+                WetScope
+            </div>
+        </div>
+        <div class="header-content main-area">
+            <p routerLink="/" routerLinkActive="active" #link="routerLinkActive"
+                [class.disabled]="!link.isActive">
+                Social
+            </p>
+        </div>
+        <div class="header-content right-area">
+            <div [matMenuTriggerFor]="menu" class="user-area">
+                <span>User Name</span>
+                <img src="/assets/header/chevron-down-icon.svg" />
+                <mat-menu class="user-menu" #menu="matMenu" xPosition="before">
+
+                    <button [routerLink]="['/']" mat-menu-item class="menu-element">
+                        <img class="menu-icon" src="/assets/header/lock-icon.svg" />
+                        <span class="menu-text">Change Password</span>
+                    </button>
+
+                    <button mat-menu-item class="menu-element">
+                        <img class="menu-icon" src="/assets/header/log-out.svg" alt="logOut" />
+                        <span class="menu-text">Log Out</span>
+                    </button>
+
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>

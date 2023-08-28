@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageComponent } from './main-page/main-page.component';
+import { MainComponent } from './main-page/main-page.component';
 
 const routes: Routes = [
     {
         path: '',
+        component: MainComponent,
         children: [
-            {
-                path: '',
-                component: MainPageComponent
-            },
             {
                 path: 'live',
                 loadChildren: () => import('../live-veiw/live-veiw.module')
                     .then((m) => m.LiveVeiwModule)
+            },
+            {
+                path: 'history',
+                loadChildren: () => import('../history/history.module')
+                .then((m) => m.HistoryModule)
             }
         ]
     },

@@ -12,11 +12,25 @@ const routes: Routes = [
                 loadChildren: () => import('../live-veiw/live-veiw.module')
                     .then((m) => m.LiveVeiwModule)
             },
+
             {
                 path: 'history',
                 loadChildren: () => import('../history/history.module')
-                .then((m) => m.HistoryModule)
+                    .then((m) => m.HistoryModule)
+            },
+            
+            {
+                path: 'records',
+                loadChildren: () => import('../records/records.module')
+                    .then((m) => m.RecordsModule)
+            },
+
+            {
+                path: 'rating',
+                loadChildren: () => import('../rating/rating.module')
+                    .then((m) => m.RatingModule)
             }
+
         ]
     },
 ];

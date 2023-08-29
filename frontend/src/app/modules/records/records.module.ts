@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LiveVeiwPageComponent } from './live-veiw-page/live-veiw-page.component';
+import { RecordsPageComponent } from './records-page/records-page.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RecordsRoutingModule } from './records-routing.module';
 import { MainModule } from '../main/main.module';
-import { LiveVeiwRoutingModule } from './live-veiw-routing.module';
+
 
 
 @NgModule({
   declarations: [
-    LiveVeiwPageComponent
+    RecordsPageComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    LiveVeiwRoutingModule,
+    RecordsRoutingModule,
     MainModule
   ]
 })
-export class LiveVeiwModule { }
+export class RecordsModule { }

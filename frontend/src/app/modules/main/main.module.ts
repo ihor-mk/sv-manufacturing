@@ -15,7 +15,7 @@ import { MaterialModule } from 'src/app/shared/material/material.module';
     CommonModule,
     MainRoutingModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class MainModule { }

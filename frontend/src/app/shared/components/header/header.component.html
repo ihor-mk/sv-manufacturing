@@ -1,25 +1,22 @@
 <mat-toolbar class="header-wrp">
     <div class="header">
-        <div class="header-content left-area">
-            <div class="header-content title" [routerLink]="['/live']">
-                <img src="https://www.sunvitagroup.com/wp-content/uploads/2022/05/logo-blue.svg" />
-                WetScope
-            </div>
+        <div class="header-title header-link" [routerLink]="['/live']">
+            <img src="https://www.sunvitagroup.com/wp-content/uploads/2022/05/logo-blue.svg" />
+            <span>WetScope</span>
         </div>
-        <div class="header-content main-area">
-            <p routerLink="/live" routerLinkActive="active" #link="routerLinkActive"
-                [class.disabled]="!link.isActive">
+        <div class="header-links-area">
+            <p class="header-link" routerLink="/live" routerLinkActive="active" #link="routerLinkActive" [class.disabled]="!link.isActive">
                 Живий перегляд
             </p>
-            <p routerLink="/history" routerLinkActive="active" #link="routerLinkActive"
+            <p class="header-link" routerLink="/history" routerLinkActive="active" #link="routerLinkActive"
                 [class.disabled]="!link.isActive">
                 Історія
             </p>
-            <p routerLink="/records" routerLinkActive="active" #link="routerLinkActive"
+            <p class="header-link" routerLink="/records" routerLinkActive="active" #link="routerLinkActive"
                 [class.disabled]="!link.isActive">
                 Рекорди
             </p>
-            <p routerLink="/rating" routerLinkActive="active" #link="routerLinkActive"
+            <p class="header-link" routerLink="/rating" routerLinkActive="active" #link="routerLinkActive"
                 [class.disabled]="!link.isActive">
                 Рейтинг
             </p>

@@ -1,1 +1,32 @@
-<p>production-line-live works!</p>
+<div class="line-wrp">
+    <div class="title-line">
+        <span>{{ line.title }}</span>
+    </div>
+    <div class="title-prod-online">
+        <span>{{ line.productivityOnline }}</span>
+    </div>
+    <div class="title-prod-top">
+        <span>{{ line.productivityTop }}</span>
+    </div>
+    <div class="title-nomenclature">
+        <span>{{ line.nomenclature }}</span>
+    </div>
+    <div class="title-plan">
+        <span>{{ line.plan }}</span>
+    </div>
+    <div class="title-fact">
+        <span>{{ line.fact }}</span>
+    </div>
+    <div class="title-progress">
+        <span>{{( line.fact / line.plan ) * 100 }}</span>
+    </div>
+    <div class="title-avg-speed">
+        <span>{{line.avgSpeed}}</span>
+    </div>
+    <div class="title-time">
+        <span>{{line.time | date:'HH:mm'}}</span>
+    </div>
+    <div class="title-end-time">
+        <span>{{line.endTime | date:'HH:mm:ss'}}</span>
+    </div>
+</div>

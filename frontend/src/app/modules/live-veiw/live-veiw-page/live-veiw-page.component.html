@@ -37,9 +37,7 @@
             <span>Час завершення</span>
         </div>
     </div>
-    <app-production-line-live></app-production-line-live>
-    <app-production-line-live></app-production-line-live>
-    <app-production-line-live></app-production-line-live>
-    <app-production-line-live></app-production-line-live>
-    <app-production-line-live></app-production-line-live>
+    <div *ngFor=" let line of this.lineArray" >
+        <app-production-line-live [line]="line" ></app-production-line-live>
+    </div>
 </div>

@@ -1,8 +1,8 @@
 <mat-toolbar class="header-wrp">
     <div class="header">
-        <div class="header-title header-link" [routerLink]="['/live']">
-            <img src="https://www.sunvitagroup.com/wp-content/uploads/2022/05/logo-blue.svg" />
-            <span>WetScope</span>
+        <div class="header-title" [routerLink]="['/live']">
+            <img src="./assets/logo.png" alt="logo" />
+            <span>LIVE-monitor</span>
         </div>
         <div class="header-links-area">
             <p class="header-link" routerLink="/live" routerLinkActive="active" #link="routerLinkActive" [class.disabled]="!link.isActive">

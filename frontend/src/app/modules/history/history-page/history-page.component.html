@@ -1,1 +1,16 @@
-<p>history-page works!</p>
+<div class="history-page-wrp">
+    <div class="header-wrp">
+        <div class="select-wrp">
+            <mat-select class="select-dropdown" [(value)]="selectedValue">
+                <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+            </mat-select>
+        </div>
+        <div class="title-wrp">
+            <div class="title-released-products title-header">Випущено продукції, шт.</div>
+            <div class="title-top-speed title-header">Пікова швидкість</div>
+            <div class="title-avg-speed title-header">Середня швидкість</div>
+            <div class="title-avg-performance title-header">Середня продуктивність</div>
+        </div>
+        
+    </div>
+</div>

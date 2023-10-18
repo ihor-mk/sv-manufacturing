@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ILineHistory } from 'src/app/models/ILineHistory';
 
 @Component({
   selector: 'app-production-line-history',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./production-line-history.component.sass']
 })
 export class ProductionLineHistoryComponent {
-
+@Input() lineHistory! : ILineHistory
 }

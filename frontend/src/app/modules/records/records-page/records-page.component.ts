@@ -11,5 +11,5 @@ export class RecordsPageComponent {
 
   lines?: ILineRecords[] = [{ title: "one", productivity: 155 }, { title: "two", groupNumber: 125 }, { title: "three", groupDate: new Date() }]
 
-  groups?: IGroupRecords[] = [{}, {}, {}, {}, {}, {}, {}]
+  groups?: IGroupRecords[] = [{title: "Зміна 1"}, {title: "Зміна 1"}, {title: "Зміна 1"}, {title: "Зміна 1"}, {title: "Зміна 1"}, {title: "Зміна 1"}, {}]
 }

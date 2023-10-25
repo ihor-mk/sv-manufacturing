@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64377",
-      "sslPort": 44305
+      "applicationUrl": "http://localhost:4305",
+      "sslPort": 44344
     }
   },
   "profiles": {
-    "SV_MFG.Core": {
+    "SunVita.Core.WebApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7091;http://localhost:5184",
+      "applicationUrl": "https://localhost:7213;http://localhost:5128",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

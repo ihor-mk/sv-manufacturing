@@ -8,8 +8,8 @@ namespace SunVita.Notifier.WebApi.Services
     {
         private readonly IMessageConsumer _consumer;
         private readonly ILogger<ConsumerHostedService> _logger;
-        private readonly BroadcastHub _hub;
-        public ConsumerHostedService(IMessageConsumer consumer, ILogger<ConsumerHostedService> logger, BroadcastHub hub)
+        private readonly LiveViewHub _hub;
+        public ConsumerHostedService(IMessageConsumer consumer, ILogger<ConsumerHostedService> logger, LiveViewHub hub)
         {
             _consumer = consumer;
             _logger = logger;

@@ -53,7 +53,7 @@ app.UseWebSockets();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapHub<BroadcastHub>("/broadcastHub");
+    endpoints.MapHub<LiveViewHub>("/liveViewHub");
     endpoints.MapHealthChecks("/health");
 });
 

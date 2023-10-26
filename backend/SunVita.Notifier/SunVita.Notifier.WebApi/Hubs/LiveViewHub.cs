@@ -4,7 +4,7 @@ using SunVita.Core.Common.DTO.Live;
 
 namespace SunVita.Notifier.WebApi.Hubs
 {
-    public class BroadcastHub : Hub
+    public class LiveViewHub : Hub
     {
         private static readonly Dictionary<string, string> ConnectedUsers = new();
         public void Connect(string email)
@@ -20,7 +20,7 @@ namespace SunVita.Notifier.WebApi.Hubs
         {
             if (Clients is not null)
             {
-                await Console.Out.WriteLineAsync(JsonConvert.SerializeObject(msg));
+                //await Console.Out.WriteLineAsync(JsonConvert.SerializeObject(msg));
                 await Clients.All.SendAsync("LineUpdate", JsonConvert.SerializeObject(msg));
             }
             else

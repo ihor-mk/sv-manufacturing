@@ -12,7 +12,7 @@ namespace SunVita.Notifier.WebApi.Extentions
             var hostname = configuration.GetValue<string>("Rabbit");
             services.AddSingleton<IConnectionProvider>(_ => new ConnectionProvider(hostname));
             services.AddTransient<IMessageConsumer, MessageConsumer>();
-            services.AddSingleton<BroadcastHub>();
+            services.AddSingleton<LiveViewHub>();
         }
     }
 }

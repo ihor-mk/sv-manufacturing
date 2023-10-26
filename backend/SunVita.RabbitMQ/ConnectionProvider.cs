@@ -1,8 +1,9 @@
 ﻿using RabbitMQ.Client;
+using SunVita.RabbitMQ.Interfaces;
 
 namespace SunVita.RabbitMQ
 {
-    public class ConnectionProvider
+    public class ConnectionProvider : IConnectionProvider
     {
         public IConnection Connection { get; }
 

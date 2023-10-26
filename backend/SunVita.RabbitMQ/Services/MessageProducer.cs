@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SunVita.RabbitMQ.Services
 {
-    public class MessageProducer
+    public class MessageProducer : IMessageProducer
     {
         private readonly IModel _channel;
         private string _queue = string.Empty;

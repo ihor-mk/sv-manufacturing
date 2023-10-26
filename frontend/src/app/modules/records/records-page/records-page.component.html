@@ -1,0 +1,59 @@
+<div class="records-page-wrp">
+    <div class="lines-records-wrp borders">
+        <div class="lines-records-header">
+            <div class="lines-records-header-title">
+            </div>
+            <div class="lines-records-header-title">
+                <span>Продуктивність</span>
+            </div>
+            <div class="lines-records-header-title">
+                <span>Номер зміни</span>
+            </div>
+            <div class="lines-records-header-title">
+                <span>Дата зміни</span>
+            </div>
+        </div>
+        <div class="lines-records-counts" *ngFor="let line of lines">
+            <div class="line-records-data">
+                <span>{{line.title}}</span>
+            </div>
+            <div class="line-records-data">
+                <span>{{line.productivity}}</span>
+            </div>
+            <div class="line-records-data">
+                <span>{{line.groupNumber}}</span>
+            </div>
+            <div class="line-records-data">
+                <span>{{line.groupDate | date:'dd.MM.YYYY'}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="counts-records-wrp">
+        <div class="group-records-wrp borders">
+            <div class="record-title">
+                <span>Кількість випущеної продукції за зміну, шт.</span>
+            </div>
+            <div class="group-record-line" *ngFor = "let group of groups">
+                <div class="group-record-data">
+                    <span>{{group.title}}</span>
+                </div>
+                <div class="group-record-data">
+                    <span>{{group.productCount}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="nomenclature-records-wrp borders">
+            <div class="record-title">
+                <span>Найбільше випущеної продукції</span>
+            </div>
+            <div class="group-record-line" *ngFor = "let group of groups">
+                <div class="group-record-data">
+                    <span>Зміна 4</span>
+                </div>
+                <div class="group-record-data">
+                    <span>50</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

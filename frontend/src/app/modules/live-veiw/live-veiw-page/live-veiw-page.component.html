@@ -1,0 +1,43 @@
+<div class='live-view-page-wrp'>
+    <div class="table-titles-wrp">
+        <div class="table-titles-header title-line">
+            <span>Лінія</span>
+        </div>
+        <div class="table-titles-header top-header">
+            <span>ПРОДУКТИВНІСТЬ</span>
+            <div class="sub-header">
+                <div class="table-titles-header">
+                    <span>online</span>
+                </div>
+                <div class="table-titles-header">
+                    <span>рекордна</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-titles-header title-nomenclature">
+            <span>Номенклатура</span>
+        </div>
+        <div class="table-titles-header title-plan">
+            <span>План</span>
+        </div>
+        <div class="table-titles-header title-fact">
+            <span>Факт</span>
+        </div>
+        <div class="table-titles-header title-progress">
+            <span>Виконання (%)</span>
+        </div>
+        <div class="table-titles-header title-avg-speed">
+            <span>Середня шв.</span>
+        </div>
+        <div class="table-titles-header title-time">
+            <span>Час</span>
+        </div>
+        <div class="table-titles-header title-end-time">
+            <span>Час завершення</span>
+        </div>
+    </div>
+    <div *ngFor=" let line of this.lineArray" >
+        <app-production-line-live [line]="line" ></app-production-line-live>
+    </div>
+</div>

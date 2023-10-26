@@ -1,0 +1,26 @@
+<mat-toolbar class="header-wrp">
+    <div class="header">
+        <div class="header-title" [routerLink]="['/live']">
+            <img src="./assets/logo.png" alt="logo" />
+            <span>LIVE-monitor</span>
+        </div>
+        <div class="header-links-area">
+            <p class="header-link" routerLink="/live" routerLinkActive="active" #link="routerLinkActive"
+                [class.disabled]="!link.isActive">
+                Живий перегляд
+            </p>
+            <p class="header-link" routerLink="/history" routerLinkActive="active" #link="routerLinkActive"
+                [class.disabled]="!link.isActive">
+                Історія
+            </p>
+            <p class="header-link" routerLink="/records" routerLinkActive="active" #link="routerLinkActive"
+                [class.disabled]="!link.isActive">
+                Рекорди
+            </p>
+            <p class="header-link" routerLink="/rating" routerLinkActive="active" #link="routerLinkActive"
+                [class.disabled]="!link.isActive">
+                Рейтинг
+            </p>
+        </div>
+    </div>
+</mat-toolbar>

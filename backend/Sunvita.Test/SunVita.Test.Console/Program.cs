@@ -1,63 +1,31 @@
 ﻿
-using var client = new HttpClient();
-DateTime timeStart = DateTime.Now;
+using var watcher = new FileSystemWatcher(@"d:\dev\donejobs");
 
-while (true)
+watcher.NotifyFilter = NotifyFilters.Attributes
+                     | NotifyFilters.CreationTime
+                     | NotifyFilters.DirectoryName
+                     | NotifyFilters.FileName
+                     | NotifyFilters.LastAccess
+                     | NotifyFilters.LastWrite
+                     | NotifyFilters.Security
+                     | NotifyFilters.Size;
+
+watcher.Changed += OnChanged;
+watcher.Created += OnChanged;
+watcher.Deleted += OnChanged;
+watcher.Renamed += OnChanged;
+
+watcher.Filter = "*.json";
+watcher.IncludeSubdirectories = true;
+watcher.EnableRaisingEvents = true;
+
+Console.WriteLine("Press enter to exit.");
+Console.ReadLine();
+
+ static void OnChanged(object sender, FileSystemEventArgs e)
 {
-    Console.WriteLine("--------------------------------------------------");
-    timeStart = DateTime.Now;
-
-    var resultNomenc = await client.GetStringAsync("http://10.61.2.21/selectjob.masp");
-    Console.WriteLine($"timer - {DateTime.Now - timeStart}");
-
-    var resultStat = await client.GetStringAsync("http://10.61.2.21/updatestatistics.masp");
-    Console.WriteLine($"timer - {DateTime.Now - timeStart}");
-
-    if (resultStat != null)
-    {
-        var data = resultStat.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-        if (data != null)
-        {
-            var preCountString = data.Where(x => x.Contains("Качественная партия")).FirstOrDefault();
-
-            int count;
-
-            if (preCountString != null)
-            {
-                var stringIndex = Array.IndexOf(data, preCountString);
-
-                var countString = data[++stringIndex]
-                    .Split("\t", StringSplitOptions.RemoveEmptyEntries)[0]
-                    .Split("\"", StringSplitOptions.RemoveEmptyEntries)[0];
-
-                count = int.Parse(countString);
-
-                Console.WriteLine($"count - {count}");
-            }
-
-            data = resultNomenc.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            var str = data
-                .Where(x => x.Contains("hostJobNameInput"))
-                .ToList();
-
-            var hostJobNameLine = str[1].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-            var hostJobNameProperty = hostJobNameLine
-                .Where(x => x.Contains("value"))
-                .FirstOrDefault();
-
-
-            var name = str[1].Substring(81, str[1].Length - (81 + 53));
-
-            Console.WriteLine(name);
-        }
-    }
-
-
-    Console.WriteLine($"timer - {DateTime.Now - timeStart}");
-    Thread.Sleep(5000);
+   
+    Console.WriteLine($"Changed: {e.FullPath}");
 }
 
 

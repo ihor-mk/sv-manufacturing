@@ -3,7 +3,6 @@ using RabbitMQ.Client;
 using SunVita.RabbitMQ.Interfaces;
 using System.Text;
 using Newtonsoft.Json;
-using SunVita.Core.DAL.Entities;
 
 namespace SunVita.RabbitMQ.Services
 {

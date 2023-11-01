@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddHostedService<LiveCountReaderHostedService>();
+builder.Services.AddHostedService<DoneJobWatcherHostedService>();
 builder.WebHost.UseUrls("http://*:5080");
 
 builder.Services.AddCors(options =>
@@ -42,9 +43,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("CorsPolicy");
 app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

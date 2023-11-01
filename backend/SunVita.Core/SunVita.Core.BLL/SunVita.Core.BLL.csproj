@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SunVita.Core.Common\SunVita.Core.Common.csproj" />
+  </ItemGroup>
+
 </Project>

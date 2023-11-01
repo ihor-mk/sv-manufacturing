@@ -20,7 +20,6 @@ namespace SunVita.Notifier.WebApi.Hubs
         {
             if (Clients is not null)
             {
-                //await Console.Out.WriteLineAsync(JsonConvert.SerializeObject(msg));
                 await Clients.All.SendAsync("LineUpdate", JsonConvert.SerializeObject(msg));
             }
             else

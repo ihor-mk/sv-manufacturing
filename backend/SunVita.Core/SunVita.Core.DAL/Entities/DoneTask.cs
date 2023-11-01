@@ -7,8 +7,16 @@ namespace SunVita.Core.DAL.Entities
         public string StringNumber { get; set; } = string.Empty;
         public long NomenclatureId { get; set; }
         public Nomenclature Nomenclature { get; set; } = null!;
-        public int Count { get; set; }
-        public long TeamId { get; set; }
-        public Team Team { get; set; } = null!;
+        public int Quantity { get; set; }
+        public ICollection<Employee> Employees { get; set; }
+        public long ProductionLineId { get; set; }
+        public ProductionLine ProductionLine { get; set; } = null!;
+        public DateTime StartedAt { get; set; }
+        public DateTime FinishedAt { get; set; }
+
+        public DoneTask()
+        {
+            Employees = new LinkedList<Employee>();
+        }
     }
 }

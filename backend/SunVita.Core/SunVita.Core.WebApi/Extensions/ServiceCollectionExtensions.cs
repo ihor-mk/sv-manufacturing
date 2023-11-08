@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SunVita.Core.BLL.Interfaces;
+using SunVita.Core.BLL.Services;
 using SunVita.Core.DAL.Context;
 
 namespace SunVita.Core.WebApi.Extensions
@@ -7,7 +9,7 @@ namespace SunVita.Core.WebApi.Extensions
     {
         public static void RegisterCustomServices(this IServiceCollection services, IConfiguration configuration)
         {
-            
+            services.AddTransient<IDoneTaskService, DoneTaskService>();
         }
         public static void AddSunVitaCoreContext(this IServiceCollection services, IConfiguration configuration)
         {

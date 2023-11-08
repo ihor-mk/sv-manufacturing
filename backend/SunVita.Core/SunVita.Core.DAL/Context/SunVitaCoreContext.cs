@@ -8,8 +8,7 @@ namespace SunVita.Core.DAL.Context
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         public SunVitaCoreContext(DbContextOptions<SunVitaCoreContext> options,
-            IHttpContextAccessor httpContextAccessor
-            ) : base(options)
+            IHttpContextAccessor httpContextAccessor) : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
         }

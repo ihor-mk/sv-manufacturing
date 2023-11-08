@@ -13,12 +13,18 @@ builder.Configuration
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+
 builder.Services.AddControllers();
 builder.Services.AddSunVitaCoreContext(builder.Configuration);
-
+builder.Services.RegisterCustomServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+
+builder.Services.AddCors();
+builder.Services.AddHealthChecks();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.WebHost.UseUrls("http://*:5050");
 
 var app = builder.Build();
 
@@ -35,7 +41,7 @@ app.UseCors(opt => opt
     .AllowAnyOrigin());
 
 app.UseHttpsRedirection();
-
+app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHealthChecks("/health");

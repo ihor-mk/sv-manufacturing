@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LiveVeiwPageComponent } from './live-veiw-page/live-veiw-page.component';
+import { LiveViewPageComponent } from './live-view-page/live-view-page.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MainModule } from '../main/main.module';
-import { LiveVeiwRoutingModule } from './live-veiw-routing.module';
+import { LiveViewRoutingModule } from './live-view-routing.module';
 import { ProductionLineLiveComponent } from './production-line-live/production-line-live.component';
 
 
 @NgModule({
   declarations: [
-    LiveVeiwPageComponent,
+    LiveViewPageComponent,
     ProductionLineLiveComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    LiveVeiwRoutingModule,
+    LiveViewRoutingModule,
     MainModule
   ]
 })
-export class LiveVeiwModule { }
+export class LiveViewModule { }

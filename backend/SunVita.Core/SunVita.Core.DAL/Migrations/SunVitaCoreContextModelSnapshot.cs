@@ -145,6 +145,36 @@ namespace SunVita.Core.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductionLines");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IpAddress = "10.0.0.1",
+                            Title = "Цех №1  (Лінія1)"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IpAddress = "10.0.0.2",
+                            Title = "Цех №2  (Лінія1)"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IpAddress = "10.0.0.3",
+                            Title = "Цех №3  (Лінія1)"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IpAddress = "10.0.0.4",
+                            Title = "Цех №3  (Лінія2)"
+                        });
                 });
 
             modelBuilder.Entity("DoneTaskEmployee", b =>

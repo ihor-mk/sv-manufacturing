@@ -9,8 +9,8 @@ const routes: Routes = [
         children: [
             {
                 path: 'live',
-                loadChildren: () => import('../live-veiw/live-veiw.module')
-                    .then((m) => m.LiveVeiwModule)
+                loadChildren: () => import('../live-view/live-view.module')
+                    .then((m) => m.LiveViewModule)
             },
 
             {
@@ -29,6 +29,11 @@ const routes: Routes = [
                 path: 'rating',
                 loadChildren: () => import('../rating/rating.module')
                     .then((m) => m.RatingModule)
+            },
+            {
+                path: '**',
+                redirectTo: '/live',
+                pathMatch: 'full'
             }
 
         ]

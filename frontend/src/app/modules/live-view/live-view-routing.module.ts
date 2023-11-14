@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LiveVeiwPageComponent } from './live-veiw-page/live-veiw-page.component';
+import { LiveViewPageComponent } from './live-view-page/live-view-page.component';
 
 const routes: Routes = [
-    { path: '', component: LiveVeiwPageComponent }
+    { path: '', component: LiveViewPageComponent }
 ];
 
 @NgModule({
@@ -11,4 +11,4 @@ const routes: Routes = [
     exports: [RouterModule],
 })
 
-export class LiveVeiwRoutingModule {}
+export class LiveViewRoutingModule {}

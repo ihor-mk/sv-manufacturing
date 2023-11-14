@@ -20,7 +20,6 @@ namespace SunVita.Worker.WebApi.Services
             watcher.Changed += OnChanged;
             watcher.Created += OnChanged;
             watcher.Deleted += OnChanged;
-            watcher.Renamed += OnChanged;
 
             watcher.Filter = "*.json";
             watcher.IncludeSubdirectories = true;
@@ -42,16 +41,14 @@ namespace SunVita.Worker.WebApi.Services
                 var doneTaskDto = JsonConvert.DeserializeObject<DoneTaskFileDto[]>(fileText);
 
                 var json = JsonConvert.SerializeObject(doneTaskDto![0]);
+
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var url = "http://localhost:5050/donetask";
-                using var client = new HttpClient();
-
-                var response = await client.PostAsync(url, data);
-
 
                 using var httpClient = new HttpClient();
 
+                var response = await httpClient.PostAsync(url, data);
 
                 Console.WriteLine($"Changed: {e.FullPath}");
             }

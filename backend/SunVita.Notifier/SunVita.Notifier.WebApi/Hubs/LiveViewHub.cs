@@ -16,7 +16,7 @@ namespace SunVita.Notifier.WebApi.Hubs
         {
             ConnectedUsers.Remove(email);
         }
-        public async Task SendLineUpdateMessage(LineUpdateDto msg)
+        public async Task SendLineUpdateMessage(ICollection<LiveViewCountsDto> msg)
         {
             if (Clients is not null)
             {

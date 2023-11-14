@@ -31,7 +31,7 @@ namespace SunVita.Notifier.WebApi.Services
         {
             try
             {
-                _consumer.Receive<LineUpdateDto>(async data =>
+                _consumer.Receive<ICollection<LiveViewCountsDto>>(async data =>
                 {
                     if (data is not null)
                     {

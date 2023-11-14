@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { LiveViewHubService } from 'src/app/core/hubs/live-veiw-hub.service';
+import { LiveViewHubService } from 'src/app/core/hubs/live-view-hub.service';
 import { ILine } from 'src/app/models/ILine';
 
 @Component({
   selector: 'app-live-veiw-page',
-  templateUrl: './live-veiw-page.component.html',
-  styleUrls: ['./live-veiw-page.component.sass']
+  templateUrl: './live-view-page.component.html',
+  styleUrls: ['./live-view-page.component.sass']
 })
-export class LiveVeiwPageComponent implements OnInit{
+export class LiveViewPageComponent implements OnInit{
   constructor(
     public liviViewHub: LiveViewHubService
   ) {
@@ -18,13 +18,13 @@ export class LiveVeiwPageComponent implements OnInit{
 
    this.liviViewHub.listenMessages((msg) => {
     const broadcastMessage = JSON.parse(msg);
-
+    console.log(broadcastMessage)
     const messages = {
         id: broadcastMessage.Id,
         currentCount: broadcastMessage.CurrentCount,
     };
 
-    console.log(messages)
+    //console.log(messages)
     this.lineTemplate.fact = messages.currentCount
 });
   }

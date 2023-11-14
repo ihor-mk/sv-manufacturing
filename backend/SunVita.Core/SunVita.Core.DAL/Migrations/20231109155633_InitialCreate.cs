@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace SunVita.Core.DAL.Migrations
 {
     /// <inheritdoc />
@@ -109,6 +111,17 @@ namespace SunVita.Core.DAL.Migrations
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductionLines",
+                columns: new[] { "Id", "CreatedAt", "IpAddress", "Title" },
+                values: new object[,]
+                {
+                    { 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.1", "Цех №1  (Лінія1)" },
+                    { 2L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.2", "Цех №2  (Лінія1)" },
+                    { 3L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.3", "Цех №3  (Лінія1)" },
+                    { 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.4", "Цех №3  (Лінія2)" }
                 });
 
             migrationBuilder.CreateIndex(

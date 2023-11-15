@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ILine } from 'src/app/models/ILine';
+import { ILiveViewCounts } from 'src/app/models/ILiveViewCounts';
 
 @Component({
   selector: 'app-production-line-live',
   templateUrl: './production-line-live.component.html',
   styleUrls: ['./production-line-live.component.sass']
 })
-export class ProductionLineLiveComponent implements OnInit {
+export class ProductionLineLiveComponent{
 
-  @Input() line!: ILine;
-
+  @Input() lineLiveViewCounts!: ILiveViewCounts
 
   ngOnInit(): void {
-    if (!this.line) {
+    if (!this.lineLiveViewCounts) {
       console.log("EMPTY")
     }
   }

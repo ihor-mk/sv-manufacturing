@@ -7,7 +7,7 @@ namespace SunVita.Worker.WebApi.Services
 {
     public class LiveViewCountsUpdateService : ILiveViewCountsUpdateService
     {
-        private readonly string[] _printers = { "10.61.2.21", "10.61.2.22", "10.61.2.23" };
+        private readonly string[] _printers = { "10.61.2.21", "10.61.2.21", "10.61.2.23" };
         public async Task<LiveViewCountsDto> GetUpdateFromPrinter(int lineId)
         {
             var newLineCounts = new LiveViewCountsDto { LineId = lineId };

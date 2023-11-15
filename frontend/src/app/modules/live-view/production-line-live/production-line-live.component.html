@@ -1,32 +1,32 @@
 <div class="line-wrp">
     <div class="title-line">
-        <span>{{ line.title }}</span>
+        <span>{{ lineLiveViewCounts.lineTitle }}</span>
     </div>
     <div class="title-prod-online">
-        <span>{{ line.productivityOnline }}</span>
+        <span>{{ lineLiveViewCounts.productivityCurrent }}</span>
     </div>
     <div class="title-prod-top">
-        <span>{{ line.productivityTop }}</span>
+        <span>{{ lineLiveViewCounts.productivityTop }}</span>
     </div>
     <div class="title-nomenclature">
-        <span>{{ line.nomenclature }}</span>
+        <span>{{ lineLiveViewCounts.nomenclatureTitle }}</span>
     </div>
     <div class="title-plan">
-        <span>{{ line.plan }}</span>
+        <span>{{ lineLiveViewCounts.quantityPlan }}</span>
     </div>
     <div class="title-fact">
-        <span>{{ line.fact}}</span>
+        <span>{{ lineLiveViewCounts.quantityFact}}</span>
     </div>
     <div class="title-progress">
-        <span>{{(( line.fact / line.plan ) * 100) | number : '1.2-2' }} %</span>
+        <span>{{(( lineLiveViewCounts.quantityFact! / lineLiveViewCounts.quantityPlan! ) * 100) | number : '1.2-2' }} %</span>
     </div>
     <div class="title-avg-speed">
-        <span>{{line.avgSpeed}}</span>
+        <span>{{lineLiveViewCounts.productivityAvg}}</span>
     </div>
     <div class="title-time">
-        <span>{{line.time | date:'HH:mm'}}</span>
+        <span>{{lineLiveViewCounts.startedAt | date:'HH:mm'}}</span>
     </div>
     <div class="title-end-time">
-        <span>{{line.endTime | date:'HH:mm:ss'}}</span>
+        <span>{{lineLiveViewCounts.finishedAt | date:'HH:mm:ss'}}</span>
     </div>
 </div>

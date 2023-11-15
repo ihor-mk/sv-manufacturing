@@ -1,7 +1,6 @@
 ﻿using SunVita.Core.Common.DTO.Live;
 using SunVita.RabbitMQ.Interfaces;
 using SunVita.Worker.WebApi.Interfaces;
-using System.Diagnostics.Metrics;
 
 namespace SunVita.Worker.WebApi.Services
 {
@@ -23,7 +22,7 @@ namespace SunVita.Worker.WebApi.Services
             _currentLineStatus = new List<LiveViewCountsDto>()
             {
                 new LiveViewCountsDto() {LineId = 0, QuantityFact = -1},
-                //new LiveViewCountsDto() {Id = 1, CurrentQuantity = -1},
+                new LiveViewCountsDto() {LineId = 0, QuantityFact = -1},
                 //new LiveViewCountsDto() {Id = 2, CurrentQuantity = -1}
             };
             updateFlag = false;

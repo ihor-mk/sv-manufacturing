@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { Subject, Subscription } from 'rxjs';
 import { LiveViewHubFactoryService } from './hubFactories/live-view-hub-factory.service';
+import { ILiveViewCounts } from 'src/app/models/ILiveViewCounts';
 
 @Injectable({
     providedIn: 'root',

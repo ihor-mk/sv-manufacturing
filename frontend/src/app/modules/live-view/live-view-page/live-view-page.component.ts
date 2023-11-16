@@ -25,6 +25,7 @@ export class LiveViewPageComponent implements OnInit {
     this.liveViewHub.listenMessages((msg) => {
       var listenMessages: ILiveViewCountsDto[] = JSON.parse(msg)
       this.linesLiveViewCounts = this.transformedMessage(listenMessages)
+      console.log(this.linesLiveViewCounts)
     });
   }
 
@@ -37,7 +38,7 @@ export class LiveViewPageComponent implements OnInit {
 
   transformedMessage(listenMessages: ILiveViewCountsDto[]) : ILiveViewCounts[] {
     return listenMessages.map((broadcastMessage) => ({
-      ...broadcastMessage,
+      //...broadcastMessage,
       lineId: broadcastMessage.LineId,
       lineTitle: broadcastMessage.LineTitle,
       productivityCurrent: broadcastMessage.ProductivityCurrent,

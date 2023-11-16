@@ -9,8 +9,7 @@ namespace SunVita.Worker.WebApi.Services
         private readonly IMessageProducer _producer;
         private readonly ILogger<LiveCountReaderHostedService> _logger;
         private readonly ILiveViewCountsUpdateService _updateService;
-        private ICollection<LiveViewCountsDto> _currentLineStatus;
-        private bool updateFlag;
+        private List<LiveViewCountsDto> _currentLineStatus;
         public LiveCountReaderHostedService(IMessageProducer producer, ILogger<LiveCountReaderHostedService> logger, ILiveViewCountsUpdateService updateService)
         {
             _producer = producer;
@@ -21,11 +20,10 @@ namespace SunVita.Worker.WebApi.Services
 
             _currentLineStatus = new List<LiveViewCountsDto>()
             {
-                new LiveViewCountsDto() {LineId = 0, QuantityFact = -1},
-                new LiveViewCountsDto() {LineId = 0, QuantityFact = -1},
+                new LiveViewCountsDto() {LineId = 0, QuantityFact = -1, QuantityPlan = 2000},
+                //new LiveViewCountsDto() {LineId = 0, QuantityFact = -1, QuantityPlan = 2000},
                 //new LiveViewCountsDto() {Id = 2, CurrentQuantity = -1}
             };
-            updateFlag = false;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -40,18 +38,27 @@ namespace SunVita.Worker.WebApi.Services
 
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            
+            var newLineStatus = new List<LiveViewCountsDto>();
+
             while (true)
             {
-                var newLineStatus = new List<LiveViewCountsDto>();
+                newLineStatus = new List<LiveViewCountsDto>();
 
-                int counter = 0;
-
-                foreach (var line in _currentLineStatus)
+                for (int i = 0; i < _currentLineStatus.Count; i++)
                 {
-                    newLineStatus.Add(await _updateService.GetUpdateFromPrinter(counter++));
+                    newLineStatus.Add(await _updateService.GetUpdateFromPrinter(i));
+
+                    if (newLineStatus[i].NomenclatureTitle != _currentLineStatus[i].NomenclatureTitle)
+                    {
+                        newLineStatus[i] = _updateService.SetCountsForNewNomenclature(_currentLineStatus[i], newLineStatus[i]);
+                        await Console.Out.WriteLineAsync("New nomenclature");
+                    }
+                    if (newLineStatus[i].QuantityFact != _currentLineStatus[i].QuantityFact)
+                    {
+                        newLineStatus[i] = _updateService.CalculateCounts(_currentLineStatus[i], newLineStatus[i]);
+                        await Console.Out.WriteLineAsync("Update Counts");
+                    }
                 }
-                counter = 0;
 
                 if (!Enumerable.SequenceEqual(newLineStatus, _currentLineStatus))
                 {
@@ -61,78 +68,6 @@ namespace SunVita.Worker.WebApi.Services
                     newLineStatus.Clear();
                 }
             }
-            
-
-            //using var client = new HttpClient();
-
-            //int currentCount = -1;
-
-            //int newQuantity = 0;
-
-            //while (true)
-            //{
-            //    try
-            //    {
-            //        Console.WriteLine("--------------------------------------------------");
-
-            //        var resultNomenc = await client.GetStringAsync("http://10.61.2.21/selectjob.masp");
-
-            //        var resultStat = await client.GetStringAsync("http://10.61.2.21/updatestatistics.masp");
-
-            //        if (resultStat != null)
-            //        {
-            //            var data = resultStat.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            //            if (data != null)
-            //            {
-            //                var preCountString = data.Where(x => x.Contains("Качественная партия")).FirstOrDefault();
-
-
-
-            //                if (preCountString != null)
-            //                {
-            //                    var stringIndex = Array.IndexOf(data, preCountString);
-
-            //                    var countString = data[++stringIndex]
-            //                        .Split("\t", StringSplitOptions.RemoveEmptyEntries)[0]
-            //                        .Split("\"", StringSplitOptions.RemoveEmptyEntries)[0];
-
-            //                    newQuantity = int.Parse(countString);
-
-            //                    Console.WriteLine($"count - {newQuantity}");
-            //                }
-
-            //                data = resultNomenc.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-            //                var str = data
-            //                    .Where(x => x.Contains("hostJobNameInput"))
-            //                    .ToList();
-
-            //                var hostJobNameLine = str[1].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-            //                var hostJobNameProperty = hostJobNameLine
-            //                    .Where(x => x.Contains("value"))
-            //                    .FirstOrDefault();
-
-
-            //                var name = str[1].Substring(81, str[1].Length - (81 + 53));
-
-            //                Console.WriteLine(name);
-            //            }
-            //        }
-
-            //        if (currentCount != newQuantity)
-            //        {
-            //            _producer.SendMessage(new LineUpdateDto() { Id = 1, CurrentQuantity = newQuantity });
-            //            currentCount = newQuantity;
-            //        }
-            //        Thread.Sleep(5000);
-            //    }
-            //    catch (Exception ex) 
-            //    {
-            //        _logger.LogError(ex, "Printer live reader fail");
-            //    }
-            //}
         }
     }
 }

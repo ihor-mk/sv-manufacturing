@@ -10,8 +10,8 @@
         public string NomenclatureTitle { get; set; } = string.Empty;
         public int QuantityPlan { get; set; } = 0;
         public int QuantityFact { get; set; } = 0;
-        //public DateTime StartedAt { get; set; } = DateTime.Now;
-        //public DateTime FinishedAt { get ; set; } = DateTime.Now;
+        public DateTime StartedAt { get; set; } = DateTime.Now;
+        public DateTime FinishedAt { get ; set; } = DateTime.Now;
 
         public override bool Equals(object? obj)
         {
@@ -22,6 +22,11 @@
 
             return (this.NomenclatureTitle == item.NomenclatureTitle
                 && this.QuantityFact == item.QuantityFact);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

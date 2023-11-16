@@ -37,6 +37,7 @@ namespace SunVita.Worker.WebApi.Services
                                 .Split("\"", StringSplitOptions.RemoveEmptyEntries)[0];
 
                             newLineCounts.QuantityFact = int.Parse(countString);
+                            await Console.Out.WriteLineAsync(newLineCounts.QuantityFact.ToString());
                         }
 
                         data = resultNomenc.Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -52,7 +53,7 @@ namespace SunVita.Worker.WebApi.Services
                             .FirstOrDefault();
 
                         newLineCounts.NomenclatureTitle = str[1].Substring(81, str[1].Length - (81 + 53));
-
+                        await Console.Out.WriteLineAsync(newLineCounts.NomenclatureTitle);
                     }
                 }
             }
@@ -77,6 +78,37 @@ namespace SunVita.Worker.WebApi.Services
             var response = await httpClient.PostAsync(url, data);
 
             httpClient.Dispose();
+        }
+        public LiveViewCountsDto SetCountsForNewNomenclature(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
+        {
+            newCounts.StartedAt = DateTime.Now;
+            newCounts.FinishedAt = newCounts.StartedAt.AddHours(24);
+            newCounts.ProductivityCurrent = 0;
+            newCounts.ProductivityTop = 0;
+            newCounts.ProductivityAvg = 0;
+            newCounts.QuantityPlan = 2000;
+            Console.WriteLine(" newCounts.QuantityPlan" + newCounts.QuantityPlan);
+
+            return newCounts;
+        }
+
+        public LiveViewCountsDto CalculateCounts(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts) 
+        {
+            newCounts.QuantityPlan = currentCounts.QuantityPlan;
+            newCounts.StartedAt = currentCounts.StartedAt;
+            var workTime = (DateTime.Now - currentCounts.StartedAt).Seconds;
+            var diffOfProducts = newCounts.QuantityFact - currentCounts.QuantityFact;
+            
+            if (newCounts.QuantityFact != 0) 
+            { 
+                newCounts.ProductivityAvg = (workTime / newCounts.QuantityFact) / 60;
+                var timeToFinish = (workTime / newCounts.QuantityFact) * currentCounts.QuantityPlan;
+                newCounts.FinishedAt = newCounts.StartedAt.AddSeconds(timeToFinish);
+            }
+            
+            Console.WriteLine(" newCounts.QuantityPlan" + currentCounts.QuantityPlan);
+
+            return newCounts;
         }
     }
 }

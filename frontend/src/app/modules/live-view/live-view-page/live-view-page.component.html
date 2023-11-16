@@ -37,7 +37,7 @@
             <span>Час завершення</span>
         </div>
     </div>
-    <div *ngFor=" let line of this.lineArray" >
-        <app-production-line-live [line]="line" ></app-production-line-live>
+    <div *ngFor=" let line of this.linesLiveViewCounts" >
+        <app-production-line-live [lineLiveViewCounts]="line" ></app-production-line-live>
     </div>
 </div>

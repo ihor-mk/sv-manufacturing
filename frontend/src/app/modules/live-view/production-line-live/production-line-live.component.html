@@ -1,0 +1,32 @@
+<div class="line-wrp">
+    <div class="title-line">
+        <span>{{ lineLiveViewCounts.lineTitle }}</span>
+    </div>
+    <div class="title-prod-online">
+        <span>{{ lineLiveViewCounts.productivityCurrent }}</span>
+    </div>
+    <div class="title-prod-top">
+        <span>{{ lineLiveViewCounts.productivityTop }}</span>
+    </div>
+    <div class="title-nomenclature">
+        <span>{{ lineLiveViewCounts.nomenclatureTitle }}</span>
+    </div>
+    <div class="title-plan">
+        <span>{{ lineLiveViewCounts.quantityPlan }}</span>
+    </div>
+    <div class="title-fact">
+        <span>{{ lineLiveViewCounts.quantityFact}}</span>
+    </div>
+    <div class="title-progress">
+        <span>{{(( lineLiveViewCounts.quantityFact! / lineLiveViewCounts.quantityPlan! ) * 100) | number : '1.2-2' }} %</span>
+    </div>
+    <div class="title-avg-speed">
+        <span>{{lineLiveViewCounts.productivityAvg}}</span>
+    </div>
+    <div class="title-time">
+        <span>{{lineLiveViewCounts.startedAt | date:'HH:mm'}}</span>
+    </div>
+    <div class="title-end-time">
+        <span>{{lineLiveViewCounts.finishedAt | date:'HH:mm:ss'}}</span>
+    </div>
+</div>

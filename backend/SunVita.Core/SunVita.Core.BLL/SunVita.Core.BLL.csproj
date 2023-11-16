@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SunVita.Core.Common\SunVita.Core.Common.csproj" />
+    <ProjectReference Include="..\SunVita.Core.DAL\SunVita.Core.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

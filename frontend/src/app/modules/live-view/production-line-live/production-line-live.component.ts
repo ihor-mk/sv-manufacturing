@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ILine } from 'src/app/models/ILine';
 import { ILiveViewCounts } from 'src/app/models/ILiveViewCounts';
 
 @Component({
@@ -7,7 +6,7 @@ import { ILiveViewCounts } from 'src/app/models/ILiveViewCounts';
   templateUrl: './production-line-live.component.html',
   styleUrls: ['./production-line-live.component.sass']
 })
-export class ProductionLineLiveComponent{
+export class ProductionLineLiveComponent implements OnInit{
 
   @Input() lineLiveViewCounts!: ILiveViewCounts
 
@@ -15,5 +14,12 @@ export class ProductionLineLiveComponent{
     if (!this.lineLiveViewCounts) {
       console.log("EMPTY")
     }
+  }
+
+  toTimeString(totalSeconds: number = 0): string {
+    const totalMs = totalSeconds * 1000;
+    const result = new Date(totalMs).toISOString().slice(11, 19);
+
+    return result;
   }
 }

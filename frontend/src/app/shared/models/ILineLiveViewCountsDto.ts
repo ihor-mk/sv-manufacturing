@@ -8,5 +8,6 @@ export interface ILiveViewCountsDto {
     QuantityPlan?: number,
     QuantityFact?: number,
     StartedAt?: Date,
-    FinishedAt?: Date
+    FinishedAt?: Date,
+    WorkTime?: number
 }

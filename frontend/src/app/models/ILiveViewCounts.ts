@@ -9,4 +9,5 @@ export interface ILiveViewCounts {
     quantityFact?: number,
     startedAt?: Date,
     finishedAt?: Date
+    workTime?: number
 }

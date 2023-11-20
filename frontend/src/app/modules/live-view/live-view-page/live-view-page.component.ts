@@ -33,6 +33,7 @@ export class LiveViewPageComponent implements OnInit {
     this.liveViewService.getLiveViewCounts().subscribe((data: ILiveViewCounts[]) => {
       this.linesLiveViewCounts = data
       console.log(this.linesLiveViewCounts)
+
     })
   }
 
@@ -48,7 +49,8 @@ export class LiveViewPageComponent implements OnInit {
       quantityPlan: broadcastMessage.QuantityPlan,
       quantityFact: broadcastMessage.QuantityFact,
       startedAt: broadcastMessage.StartedAt,
-      finishedAt: broadcastMessage.FinishedAt
+      finishedAt: broadcastMessage.FinishedAt,
+      workTime: broadcastMessage.WorkTime
     }))
   }
 }

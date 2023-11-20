@@ -12,6 +12,7 @@
         public int QuantityFact { get; set; } = 0;
         public DateTime StartedAt { get; set; } = DateTime.Now;
         public DateTime FinishedAt { get ; set; } = DateTime.Now;
+        public int WorkTime { get; set; } = 0;
 
         public override bool Equals(object? obj)
         {

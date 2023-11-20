@@ -81,8 +81,9 @@ namespace SunVita.Worker.WebApi.Services
         }
         public LiveViewCountsDto SetCountsForNewNomenclature(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
         {
+            newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.StartedAt = DateTime.Now;
-            newCounts.FinishedAt = newCounts.StartedAt.AddHours(24);
+            newCounts.FinishedAt = newCounts.StartedAt.AddHours(12);
             newCounts.ProductivityCurrent = 0;
             newCounts.ProductivityTop = 0;
             newCounts.ProductivityAvg = 0;
@@ -92,20 +93,46 @@ namespace SunVita.Worker.WebApi.Services
             return newCounts;
         }
 
-        public LiveViewCountsDto CalculateCounts(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts) 
+        public LiveViewCountsDto CalculateCounts(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
         {
+            newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.QuantityPlan = currentCounts.QuantityPlan;
             newCounts.StartedAt = currentCounts.StartedAt;
-            var workTime = (DateTime.Now - currentCounts.StartedAt).Seconds;
-            var diffOfProducts = newCounts.QuantityFact - currentCounts.QuantityFact;
-            
-            if (newCounts.QuantityFact != 0) 
-            { 
-                newCounts.ProductivityAvg = (workTime / newCounts.QuantityFact) / 60;
-                var timeToFinish = (workTime / newCounts.QuantityFact) * currentCounts.QuantityPlan;
-                newCounts.FinishedAt = newCounts.StartedAt.AddSeconds(timeToFinish);
+            newCounts.WorkTime = (int)(DateTime.Now - currentCounts.StartedAt).TotalSeconds;
+
+            var workTime = (DateTime.Now - currentCounts.StartedAt).TotalSeconds + 60;
+
+            if (newCounts.QuantityFact != 0 && currentCounts.QuantityPlan != 0)
+            {
+                float quantutyDiff = newCounts.QuantityFact - currentCounts.QuantityFact;
+                float timeDiff = newCounts.WorkTime - currentCounts.WorkTime;
+
+                if (timeDiff > 0 && quantutyDiff > 0)
+                {
+                    
+                    float prodCurr = quantutyDiff / (timeDiff / 60);
+
+                    if (prodCurr < 1 && prodCurr > 0)
+                        newCounts.ProductivityCurrent = 1;
+
+                    else newCounts.ProductivityCurrent = (int) prodCurr;
+
+                    if (newCounts.ProductivityCurrent > currentCounts.ProductivityTop)
+                    {
+                        newCounts.ProductivityTop = newCounts.ProductivityCurrent;
+                    }
+                    else
+                    {
+                        newCounts.ProductivityTop = currentCounts.ProductivityTop;
+                    }
+                }
+
+                var prodAvg = newCounts.QuantityFact / (workTime / 60);
+                newCounts.ProductivityAvg = (int)prodAvg;
+                var timeToFinish = (workTime / newCounts.QuantityFact) * (currentCounts.QuantityPlan - newCounts.QuantityFact);
+                newCounts.FinishedAt = DateTime.Now.AddSeconds(timeToFinish);
             }
-            
+
             Console.WriteLine(" newCounts.QuantityPlan" + currentCounts.QuantityPlan);
 
             return newCounts;

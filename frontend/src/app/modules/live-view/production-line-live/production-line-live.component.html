@@ -24,7 +24,7 @@
         <span>{{lineLiveViewCounts.productivityAvg}}</span>
     </div>
     <div class="title-time">
-        <span>{{lineLiveViewCounts.startedAt | date:'HH:mm'}}</span>
+        <span>{{toTimeString(lineLiveViewCounts.workTime)}}</span>
     </div>
     <div class="title-end-time">
         <span>{{lineLiveViewCounts.finishedAt | date:'HH:mm:ss'}}</span>

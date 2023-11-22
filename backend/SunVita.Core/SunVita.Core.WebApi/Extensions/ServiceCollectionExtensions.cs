@@ -13,6 +13,7 @@ namespace SunVita.Core.WebApi.Extensions
             services.AddSingleton<ILiveViewCountsService, LiveViewCountsService>();
             services.AddTransient<IDoneTaskService, DoneTaskService>();
             services.AddTransient<IDataService, DataService>();
+            services.AddTransient<IRecordsService, RecordsService>();
         }
         public static void AddSunVitaCoreContext(this IServiceCollection services, IConfiguration configuration)
         {

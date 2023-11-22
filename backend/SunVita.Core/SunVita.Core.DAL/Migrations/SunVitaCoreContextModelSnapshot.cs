@@ -67,6 +67,10 @@ namespace SunVita.Core.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TeamTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NomenclatureId");
@@ -150,21 +154,21 @@ namespace SunVita.Core.DAL.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1498),
+                            CreatedAt = new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1026),
                             IpAddress = "10.61.2.21",
                             Title = "Цех №2  (Лінія1)"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1544),
+                            CreatedAt = new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1034),
                             IpAddress = "10.61.2.22",
                             Title = "Цех №2 (Лінія 2)"
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1547),
+                            CreatedAt = new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1039),
                             IpAddress = "10.61.2.23",
                             Title = "Цех №5"
                         });

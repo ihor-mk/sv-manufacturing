@@ -67,6 +67,7 @@ namespace SunVita.Core.DAL.Migrations
                     StringNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NomenclatureId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    TeamTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductionLineId = table.Column<long>(type: "bigint", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FinishedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -118,9 +119,9 @@ namespace SunVita.Core.DAL.Migrations
                 columns: new[] { "Id", "CreatedAt", "IpAddress", "Title" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1498), "10.61.2.21", "Цех №2  (Лінія1)" },
-                    { 2L, new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1544), "10.61.2.22", "Цех №2 (Лінія 2)" },
-                    { 3L, new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1547), "10.61.2.23", "Цех №5" }
+                    { 1L, new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1026), "10.61.2.21", "Цех №2  (Лінія1)" },
+                    { 2L, new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1034), "10.61.2.22", "Цех №2 (Лінія 2)" },
+                    { 3L, new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1039), "10.61.2.23", "Цех №5" }
                 });
 
             migrationBuilder.CreateIndex(

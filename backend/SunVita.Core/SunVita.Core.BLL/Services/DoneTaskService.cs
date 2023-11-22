@@ -61,6 +61,7 @@ namespace SunVita.Core.BLL.Services
             {
                 Nomenclature = nomenklature!,
                 ProductionLine = line!,
+                TeamTitle = file.TeamTitle,
                 Employees = employees!,
                 Quantity = file.Quantity,
                 StringNumber = file.StringNumber,

@@ -5,6 +5,7 @@
         public string StringNumber { get; set; } = string.Empty;
         public string NomenclatureNumber { get; set; } = string.Empty;
         public string NomenclatureTitle { get; set; } = null!;
+        public int NomenclatureInBox { get; set; } = 0;
         public int Quantity { get; set; }
         public string ProductionLineTitle { get; set; } = string.Empty;
         public string StartedAt { get; set; } = string.Empty;

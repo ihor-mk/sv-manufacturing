@@ -17,9 +17,9 @@ namespace SunVita.Worker.WebApi.Services
                                  | NotifyFilters.FileName
                                  | NotifyFilters.LastWrite;
 
-            watcher.Changed += OnChanged;
+            //watcher.Changed += OnChanged;
             watcher.Created += OnChanged;
-            watcher.Deleted += OnChanged;
+            //watcher.Deleted += OnChanged;
 
             watcher.Filter = "*.json";
             watcher.IncludeSubdirectories = true;
@@ -32,6 +32,7 @@ namespace SunVita.Worker.WebApi.Services
         }
         private static async void OnChanged(object sender, FileSystemEventArgs e)
         {
+            Thread.Sleep(500);
             try
             {
                 using var streamReader = new StreamReader(e.FullPath);

@@ -14,10 +14,9 @@ namespace SunVita.Core.DAL.Context
         {
             return new List<ProductionLine>()
             {
-                new ProductionLine {Id = 1, IpAddress = "10.0.0.1", Title = "Цех №1  (Лінія1)"  },
-                new ProductionLine {Id = 2, IpAddress = "10.0.0.2", Title = "Цех №2  (Лінія1)"  },
-                new ProductionLine {Id = 3, IpAddress = "10.0.0.3", Title = "Цех №3  (Лінія1)"  },
-                new ProductionLine {Id = 4, IpAddress = "10.0.0.4", Title = "Цех №3  (Лінія2)"  },
+                new ProductionLine {Id = 1, IpAddress = "10.61.2.21", Title = "Цех №2  (Лінія1)", CreatedAt = DateTime.Now  },
+                new ProductionLine {Id = 2, IpAddress = "10.61.2.22", Title = "Цех №2 (Лінія 2)", CreatedAt = DateTime.Now  },
+                new ProductionLine {Id = 3, IpAddress = "10.61.2.23", Title = "Цех №5", CreatedAt = DateTime.Now  },
             };
         }
     }

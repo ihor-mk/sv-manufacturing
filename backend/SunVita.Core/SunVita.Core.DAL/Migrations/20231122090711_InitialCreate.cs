@@ -35,7 +35,7 @@ namespace SunVita.Core.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PiecesInBox = table.Column<int>(type: "int", nullable: false),
+                    NomenclatureInBox = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -118,10 +118,9 @@ namespace SunVita.Core.DAL.Migrations
                 columns: new[] { "Id", "CreatedAt", "IpAddress", "Title" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.1", "Цех №1  (Лінія1)" },
-                    { 2L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.2", "Цех №2  (Лінія1)" },
-                    { 3L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.3", "Цех №3  (Лінія1)" },
-                    { 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "10.0.0.4", "Цех №3  (Лінія2)" }
+                    { 1L, new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1498), "10.61.2.21", "Цех №2  (Лінія1)" },
+                    { 2L, new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1544), "10.61.2.22", "Цех №2 (Лінія 2)" },
+                    { 3L, new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1547), "10.61.2.23", "Цех №5" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -6,6 +6,6 @@ namespace SunVita.Core.DAL.Entities
     {
         public string Number { get; set; } = string.Empty; 
         public string Title { get; set; } = string.Empty;
-        public int PiecesInBox { get; set; }
+        public int NomenclatureInBox { get; set; }
     }
 }

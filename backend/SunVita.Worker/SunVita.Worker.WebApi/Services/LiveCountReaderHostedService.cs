@@ -21,8 +21,6 @@ namespace SunVita.Worker.WebApi.Services
             _currentLineStatus = new List<LiveViewCountsDto>()
             {
                 new LiveViewCountsDto() {LineId = 0, LineTitle="Цех №2  (Лінія1)", QuantityFact = -1, QuantityPlan = 2000, StartedAt = DateTime.Now},
-                //new LiveViewCountsDto() {LineId = 0, QuantityFact = -1, QuantityPlan = 2000},
-                //new LiveViewCountsDto() {Id = 2, CurrentQuantity = -1}
             };
         }
 

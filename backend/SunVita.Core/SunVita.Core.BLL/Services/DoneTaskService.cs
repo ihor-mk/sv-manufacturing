@@ -9,7 +9,7 @@ namespace SunVita.Core.BLL.Services
 {
     public class DoneTaskService : BaseService, IDoneTaskService
     {
-        public DoneTaskService(SunVitaCoreContext context) : base(context)
+        public DoneTaskService(SunVitaCoreContext context, IMapper mapper) : base(context, mapper)
         {
         }
         public async Task<DoneTaskFileDto> CreateDoneTask(DoneTaskFileDto file)

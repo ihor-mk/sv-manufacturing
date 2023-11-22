@@ -12,7 +12,7 @@ using SunVita.Core.DAL.Context;
 namespace SunVita.Core.DAL.Migrations
 {
     [DbContext(typeof(SunVitaCoreContext))]
-    [Migration("20231109155633_InitialCreate")]
+    [Migration("20231122090711_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -110,12 +110,12 @@ namespace SunVita.Core.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NomenclatureInBox")
+                        .HasColumnType("int");
+
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PiecesInBox")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -153,30 +153,23 @@ namespace SunVita.Core.DAL.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.1",
-                            Title = "Цех №1  (Лінія1)"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.2",
+                            CreatedAt = new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1498),
+                            IpAddress = "10.61.2.21",
                             Title = "Цех №2  (Лінія1)"
                         },
                         new
                         {
-                            Id = 3L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.3",
-                            Title = "Цех №3  (Лінія1)"
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1544),
+                            IpAddress = "10.61.2.22",
+                            Title = "Цех №2 (Лінія 2)"
                         },
                         new
                         {
-                            Id = 4L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.4",
-                            Title = "Цех №3  (Лінія2)"
+                            Id = 3L,
+                            CreatedAt = new DateTime(2023, 11, 22, 11, 7, 11, 20, DateTimeKind.Local).AddTicks(1547),
+                            IpAddress = "10.61.2.23",
+                            Title = "Цех №5"
                         });
                 });
 

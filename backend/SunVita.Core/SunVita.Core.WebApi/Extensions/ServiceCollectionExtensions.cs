@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SunVita.Core.BLL.Interfaces;
+using SunVita.Core.BLL.MappingProfiles;
 using SunVita.Core.BLL.Services;
 using SunVita.Core.DAL.Context;
 
@@ -11,6 +12,7 @@ namespace SunVita.Core.WebApi.Extensions
         {
             services.AddSingleton<ILiveViewCountsService, LiveViewCountsService>();
             services.AddTransient<IDoneTaskService, DoneTaskService>();
+            services.AddTransient<IDataService, DataService>();
         }
         public static void AddSunVitaCoreContext(this IServiceCollection services, IConfiguration configuration)
         {
@@ -20,6 +22,13 @@ namespace SunVita.Core.WebApi.Extensions
                     connectionsString,
                     opt => opt.MigrationsAssembly(typeof(SunVitaCoreContext).Assembly.GetName().Name)));
         }
-
+        public static void RegisterAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<NomenclatureProfile>();
+                cfg.AddProfile<EmployeeProfile>();
+            });
+        }
     }
 }

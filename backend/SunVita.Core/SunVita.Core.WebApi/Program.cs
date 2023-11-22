@@ -1,5 +1,6 @@
 using SunVita.Core.WebApi.Extensions;
 using System.Reflection;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.RegisterCustomServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
+builder.Services.RegisterAutoMapper();
 
 builder.Services.AddCors();
 builder.Services.AddHealthChecks();

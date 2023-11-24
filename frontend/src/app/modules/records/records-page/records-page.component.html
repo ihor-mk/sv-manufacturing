@@ -13,18 +13,18 @@
                 <span>Дата зміни</span>
             </div>
         </div>
-        <div class="lines-records-counts" *ngFor="let line of lines">
+        <div class="lines-records-counts" *ngFor="let line of lineProductivityTop">
             <div class="line-records-data">
-                <span>{{line.title}}</span>
+                <span>{{line.lineTitle}}</span>
             </div>
             <div class="line-records-data">
-                <span>{{line.productivity}}</span>
+                <span>{{line.productivity | number : '1.2-2'}} уп./хв</span>
             </div>
             <div class="line-records-data">
-                <span>{{line.groupNumber}}</span>
+                <span>{{line.teamTitle}}</span>
             </div>
             <div class="line-records-data">
-                <span>{{line.groupDate | date:'dd.MM.YYYY'}}</span>
+                <span>{{line.dateTime | date:'dd.MM.YYYY'}}</span>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <div class="group-record-data">
                     <span>{{group.title}}</span>
                 </div>
-                <div class="group-record-data">
+                <div class="">
                     <span>{{group.productCount}}</span>
                 </div>
             </div>
@@ -46,12 +46,12 @@
             <div class="record-title">
                 <span>Найбільше випущеної продукції</span>
             </div>
-            <div class="group-record-line" *ngFor = "let group of groups">
+            <div class="group-record-line" *ngFor = "let nomnclature of nomenclaturesRating">
                 <div class="group-record-data">
-                    <span>Зміна 4</span>
+                    <span>{{nomnclature.nomenclatureTitle}}</span>
                 </div>
-                <div class="group-record-data">
-                    <span>50</span>
+                <div class="">
+                    <span>{{nomnclature.quantity}}</span>
                 </div>
             </div>
         </div>

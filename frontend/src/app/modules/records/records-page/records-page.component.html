@@ -33,12 +33,15 @@
             <div class="record-title">
                 <span>Кількість випущеної продукції за зміну, шт.</span>
             </div>
-            <div class="group-record-line" *ngFor = "let group of groups">
-                <div class="group-record-data">
-                    <span>{{group.title}}</span>
+            <div class="group-record-line" *ngFor = "let team of teamsTop">
+                <div class="team-record-data-team">
+                    <span>{{team.teamTitle}}</span>
                 </div>
-                <div class="">
-                    <span>{{group.productCount}}</span>
+                <div class="team-record-data-quantity">
+                    <span>{{team.quantity}}</span>
+                </div>
+                <div class="team-record-data-quantity">
+                    <span>{{team.date | date:'dd.MM.YYYY' }}</span>
                 </div>
             </div>
         </div>
@@ -46,7 +49,7 @@
             <div class="record-title">
                 <span>Найбільше випущеної продукції</span>
             </div>
-            <div class="group-record-line" *ngFor = "let nomnclature of nomenclaturesRating">
+            <div class="group-record-line" *ngFor = "let nomnclature of nomenclaturesTop">
                 <div class="group-record-data">
                     <span>{{nomnclature.nomenclatureTitle}}</span>
                 </div>

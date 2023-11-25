@@ -36,7 +36,14 @@ namespace SunVita.Core.WebApi.Controllers
             var result = await _recordsService.GetNomenclaturesRating();
             return Ok(result);
         }
-        
+
+        [HttpGet("teamRating")]
+        public async Task<ActionResult<ICollection<TeamTopDto>>> GetTeamRating()
+        {
+            var result = await _recordsService.GetTeamRating();
+            return Ok(result);
+        }
+
 
 
     }

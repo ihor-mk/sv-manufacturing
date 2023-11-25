@@ -7,6 +7,7 @@ namespace SunVita.Core.BLL.Interfaces
     {
         Task<ICollection<LineRecordProductivityDto>> GetLinesProductivityRating();
         Task<ICollection<NomenclatureQuantityDto>> GetNomenclaturesRating();
+        Task<ICollection<TeamTopDto>> GetTeamRating();
         Task<ICollection<DoneTask>> GetTestDate();
     }
 }

@@ -65,7 +65,7 @@ namespace SunVita.Core.BLL.Services
                 .ToListAsync();
         }
 
-        public async Task GetTeamRating()
+        public async Task<ICollection<TeamTopDto>> GetTeamRating()
         {
             var doneTasks = await _context.DoneTasks.ToListAsync();
 
@@ -86,7 +86,7 @@ namespace SunVita.Core.BLL.Services
                                 })
                     })
                 .SelectMany(dateGroup => dateGroup.List, (dateGroup, team) =>
-                    new
+                    new TeamTopDto
                     {
                         Date = dateGroup.Date,
                         TeamTitle = team.TeamTitle,
@@ -110,7 +110,7 @@ namespace SunVita.Core.BLL.Services
                                 })
                     })
                 .SelectMany(dateGroup => dateGroup.List, (dateGroup, team) =>
-                    new
+                    new TeamTopDto
                     {
                         Date = dateGroup.Date,
                         TeamTitle = team.TeamTitle,
@@ -120,7 +120,10 @@ namespace SunVita.Core.BLL.Services
 
             teamDay.AddRange(teamNight.ToList());
 
-            await Console.Out.WriteLineAsync("public async Task GetTeamRating()");
+            return teamDay
+                .OrderByDescending(team => team.Quantity)
+                .Take(7)
+                .ToList();
         }
     }
 }

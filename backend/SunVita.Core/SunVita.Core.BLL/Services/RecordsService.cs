@@ -5,8 +5,6 @@ using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.Records;
 using SunVita.Core.DAL.Context;
 using SunVita.Core.DAL.Entities;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SunVita.Core.BLL.Services
 {
@@ -59,16 +57,20 @@ namespace SunVita.Core.BLL.Services
 
             return await _context.DoneTasks
                 .GroupBy(x => x.Nomenclature)
-                .Select(x => new NomenclatureQuantityDto { Quantity = x.Sum(y => y.Quantity), NomenclatureTitle = x.Key.Title })
+                .Select(x =>
+                    new NomenclatureQuantityDto
+                    {
+                        Quantity = x.Sum(y => y.Quantity),
+                        NomenclatureTitle = x.Key.Title
+                    })
                 .OrderByDescending(x => x.Quantity)
-                .Take(10)
+                .Take(8)
                 .ToListAsync();
         }
 
         public async Task<ICollection<TeamTopDto>> GetTeamRating()
         {
             var doneTasks = await _context.DoneTasks.ToListAsync();
-
 
             var teamDay = doneTasks
                 .Where(task => task.StartedAt.Hour >= 6 && task.StartedAt.Hour < 18)
@@ -122,7 +124,7 @@ namespace SunVita.Core.BLL.Services
 
             return teamDay
                 .OrderByDescending(team => team.Quantity)
-                .Take(7)
+                .Take(8)
                 .ToList();
         }
     }

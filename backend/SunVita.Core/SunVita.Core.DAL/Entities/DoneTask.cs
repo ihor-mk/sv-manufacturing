@@ -18,7 +18,7 @@ namespace SunVita.Core.DAL.Entities
 
         public DoneTask()
         {
-            Employees = new LinkedList<Employee>();
+            Employees = new List<Employee>();
         }
     }
 }

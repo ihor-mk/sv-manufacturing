@@ -94,21 +94,21 @@ namespace SunVita.Core.DAL.Migrations
                 name: "DoneTaskEmployee",
                 columns: table => new
                 {
-                    DoneTasksId = table.Column<long>(type: "bigint", nullable: false),
-                    EmployeesId = table.Column<long>(type: "bigint", nullable: false)
+                    DoneTaskId = table.Column<long>(type: "bigint", nullable: false),
+                    EmployeeId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DoneTaskEmployee", x => new { x.DoneTasksId, x.EmployeesId });
+                    table.PrimaryKey("PK_DoneTaskEmployee", x => new { x.DoneTaskId, x.EmployeeId });
                     table.ForeignKey(
-                        name: "FK_DoneTaskEmployee_DoneTasks_DoneTasksId",
-                        column: x => x.DoneTasksId,
+                        name: "FK_DoneTaskEmployee_DoneTasks_DoneTaskId",
+                        column: x => x.DoneTaskId,
                         principalTable: "DoneTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DoneTaskEmployee_Employees_EmployeesId",
-                        column: x => x.EmployeesId,
+                        name: "FK_DoneTaskEmployee_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -119,15 +119,15 @@ namespace SunVita.Core.DAL.Migrations
                 columns: new[] { "Id", "CreatedAt", "IpAddress", "Title" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1026), "10.61.2.21", "Цех №2  (Лінія1)" },
-                    { 2L, new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1034), "10.61.2.22", "Цех №2 (Лінія 2)" },
-                    { 3L, new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1039), "10.61.2.23", "Цех №5" }
+                    { 1L, new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5947), "10.61.2.21", "Цех №2  (Лінія1)" },
+                    { 2L, new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5955), "10.61.2.22", "Цех №2 (Лінія 2)" },
+                    { 3L, new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5960), "10.61.2.23", "Цех №5" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DoneTaskEmployee_EmployeesId",
+                name: "IX_DoneTaskEmployee_EmployeeId",
                 table: "DoneTaskEmployee",
-                column: "EmployeesId");
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DoneTasks_NomenclatureId",

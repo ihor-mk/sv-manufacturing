@@ -1,1 +1,35 @@
-<p>rating-page works!</p>
+<div class="rating-page-wrp borders">
+    <div class="rating-page-borders">
+        <div class="header-wrp">
+            <div class="select-wrp">
+                <mat-select class="select-dropdown" [(value)]="selectedValue">
+                    <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+                </mat-select>
+            </div>
+            <div class="title-wrp">
+                    <span>Рейтинг продуктивності працівників</span>
+            </div>
+        </div>
+        <div class="employees-list-wrp" *ngFor="let employee of employees">
+            <div class="employee-line">
+                <div class="employee-line-data">
+                    <span>{{employee.fullName}}</span>
+                </div>
+                <div class="employee-line-data">
+                    <span>{{employee.quantity}}</span>
+                </div>
+            </div>
+        </div>
+    <div class="pagination-wrp">
+    <div class="previous-page" *ngIf = "pageNumber > 0">
+        <button mat-stroked-button disabled={{isPaginPrevious()}} (click) = "openPreviousPage()">Назад</button>
+    </div>
+    <span>{{filter.pageNumber}} </span>
+    <div class="next-page" *ngIf = "pageNumber > 0">
+        <button mat-stroked-button disabled={{isPaginNext()}} (click) = "openNextPage()">Вперед</button>
+    </div>
+    </div>
+        
+        
+    </div>
+</div>

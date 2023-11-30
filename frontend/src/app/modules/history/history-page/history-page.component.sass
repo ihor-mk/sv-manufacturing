@@ -2,12 +2,19 @@
 @import "src/styles/fonts.scss"
 
 .history-page-wrp
-    display: flex
-    flex-direction: column
     overflow: hidden
+    width: calc( 100% - 20px )
     height: 100%
     background-color: $background-color
     text-align: center
+    padding: 10px
+
+.history-page-borders
+    display: flex
+    flex-direction: column
+    border: solid 2px $dark-blue
+    border-radius: 10px
+    overflow: hidden
 
 .header-wrp
     display: flex
@@ -38,6 +45,8 @@
 
 .title-header
     width: 19%
+
+
 
 .mat-mdc-select
     font-family: 'Geometria' !important

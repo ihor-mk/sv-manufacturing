@@ -1,26 +1,28 @@
-<div class="history-page-wrp">
-    <div class="header-wrp">
-        <div class="select-wrp">
-            <mat-select class="select-dropdown" [(value)]="selectedValue">
-                <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
-            </mat-select>
+<div class="history-page-wrp borders">
+    <div class="history-page-borders">
+        <div class="header-wrp">
+            <div class="select-wrp">
+                <mat-select class="select-dropdown" [(value)]="selectedValue">
+                    <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+                </mat-select>
+            </div>
+            <div class="title-wrp">
+                <div class="title-released-products title-header">
+                    <span>Випущено продукції, шт.</span>
+                </div>
+                <div class="title-top-speed title-header">
+                    <span>Пікова швидкість</span>
+                </div>
+                <div class="title-avg-speed title-header">
+                    <span>Середня швидкість</span>
+                </div>
+                <div class="title-avg-performance title-header">
+                    <span>Середня продуктивність</span>
+                </div>
+            </div>
         </div>
-        <div class="title-wrp">
-            <div class="title-released-products title-header">
-                <span>Випущено продукції, шт.</span>
-            </div>
-            <div class="title-top-speed title-header">
-                <span>Пікова швидкість</span>
-            </div>
-            <div class="title-avg-speed title-header">
-                <span>Середня швидкість</span>
-            </div>
-            <div class="title-avg-performance title-header">
-                <span>Середня продуктивність</span>
-            </div>
+        <div *ngFor=" let line of this.lineArray">
+            <app-production-line-history [lineHistory]="line"></app-production-line-history>
         </div>
-    </div>
-    <div *ngFor=" let line of this.lineArray">
-        <app-production-line-history [lineHistory]="line"></app-production-line-history>
     </div>
 </div>

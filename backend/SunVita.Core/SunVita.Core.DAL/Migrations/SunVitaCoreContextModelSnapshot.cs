@@ -22,21 +22,6 @@ namespace SunVita.Core.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DoneTaskEmployee", b =>
-                {
-                    b.Property<long>("DoneTasksId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("EmployeesId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("DoneTasksId", "EmployeesId");
-
-                    b.HasIndex("EmployeesId");
-
-                    b.ToTable("DoneTaskEmployee");
-                });
-
             modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTask", b =>
                 {
                     b.Property<long>("Id")
@@ -78,6 +63,21 @@ namespace SunVita.Core.DAL.Migrations
                     b.HasIndex("ProductionLineId");
 
                     b.ToTable("DoneTasks");
+                });
+
+            modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTaskEmployee", b =>
+                {
+                    b.Property<long>("DoneTaskId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("DoneTaskId", "EmployeeId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("DoneTaskEmployee");
                 });
 
             modelBuilder.Entity("SunVita.Core.DAL.Entities.Employee", b =>
@@ -154,39 +154,24 @@ namespace SunVita.Core.DAL.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1026),
+                            CreatedAt = new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5947),
                             IpAddress = "10.61.2.21",
                             Title = "Цех №2  (Лінія1)"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1034),
+                            CreatedAt = new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5955),
                             IpAddress = "10.61.2.22",
                             Title = "Цех №2 (Лінія 2)"
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 11, 22, 16, 5, 0, 526, DateTimeKind.Local).AddTicks(1039),
+                            CreatedAt = new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5960),
                             IpAddress = "10.61.2.23",
                             Title = "Цех №5"
                         });
-                });
-
-            modelBuilder.Entity("DoneTaskEmployee", b =>
-                {
-                    b.HasOne("SunVita.Core.DAL.Entities.DoneTask", null)
-                        .WithMany()
-                        .HasForeignKey("DoneTasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SunVita.Core.DAL.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTask", b =>
@@ -206,6 +191,21 @@ namespace SunVita.Core.DAL.Migrations
                     b.Navigation("Nomenclature");
 
                     b.Navigation("ProductionLine");
+                });
+
+            modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTaskEmployee", b =>
+                {
+                    b.HasOne("SunVita.Core.DAL.Entities.DoneTask", null)
+                        .WithMany()
+                        .HasForeignKey("DoneTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SunVita.Core.DAL.Entities.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

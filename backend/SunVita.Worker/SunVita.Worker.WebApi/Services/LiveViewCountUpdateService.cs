@@ -1,16 +1,23 @@
 ﻿using Newtonsoft.Json;
 using SunVita.Core.Common.DTO.Live;
 using SunVita.Worker.WebApi.Interfaces;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace SunVita.Worker.WebApi.Services
 {
     public class LiveViewCountsUpdateService : ILiveViewCountsUpdateService
     {
-        private readonly string[] _printers = { "10.61.2.21", "10.61.2.21", "10.61.2.23" };
+        private readonly string[] _printers = { "10.61.2.21", "10.61.2.22", "10.61.2.23" };
         public async Task<LiveViewCountsDto> GetUpdateFromPrinter(int lineId)
         {
             var newLineCounts = new LiveViewCountsDto { LineId = lineId };
+
+            var pinger = new Ping();
+            var reply = pinger.Send(_printers[lineId], 500);
+
+            if (reply.Status != IPStatus.Success) 
+                return null;
 
             using var client = new HttpClient();
             try
@@ -81,6 +88,7 @@ namespace SunVita.Worker.WebApi.Services
         }
         public LiveViewCountsDto SetCountsForNewNomenclature(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
         {
+            newCounts.LineId = currentCounts.LineId;
             newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.StartedAt = DateTime.Now;
             newCounts.FinishedAt = newCounts.StartedAt.AddHours(12);
@@ -95,6 +103,7 @@ namespace SunVita.Worker.WebApi.Services
 
         public LiveViewCountsDto CalculateCounts(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
         {
+            newCounts.LineId = currentCounts.LineId;
             newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.QuantityPlan = currentCounts.QuantityPlan;
             newCounts.StartedAt = currentCounts.StartedAt;

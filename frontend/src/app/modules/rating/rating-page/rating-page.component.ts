@@ -16,7 +16,7 @@ export class RatingPageComponent implements OnInit {
   pageNumber: number = 2;
   employeesCount: number = 112
   pageSize: number = 10
-  filter: IRatingFilter = { pageNumber: 1, pageSize: 10, month: 0 }
+  filter: IRatingFilter = { pageNumber: 1, pageSize: 10, month: -1 }
 
   constructor(private ratingService: RatingService) { }
 

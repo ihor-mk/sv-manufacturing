@@ -20,7 +20,9 @@ namespace SunVita.Worker.WebApi.Services
 
             _currentLineStatus = new List<LiveViewCountsDto>()
             {
-                new LiveViewCountsDto() {LineId = 0, LineTitle="Цех №2  (Лінія1)", QuantityFact = -1, QuantityPlan = 2000, StartedAt = DateTime.Now},
+                new LiveViewCountsDto() {LineId = 0, LineTitle="Цех №2 (Лінія 2)", QuantityFact = -1, QuantityPlan = 2000, StartedAt = DateTime.Now},
+                new LiveViewCountsDto() {LineId = 1, LineTitle="Цех №2 (Лінія1)", QuantityFact = -1, QuantityPlan = 2000, StartedAt = DateTime.Now},
+                new LiveViewCountsDto() {LineId = 2, LineTitle="Цех №5 (Лінія1)", QuantityFact = -1, QuantityPlan = 2000, StartedAt = DateTime.Now}
             };
         }
 
@@ -40,23 +42,36 @@ namespace SunVita.Worker.WebApi.Services
 
             while (true)
             {
-                newLineStatus = new List<LiveViewCountsDto>();
+                newLineStatus = new List<LiveViewCountsDto>() { new LiveViewCountsDto(), new LiveViewCountsDto(), new LiveViewCountsDto() };
 
-                for (int i = 0; i < _currentLineStatus.Count; i++)
+                await Parallel.ForEachAsync(_currentLineStatus, async (currentLine, cancellationToken) =>
                 {
-                    newLineStatus.Add(await _updateService.GetUpdateFromPrinter(i));
+                    var temp = await _updateService.GetUpdateFromPrinter(currentLine.LineId);
 
-                    if (newLineStatus[i].NomenclatureTitle != _currentLineStatus[i].NomenclatureTitle)
+                    if (temp is not null)
                     {
-                        newLineStatus[i] = _updateService.SetCountsForNewNomenclature(_currentLineStatus[i], newLineStatus[i]);
-                        await Console.Out.WriteLineAsync("New nomenclature");
+                        newLineStatus[currentLine.LineId] = temp;
+    
+                    if (newLineStatus[currentLine.LineId].NomenclatureTitle != currentLine.NomenclatureTitle ||
+                        newLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
+                            {
+                                newLineStatus[currentLine.LineId] = _updateService.SetCountsForNewNomenclature(currentLine, newLineStatus[currentLine.LineId]);
+                                await Console.Out.WriteLineAsync("New nomenclature");
+                            }
+
+                        if (newLineStatus[currentLine.LineId].QuantityFact > currentLine.QuantityFact)
+                        {
+                            newLineStatus[currentLine.LineId] = _updateService.CalculateCounts(currentLine, newLineStatus[currentLine.LineId]);
+                            await Console.Out.WriteLineAsync("Update Counts");
+                        }
+                        else
+                        {
+                            newLineStatus[currentLine.LineId] = currentLine;
+                        } 
                     }
-                    if (newLineStatus[i].QuantityFact != _currentLineStatus[i].QuantityFact)
-                    {
-                        newLineStatus[i] = _updateService.CalculateCounts(_currentLineStatus[i], newLineStatus[i]);
-                        await Console.Out.WriteLineAsync("Update Counts");
-                    }
+                    else { newLineStatus[currentLine.LineId] = currentLine; }
                 }
+                );
 
                 if (!Enumerable.SequenceEqual(newLineStatus, _currentLineStatus))
                 {

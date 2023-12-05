@@ -12,22 +12,16 @@ import { IRatingFilter } from './IRatingFilter';
 export class RatingPageComponent implements OnInit {
   months: string[] = []
   selectedValue: string = ""
-  employees: IEmployeeQuantity[] = [{ fullName: "Ihor Myroniuk", quantity: 100 },]
-  pageNumber: number = 2;
-  employeesCount: number = 112
-  pageSize: number = 10
-  filter: IRatingFilter = { pageNumber: 1, pageSize: 10, month: -1 }
+  employees: IEmployeeQuantity[] = []
+  employeesCount: number = 0
+  filter: IRatingFilter = { pageNumber: 1, pageSize: 10, month: new Date().getMonth() }
 
   constructor(private ratingService: RatingService) { }
 
   ngOnInit(): void {
     this.months = monthSample;
-    this.selectedValue = this.months[this.months.length - 1];
-
-    this.ratingService.getEmployeesCounts(this.filter.month).subscribe((data) => {
-      this.employeesCount = data
-    })
-
+    this.selectedValue = monthSample[(new Date().getMonth()) - 1]
+    this.getEmployeesCount()
     this.getEmployeesList()
   }
 
@@ -59,5 +53,18 @@ export class RatingPageComponent implements OnInit {
       this.employees = []
       this.employees = data
     }))
+  }
+
+  getEmployeesCount() {
+    this.ratingService.getEmployeesCounts(this.filter.month).subscribe((data) => {
+      this.employeesCount = data
+      this.filter.pageNumber = 1
+    })
+  }
+
+  changeMonth(value: string) {
+    this.filter.month = monthSample.indexOf(value) + 1
+    this.getEmployeesCount()
+    this.getEmployeesList()
   }
 }

@@ -2,12 +2,12 @@
     <div class="rating-page-borders">
         <div class="header-wrp">
             <div class="select-wrp">
-                <mat-select class="select-dropdown" [(value)]="selectedValue">
+                <mat-select class="select-dropdown" [(value)]="selectedValue" (selectionChange)="changeMonth($event.value)">
                     <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
                 </mat-select>
             </div>
             <div class="title-wrp">
-                    <span>Рейтинг продуктивності працівників</span>
+                <span>Рейтинг продуктивності працівників</span>
             </div>
         </div>
         <div class="employees-list-wrp" *ngFor="let employee of employees">
@@ -20,16 +20,14 @@
                 </div>
             </div>
         </div>
-    <div class="pagination-wrp">
-    <div class="previous-page" *ngIf = "pageNumber > 0">
-        <button mat-stroked-button disabled={{isPaginPrevious()}} (click) = "openPreviousPage()">Назад</button>
-    </div>
-    <span>{{filter.pageNumber}} </span>
-    <div class="next-page" *ngIf = "pageNumber > 0">
-        <button mat-stroked-button disabled={{isPaginNext()}} (click) = "openNextPage()">Вперед</button>
-    </div>
-    </div>
-        
-        
+        <div class="pagination-wrp">
+            <div class="previous-page" *ngIf="filter.pageNumber > 0">
+                <button mat-stroked-button disabled={{isPaginPrevious()}} (click)="openPreviousPage()">Назад</button>
+            </div>
+            <span>{{filter.pageNumber}} </span>
+            <div class="next-page" *ngIf="filter.pageNumber > 0">
+                <button mat-stroked-button disabled={{isPaginNext()}} (click)="openNextPage()">Вперед</button>
+            </div>
+        </div>
     </div>
 </div>

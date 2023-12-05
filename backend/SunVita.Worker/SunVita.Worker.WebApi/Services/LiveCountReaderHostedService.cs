@@ -51,23 +51,28 @@ namespace SunVita.Worker.WebApi.Services
                     if (temp is not null)
                     {
                         newLineStatus[currentLine.LineId] = temp;
-    
-                    if (newLineStatus[currentLine.LineId].NomenclatureTitle != currentLine.NomenclatureTitle ||
-                        newLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
-                            {
-                                newLineStatus[currentLine.LineId] = _updateService.SetCountsForNewNomenclature(currentLine, newLineStatus[currentLine.LineId]);
-                                await Console.Out.WriteLineAsync("New nomenclature");
-                            }
+
+                        if (newLineStatus[currentLine.LineId].NomenclatureTitle != currentLine.NomenclatureTitle ||
+                            newLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
+                        {
+                            newLineStatus[currentLine.LineId] =
+                                _updateService.SetCountsForNewNomenclature(currentLine, newLineStatus[currentLine.LineId]);
+
+                            await Console.Out.WriteLineAsync("New nomenclature");
+                            return;
+                        }
 
                         if (newLineStatus[currentLine.LineId].QuantityFact > currentLine.QuantityFact)
                         {
-                            newLineStatus[currentLine.LineId] = _updateService.CalculateCounts(currentLine, newLineStatus[currentLine.LineId]);
+                            newLineStatus[currentLine.LineId] = 
+                                _updateService.CalculateCounts(currentLine, newLineStatus[currentLine.LineId]);
+
                             await Console.Out.WriteLineAsync("Update Counts");
                         }
                         else
                         {
                             newLineStatus[currentLine.LineId] = currentLine;
-                        } 
+                        }
                     }
                     else { newLineStatus[currentLine.LineId] = currentLine; }
                 }
@@ -77,7 +82,7 @@ namespace SunVita.Worker.WebApi.Services
                 {
                     await _updateService.SendNewCountsToCore(newLineStatus);
                     _producer.SendMessage(newLineStatus);
-                    _currentLineStatus = new List<LiveViewCountsDto> (newLineStatus);
+                    _currentLineStatus = new List<LiveViewCountsDto>(newLineStatus);
                     newLineStatus.Clear();
                 }
             }

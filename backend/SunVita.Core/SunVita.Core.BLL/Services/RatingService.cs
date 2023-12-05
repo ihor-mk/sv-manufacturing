@@ -19,7 +19,7 @@ namespace SunVita.Core.BLL.Services
             var doneTasks = await _context.DoneTasks.Include(x => x.Employees).ToListAsync();
 
             return doneTasks
-                .Where(x => x.StartedAt.Month == DateTime.Now.Month + filter.Month)
+                .Where(x => x.StartedAt.Month == filter.Month)
                 .SelectMany(x => x.Employees, (task, employee) =>
                     new EmployeeQuantityDto
                     {
@@ -44,7 +44,7 @@ namespace SunVita.Core.BLL.Services
             var doneTasks = await _context.DoneTasks.Include(x => x.Employees).ToListAsync();
 
             return doneTasks
-                .Where(x => x.StartedAt.Month == DateTime.Now.Month + month)
+                .Where(x => x.StartedAt.Month == month)
                 .SelectMany(x => x.Employees, (task, employee) =>
                     new EmployeeQuantityDto
                     {

@@ -44,7 +44,6 @@ namespace SunVita.Worker.WebApi.Services
                                 .Split("\"", StringSplitOptions.RemoveEmptyEntries)[0];
 
                             newLineCounts.QuantityFact = int.Parse(countString);
-                            await Console.Out.WriteLineAsync(newLineCounts.QuantityFact.ToString());
                         }
 
                         data = resultNomenc.Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -60,7 +59,7 @@ namespace SunVita.Worker.WebApi.Services
                             .FirstOrDefault();
 
                         newLineCounts.NomenclatureTitle = str[1].Substring(81, str[1].Length - (81 + 53));
-                        await Console.Out.WriteLineAsync(newLineCounts.NomenclatureTitle);
+                        await Console.Out.WriteLineAsync($"{newLineCounts.QuantityFact} - {newLineCounts.NomenclatureTitle}");
                     }
                 }
             }
@@ -96,7 +95,6 @@ namespace SunVita.Worker.WebApi.Services
             newCounts.ProductivityTop = 0;
             newCounts.ProductivityAvg = 0;
             newCounts.QuantityPlan = 2000;
-            Console.WriteLine(" newCounts.QuantityPlan" + newCounts.QuantityPlan);
 
             return newCounts;
         }
@@ -141,8 +139,6 @@ namespace SunVita.Worker.WebApi.Services
                 var timeToFinish = (workTime / newCounts.QuantityFact) * (currentCounts.QuantityPlan - newCounts.QuantityFact);
                 newCounts.FinishedAt = DateTime.Now.AddSeconds(timeToFinish);
             }
-
-            Console.WriteLine(" newCounts.QuantityPlan" + currentCounts.QuantityPlan);
 
             return newCounts;
         }

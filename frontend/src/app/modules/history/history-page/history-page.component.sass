@@ -2,7 +2,7 @@
 @import "src/styles/fonts.scss"
 
 .history-page-wrp
-    overflow: hidden
+    overflow: scroll
     width: calc( 100% - 20px )
     height: 100%
     background-color: $background-color
@@ -46,7 +46,24 @@
 .title-header
     width: 19%
 
+.pagination-wrp
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin-left: auto
+    width: 220px
+    padding: 10px
+    text-align: center
 
+.pagination-wrp > span
+    font-size: 16pt
+    align-self: center
+    text-decoration: underline
+
+.mdc-button
+    font-family: 'Geometria' !important
+    font-style: normal !important
+    font-stretch: condensed !important
 
 .mat-mdc-select
     font-family: 'Geometria' !important

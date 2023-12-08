@@ -8,7 +8,7 @@ namespace SunVita.Core.WebApi.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void RegisterCustomServices(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterCustomServices(this IServiceCollection services)
         {
             services.AddSingleton<ILiveViewCountsService, LiveViewCountsService>();
             services.AddTransient<IDoneTaskService, DoneTaskService>();

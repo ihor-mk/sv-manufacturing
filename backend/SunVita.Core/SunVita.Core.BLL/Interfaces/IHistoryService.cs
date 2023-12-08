@@ -5,7 +5,7 @@ namespace SunVita.Core.BLL.Interfaces
 {
     public interface IHistoryService
     {
-        int GetDoneTaskCount(int month);
+        Task<int> GetDoneTaskCount(int month);
         Task<ICollection<DoneTaskDto>> GetDoneTasks(MainFilter filter);
     }
 }

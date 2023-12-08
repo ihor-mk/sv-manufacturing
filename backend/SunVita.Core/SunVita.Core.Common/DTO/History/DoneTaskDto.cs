@@ -1,4 +1,6 @@
-﻿namespace SunVita.Core.Common.DTO.History
+﻿using SunVita.Core.Common.DTO.Employee;
+
+namespace SunVita.Core.Common.DTO.History
 {
     public class DoneTaskDto
     {
@@ -7,7 +9,13 @@
         public string NomenclatureTitle { get; set; } = string.Empty;
         public int Quantity { get; set; }
         public int Productivity { get; set; }
+        public List<string> Employees { get; set; }
         public DateTime StartedAt { get; set; } = DateTime.MinValue;
         public DateTime FinishedAt { get; set;} = DateTime.MinValue;
+
+        public DoneTaskDto()
+        {
+            Employees = new List<string>();
+        }
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { monthSample } from '../../history/history-page/history-page.util';
 import { IEmployeeQuantity } from 'src/app/models/IEmployeeQuantity';
 import { RatingService } from 'src/app/core/services/rating.service';
-import { IRatingFilter } from './IRatingFilter';
+import { IMainFilter } from '../../../shared/models/IMainFilter';
 
 @Component({
   selector: 'app-rating-page',
@@ -14,7 +14,7 @@ export class RatingPageComponent implements OnInit {
   selectedValue: string = ""
   employees: IEmployeeQuantity[] = []
   employeesCount: number = 0
-  filter: IRatingFilter = { pageNumber: 1, pageSize: 10, month: new Date().getMonth() }
+  filter: IMainFilter = { pageNumber: 1, pageSize: 10, month: new Date().getMonth() }
 
   constructor(private ratingService: RatingService) { }
 
@@ -50,7 +50,6 @@ export class RatingPageComponent implements OnInit {
 
   getEmployeesList() {
     this.ratingService.getEmployees(this.filter).subscribe((data => {
-      this.employees = []
       this.employees = data
     }))
   }

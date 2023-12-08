@@ -1,20 +1,20 @@
 
 <div class="production-line-history-wrp">
     <div class="line-title">
-        <span>{{lineHistory.title}}</span>
+        <span>{{doneTask.lineTitle}}</span>
     </div>
     <div class="line-data">
         <div class="line-prod-count line-widht">
-            <span>{{lineHistory.productionsCount}}</span>
+            <span>{{doneTask.quantity}}</span>
         </div>
         <div class="line-speed-top line-widht">
-            <span>{{lineHistory.speedTop}}</span>
+            <span>{{doneTask.startedAt}}</span>
         </div>
         <div class="line-speed-avg line-widht">
-            <span>{{lineHistory.speedAvg}}</span>
+            <span>{{doneTask.finishedAt}}</span>
         </div>
         <div class="line-prod-avg line-widht">
-            <span>{{lineHistory.productivityAvg}}</span>
+            <span>{{getProductivity() | number : '1.2-2'}}</span>
         </div>
     </div>
 </div>

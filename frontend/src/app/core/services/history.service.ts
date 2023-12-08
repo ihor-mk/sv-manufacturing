@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "./http.service";
-import { IEmployeeQuantity } from "src/app/models/IEmployeeQuantity";
+import { IDoneTask } from "src/app/models/IDoneTask";
 import { IMainFilter } from "src/app/shared/models/IMainFilter";
 import { Observable } from "rxjs";
 
@@ -8,16 +8,16 @@ import { Observable } from "rxjs";
     providedIn: 'root',
 })
 
-export class RatingService {
-    public routePrefix = '/rating'
+export class HistoryService {
+    public routePrefix = '/history'
 
     constructor(private httpService: HttpService) {}
 
-    public getEmployeesCounts(month: number) {
+    public getDoneTasksCounts(month: number) {
         return this.httpService.get<number>(`${this.routePrefix}/${month}`);
     }
 
-    public getEmployees(filter: IMainFilter) : Observable<IEmployeeQuantity[]> {
+    public getDoneTasks(filter: IMainFilter) : Observable<IDoneTask[]> {
         return this.httpService.post(`${this.routePrefix}`, filter)
     }
 }

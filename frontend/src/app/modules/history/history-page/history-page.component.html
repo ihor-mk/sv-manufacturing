@@ -21,8 +21,17 @@
                 </div>
             </div>
         </div>
-        <div *ngFor=" let line of this.lineArray">
-            <app-production-line-history [lineHistory]="line"></app-production-line-history>
+        <div *ngFor=" let doneTask of this.doneTasks">
+            <app-production-line-history [doneTask]="doneTask"></app-production-line-history>
+        </div>
+        <div class="pagination-wrp">
+            <div class="previous-page" *ngIf="filter.pageNumber > 0">
+                <button mat-stroked-button disabled={{isPaginPrevious()}} (click)="openPreviousPage()">Назад</button>
+            </div>
+            <span>{{filter.pageNumber}} </span>
+            <div class="next-page" *ngIf="filter.pageNumber > 0">
+                <button mat-stroked-button disabled={{isPaginNext()}} (click)="openNextPage()">Вперед</button>
+            </div>
         </div>
     </div>
 </div>

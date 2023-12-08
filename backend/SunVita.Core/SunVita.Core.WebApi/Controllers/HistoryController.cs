@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SunVita.Core.BLL.Interfaces;
+using SunVita.Core.Common.DTO.Filters;
+using SunVita.Core.Common.DTO.History;
 
 namespace SunVita.Core.WebApi.Controllers
 {
@@ -12,11 +14,19 @@ namespace SunVita.Core.WebApi.Controllers
         {
             _historyService = historyService;
         }
-        [HttpGet]
-        public ActionResult<int> GetAction(int month)
+        [HttpGet("{month}")]
+        public async Task<ActionResult<int>> GetAction(int month)
         {
-            var result  = _historyService.GetDoneTaskCount(month);
+            var result = await _historyService.GetDoneTaskCount(month);
             return Ok(result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ICollection<DoneTaskDto>>> Post([FromBody] MainFilter filter)
+        {
+            var result = await _historyService.GetDoneTasks(filter);
+            return Ok(result);
+        }
+
     }
 }

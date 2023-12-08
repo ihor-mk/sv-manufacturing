@@ -5,7 +5,6 @@ using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.Filters;
 using SunVita.Core.Common.DTO.Rating;
 using SunVita.Core.DAL.Context;
-using System;
 
 namespace SunVita.Core.BLL.Services
 {

@@ -17,7 +17,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddControllers();
 builder.Services.AddSunVitaCoreContext(builder.Configuration);
-builder.Services.RegisterCustomServices(builder.Configuration);
+builder.Services.RegisterCustomServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();

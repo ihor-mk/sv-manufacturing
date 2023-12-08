@@ -23,7 +23,7 @@ namespace SunVita.Core.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ICollection<EmployeeQuantityDto>>> Post([FromBody] RatingFilter filter)
+        public async Task<ActionResult<ICollection<EmployeeQuantityDto>>> Post([FromBody] MainFilter filter)
         {
             var result = await _ratingService.GetEmployees(filter);
             return Ok(result);

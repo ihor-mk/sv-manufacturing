@@ -5,7 +5,7 @@ using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.Filters;
 using SunVita.Core.Common.DTO.Rating;
 using SunVita.Core.DAL.Context;
-using SunVita.Core.DAL.Entities;
+using System;
 
 namespace SunVita.Core.BLL.Services
 {
@@ -14,45 +14,58 @@ namespace SunVita.Core.BLL.Services
         public RatingService(SunVitaCoreContext context, IMapper mapper)
             : base(context, mapper) { }
 
-        public async Task<List<EmployeeQuantityDto>> GetEmployees(RatingFilter filter)
+        public async Task<List<EmployeeQuantityDto>> GetEmployees(MainFilter filter)
         {
-            var doneTasks = await _context.DoneTasks.Include(x => x.Employees).ToListAsync();
+            var startDate = new DateTime(DateTime.Now.Year, filter.Month, 1);
+            var endDate = new DateTime(DateTime.Now.Year, filter.Month, DateTime.DaysInMonth(DateTime.Now.Year, filter.Month));
 
-            return doneTasks
-                .Where(x => x.StartedAt.Month == filter.Month)
-                .SelectMany(x => x.Employees, (task, employee) =>
+            var result = await _context.DoneTasks
+                 .Where(x => x.WorkDay >= startDate && x.WorkDay <= endDate)
+                 .Include(x => x.Employees)
+                 .SelectMany(x => x.Employees, (task, employee) =>
+                     new EmployeeQuantityDto
+                     {
+                         FullName = employee.FullName,
+                         Quantity = task.Quantity
+                     })
+                 .GroupBy(x => x.FullName)
+                 .Select(group =>
+                     new EmployeeQuantityDto
+                     {
+                         FullName = group.Key,
+                         Quantity = group.Sum(x => x.Quantity)
+                     })
+                 .OrderByDescending(x => x.Quantity)
+                 .Skip((filter.PageNumber - 1) * filter.PageSize)
+                 .Take(filter.PageSize)
+                 .ToListAsync();
+
+            return result
+                .Select(x =>
                     new EmployeeQuantityDto
                     {
-                        FullName = employee.FullName,
-                        Quantity = task.Quantity
+                        FullName = x.FullName.Split('(')[0],
+                        Quantity = x.Quantity
                     })
-                .GroupBy(x => x.FullName)
-                .Select(group =>
-                    new EmployeeQuantityDto
-                    {
-                        FullName = group.Key.Split('(')[0],
-                        Quantity = group.Sum(x => x.Quantity)
-                    })
-                .OrderByDescending(x => x.Quantity)
-                .Skip((filter.PageNumber - 1) * filter.PageSize)
-                .Take(filter.PageSize)
                 .ToList();
         }
 
         public async Task<int> GetEmployeesCount(int month)
         {
-            var doneTasks = await _context.DoneTasks.Include(x => x.Employees).ToListAsync();
+            var startDate = new DateTime(DateTime.Now.Year, month, 1);
+            var endDate = new DateTime(DateTime.Now.Year, month, DateTime.DaysInMonth(DateTime.Now.Year, month));
 
-            return doneTasks
-                .Where(x => x.StartedAt.Month == month)
+            return await _context.DoneTasks
+                .Where(x => x.WorkDay >= startDate && x.WorkDay <= endDate)
+                .Include(x => x.Employees)
                 .SelectMany(x => x.Employees, (task, employee) =>
-                    new EmployeeQuantityDto
-                    {
-                        FullName = employee.FullName,
-                        Quantity = task.Quantity
-                    })
+                     new EmployeeQuantityDto
+                     {
+                         FullName = employee.FullName,
+                         Quantity = task.Quantity
+                     })
                 .GroupBy(x => x.FullName)
-                .Count();
+                .CountAsync();
         }
     }
 }

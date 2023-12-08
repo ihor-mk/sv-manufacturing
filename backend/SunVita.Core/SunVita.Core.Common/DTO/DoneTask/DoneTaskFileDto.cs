@@ -11,6 +11,8 @@
         public string StartedAt { get; set; } = string.Empty;
         public string FinishedAt { get; set; } = string.Empty;
         public string TeamTitle { get; set; } = string.Empty;
+        public string DayPart { get; set; } = string.Empty;
+        public string WorkDay { get; set; } = string.Empty;
         public ICollection<EmployeeDto> Employees { get; set; }
 
         public DoneTaskFileDto() 

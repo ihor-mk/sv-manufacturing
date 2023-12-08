@@ -62,6 +62,8 @@ namespace SunVita.Core.BLL.Services
                 Nomenclature = nomenklature!,
                 ProductionLine = line!,
                 TeamTitle = file.TeamTitle,
+                WorkDay = DateTime.Parse(file.WorkDay),
+                DayPart = file.DayPart,
                 Employees = employees!,
                 Quantity = file.Quantity,
                 StringNumber = file.StringNumber,

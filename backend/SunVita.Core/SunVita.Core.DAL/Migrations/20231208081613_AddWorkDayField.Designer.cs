@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SunVita.Core.DAL.Context;
 
@@ -11,9 +12,11 @@ using SunVita.Core.DAL.Context;
 namespace SunVita.Core.DAL.Migrations
 {
     [DbContext(typeof(SunVitaCoreContext))]
-    partial class SunVitaCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231208081613_AddWorkDayField")]
+    partial class AddWorkDayField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

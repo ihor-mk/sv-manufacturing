@@ -6,6 +6,6 @@ namespace SunVita.Core.BLL.Interfaces
     public interface IRatingService
     {
         Task<int> GetEmployeesCount(int month);
-        Task<List<EmployeeQuantityDto>> GetEmployees(RatingFilter filter);
+        Task<List<EmployeeQuantityDto>> GetEmployees(MainFilter filter);
     }
 }

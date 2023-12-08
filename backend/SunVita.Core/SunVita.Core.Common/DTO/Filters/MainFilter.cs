@@ -1,6 +1,6 @@
 ﻿namespace SunVita.Core.Common.DTO.Filters
 {
-    public class RatingFilter
+    public class MainFilter
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }

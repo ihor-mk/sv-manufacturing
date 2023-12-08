@@ -15,6 +15,7 @@ namespace SunVita.Core.WebApi.Extensions
             services.AddTransient<IDataService, DataService>();
             services.AddTransient<IRecordsService, RecordsService>();
             services.AddTransient<IRatingService, RatingService>();
+            services.AddTransient<IHistoryService, HistoryService>();
         }
         public static void AddSunVitaCoreContext(this IServiceCollection services, IConfiguration configuration)
         {

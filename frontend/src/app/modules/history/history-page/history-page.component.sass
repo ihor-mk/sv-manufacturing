@@ -2,7 +2,7 @@
 @import "src/styles/fonts.scss"
 
 .history-page-wrp
-    overflow: scroll
+    overflow: hidden
     width: calc( 100% - 20px )
     height: 100%
     background-color: $background-color
@@ -27,7 +27,7 @@
     height: 70px
 
 .select-wrp
-    width: 16%
+    width: 13%
     padding: 0px 20px
 
 .select-dropdown
@@ -38,13 +38,25 @@
     
 
 .title-wrp
-    width: calc( 84% - 40px )
+    width: calc( 87% - 40px )
     display: flex
     flex-direction: row
     justify-content: space-around
+    align-items: center
+    font-size: 13pt
+
+.title-nomenclature
+    width: 50%
+    padding: 0 15px 0 15px
 
 .title-header
-    width: 19%
+    width: 15%
+
+.title-quantity
+    width: 10%
+
+.title-avg-performance
+    width: 10%
 
 .pagination-wrp
     display: flex

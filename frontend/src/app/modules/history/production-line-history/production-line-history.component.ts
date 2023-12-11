@@ -11,12 +11,18 @@ export class ProductionLineHistoryComponent implements OnInit {
   @Input() doneTask!: IDoneTask
 
   productivity!: number
+  showEmployeesList: boolean = false
 
   ngOnInit(): void {
     this.getProductivity()
+    console.log(this.doneTask.employees)
   }
 
   getProductivity() {
     return this.doneTask.quantity / ((new Date(this.doneTask.finishedAt).getTime() - new Date(this.doneTask.startedAt).getTime()) / 60000)
+  }
+
+  changeVisability() {
+    this.showEmployeesList = !this.showEmployeesList
   }
 }

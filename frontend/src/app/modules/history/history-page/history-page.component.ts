@@ -25,7 +25,7 @@ export class HistoryPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.months = monthSample;
-    this.selectedValue = this.months[this.months.length - 1];
+    this.selectedValue = this.months[(new Date().getMonth()) - 1];
     this.getDoneTasksCount()
     this.getDoneTasksList()
   }
@@ -33,6 +33,8 @@ export class HistoryPageComponent implements OnInit {
   getDoneTasksList() {
     this.historyService.getDoneTasks(this.filter).subscribe((data => {
       this.doneTasks = data
+      console.log(data)
+      console.log(this.doneTasks)
     }))
   }
 

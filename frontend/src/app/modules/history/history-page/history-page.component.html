@@ -2,22 +2,25 @@
     <div class="history-page-borders">
         <div class="header-wrp">
             <div class="select-wrp">
-                <mat-select class="select-dropdown" [(value)]="selectedValue">
+                <mat-select class="select-dropdown" [(value)]="selectedValue" (selectionChange)="changeMonth($event.value)">
                     <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
                 </mat-select>
             </div>
             <div class="title-wrp">
-                <div class="title-released-products title-header">
-                    <span>Випущено продукції, шт.</span>
+                <div class="title-nomenclature">
+                    <span>Номенклатура</span>
                 </div>
-                <div class="title-top-speed title-header">
-                    <span>Пікова швидкість</span>
+                <div class="title-quantity title-header">
+                    <span>Кількість</span>
                 </div>
-                <div class="title-avg-speed title-header">
-                    <span>Середня швидкість</span>
+                <div class="title-started-at title-header">
+                    <span>Взято в роботу</span>
+                </div>
+                <div class="title-finished-at title-header">
+                    <span>Виконано</span>
                 </div>
                 <div class="title-avg-performance title-header">
-                    <span>Середня продуктивність</span>
+                    <span>Швидкість, <br> уп/хв</span>
                 </div>
             </div>
         </div>

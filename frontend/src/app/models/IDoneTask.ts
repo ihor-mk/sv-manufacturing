@@ -3,7 +3,7 @@ export interface IDoneTask {
     dayPart: string,
     nomenclatureTitle: string,
     quantity: number,
-    employee: string[],
+    employees: string[],
     startedAt: Date,
     finishedAt: Date
 }

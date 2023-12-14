@@ -19,7 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddHostedService<LiveCountReaderHostedService>();
-builder.Services.AddHostedService<DoneJobWatcherHostedService>();
+builder.Services.AddHostedService<FileSystemWatcherHostedService>(); 
+
+
 builder.WebHost.UseUrls("http://*:5080");
 
 builder.Services.AddCors(options =>

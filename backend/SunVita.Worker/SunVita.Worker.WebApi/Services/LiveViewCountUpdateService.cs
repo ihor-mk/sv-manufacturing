@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SunVita.Core.Common.DTO.Live;
 using SunVita.Worker.WebApi.Interfaces;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 
@@ -8,6 +9,44 @@ namespace SunVita.Worker.WebApi.Services
 {
     public class LiveViewCountsUpdateService : ILiveViewCountsUpdateService
     {
+        public List<LiveViewCountsDto> CurrentLineStatus { get; set; }
+
+        public LiveViewCountsUpdateService()
+        {
+            CurrentLineStatus = new List<LiveViewCountsDto>()
+            {
+                new LiveViewCountsDto()
+                {
+                    LineId = 0,
+                    LineCode = "000000010",
+                    LineTitle = "Цех №2 (Лінія 2)",
+                    IpAddress = "10.61.2.21",
+                    QuantityFact = -1,
+                    QuantityPlan = 2000,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 1,
+                    LineCode = "000000009",
+                    LineTitle = "Цех №2 (Лінія 1)",
+                    IpAddress = "10.61.2.22",
+                    QuantityFact = -1,
+                    QuantityPlan = 2000,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 2,
+                    LineTitle = "Цех №5 (Лінія1)",
+                    IpAddress = "10.61.2.23",
+                    QuantityFact = -1,
+                    QuantityPlan = 2000,
+                    StartedAt = DateTime.Now
+                }
+            };
+        }
+
         private readonly string[] _printers = { "10.61.2.21", "10.61.2.22", "10.61.2.23" };
         public async Task<LiveViewCountsDto> GetUpdateFromPrinter(int lineId)
         {
@@ -16,7 +55,7 @@ namespace SunVita.Worker.WebApi.Services
             var pinger = new Ping();
             var reply = pinger.Send(_printers[lineId], 500);
 
-            if (reply.Status != IPStatus.Success) 
+            if (reply.Status != IPStatus.Success)
                 return null;
 
             using var client = new HttpClient();
@@ -116,13 +155,13 @@ namespace SunVita.Worker.WebApi.Services
 
                 if (timeDiff > 0 && quantutyDiff > 0)
                 {
-                    
+
                     float prodCurr = quantutyDiff / (timeDiff / 60);
 
                     if (prodCurr < 1 && prodCurr > 0)
                         newCounts.ProductivityCurrent = 1;
 
-                    else newCounts.ProductivityCurrent = (int) prodCurr;
+                    else newCounts.ProductivityCurrent = (int)prodCurr;
 
                     if (newCounts.ProductivityCurrent > currentCounts.ProductivityTop)
                     {

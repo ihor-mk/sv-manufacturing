@@ -3,7 +3,9 @@
     public class LiveViewCountsDto
     {
         public int LineId { get; set; } = -1;
+        public string LineCode { get; set; } = string.Empty;
         public string LineTitle { get;set; } = string.Empty;
+        public string IpAddress { get; set; } = string.Empty;
         public int ProductivityCurrent { get; set; } = 0;
         public int ProductivityTop { get; set;} = 0;
         public int ProductivityAvg { get; set; } = 0;

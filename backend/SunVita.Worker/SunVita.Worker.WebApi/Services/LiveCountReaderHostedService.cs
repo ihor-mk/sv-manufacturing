@@ -26,16 +26,6 @@ namespace SunVita.Worker.WebApi.Services
             };
         }
 
-        public override async Task StartAsync(CancellationToken cancellationToken)
-        {
-            await base.StartAsync(cancellationToken);
-        }
-
-        public override async Task StopAsync(CancellationToken cancellationToken)
-        {
-            await base.StopAsync(cancellationToken);
-        }
-
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             var newLineStatus = new List<LiveViewCountsDto>();

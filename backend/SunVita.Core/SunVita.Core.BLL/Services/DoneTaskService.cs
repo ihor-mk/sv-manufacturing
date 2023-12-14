@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SunVita.Core.BLL.Interfaces;
 using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.DoneTask;
@@ -16,9 +17,9 @@ namespace SunVita.Core.BLL.Services
         {
             foreach(var emp in file.Employees) 
             {
-                var employee = _context.Employees
+                var employee = await _context.Employees
                     .Where(x => x.FullName == emp.FullName)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
                 if (employee == null) 
                 {
@@ -38,9 +39,9 @@ namespace SunVita.Core.BLL.Services
 
 
 
-            var nomenklature = _context.Nomenclatures
+            var nomenklature = await _context.Nomenclatures
                 .Where(x => x.Title == file.NomenclatureTitle)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (nomenklature == null)
             {
@@ -48,14 +49,24 @@ namespace SunVita.Core.BLL.Services
                 await _context.Nomenclatures.AddAsync(newNomencl);
                 await _context.SaveChangesAsync();
             }
-            nomenklature = _context.Nomenclatures
+            nomenklature = await _context.Nomenclatures
                 .Where(x => x.Title == file.NomenclatureTitle)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
-            var line = _context.ProductionLines
+            var line = await _context.ProductionLines
                 .Where(x => x.Title == file.ProductionLineTitle)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
+            if (line == null)
+            {
+                var newLine = new ProductionLine { Title = file.ProductionLineTitle };
+                await _context.ProductionLines.AddAsync(newLine);
+                await _context.SaveChangesAsync();
+            }
+
+            line = await _context.ProductionLines
+                .Where(x => x.Title == file.ProductionLineTitle)
+                .FirstOrDefaultAsync();
 
             var newDoneTask = new DoneTask
             {

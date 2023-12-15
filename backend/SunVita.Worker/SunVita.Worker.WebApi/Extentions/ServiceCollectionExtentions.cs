@@ -12,9 +12,10 @@ namespace SunVita.Worker.WebApi.Extentions
         {
             var hostname = configuration.GetValue<string>("Rabbit");
             services.AddSingleton<IConnectionProvider>(_ => new ConnectionProvider(hostname));
+            services.AddSingleton<ILiveViewCountsUpdateService, LiveViewCountsUpdateService>();
             services.AddTransient<IMessageProducer, MessageProducer>();
-            services.AddTransient<ILiveViewCountsUpdateService, LiveViewCountsUpdateService>();
-            services.AddSingleton<ILiveTaskInformationService, LiveTaskInformationService>();
+           
+            //services.AddSingleton<ILiveTaskInformationService, LiveTaskInformationService>();
         }
     }
 }

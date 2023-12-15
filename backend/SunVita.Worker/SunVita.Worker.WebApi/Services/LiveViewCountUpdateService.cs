@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SunVita.Core.Common.DTO.Live;
 using SunVita.Worker.WebApi.Interfaces;
-using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 
@@ -97,7 +96,7 @@ namespace SunVita.Worker.WebApi.Services
                             .Where(x => x.Contains("value"))
                             .FirstOrDefault();
 
-                        newLineCounts.NomenclatureTitle = str[1].Substring(81, str[1].Length - (81 + 53));
+                        //newLineCounts.NomenclatureTitle = str[1].Substring(81, str[1].Length - (81 + 53));
                         await Console.Out.WriteLineAsync($"{newLineCounts.QuantityFact} - {newLineCounts.NomenclatureTitle}");
                     }
                 }
@@ -143,6 +142,9 @@ namespace SunVita.Worker.WebApi.Services
             newCounts.LineId = currentCounts.LineId;
             newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.QuantityPlan = currentCounts.QuantityPlan;
+            newCounts.NomenclatureTitle = currentCounts.NomenclatureTitle;  ///////////
+            newCounts.LineCode = currentCounts.LineCode;                    /////////
+            newCounts.NomenclatureInBox = currentCounts.NomenclatureInBox;  /////////
             newCounts.StartedAt = currentCounts.StartedAt;
             newCounts.WorkTime = (int)(DateTime.Now - currentCounts.StartedAt).TotalSeconds;
 
@@ -180,6 +182,20 @@ namespace SunVita.Worker.WebApi.Services
             }
 
             return newCounts;
+        }
+
+        public void SetNewTaskCounts(LiveTaskDto liveTaskDto)
+        {
+            var line = CurrentLineStatus
+                .FirstOrDefault(x => x.LineCode == liveTaskDto.ProductionLineCode);
+
+            if (line is not null)
+            {
+                line.QuantityPlan = liveTaskDto.Quantity;
+                line.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
+                line.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
+            }
+                
         }
     }
 }

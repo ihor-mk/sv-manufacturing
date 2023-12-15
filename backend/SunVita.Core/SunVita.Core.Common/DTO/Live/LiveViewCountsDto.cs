@@ -10,6 +10,7 @@
         public int ProductivityTop { get; set;} = 0;
         public int ProductivityAvg { get; set; } = 0;
         public string NomenclatureTitle { get; set; } = string.Empty;
+        public int NomenclatureInBox { get; set; } = 1;
         public int QuantityPlan { get; set; } = 0;
         public int QuantityFact { get; set; } = 0;
         public DateTime StartedAt { get; set; } = DateTime.Now;

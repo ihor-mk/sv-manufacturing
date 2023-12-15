@@ -1,13 +1,18 @@
 ﻿using Newtonsoft.Json;
 using SunVita.Core.Common.DTO.DoneTask;
 using SunVita.Core.Common.DTO.Live;
+using SunVita.Worker.WebApi.Interfaces;
 using System.Text;
 
 namespace SunVita.Worker.WebApi.Services
 {
     public class FileSystemWatcherHostedService : BackgroundService
     {
-        public FileSystemWatcherHostedService() { }
+        private readonly ILiveViewCountsUpdateService _countsUpdateService;
+        public FileSystemWatcherHostedService(ILiveViewCountsUpdateService countsUpdateService) 
+        {
+            _countsUpdateService = countsUpdateService;
+        }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             using var doneTaskWatcher = new FileSystemWatcher(@"d:\dev\donejobs");
@@ -68,6 +73,8 @@ namespace SunVita.Worker.WebApi.Services
                 var fileText = streamReader.ReadToEnd();
 
                 var liveTaskDto = JsonConvert.DeserializeObject<LiveTaskDto[]>(fileText)![0];
+
+                _countsUpdateService.SetNewTaskCounts(liveTaskDto);
 
                 Console.WriteLine($"Changed: {e.FullPath}");
             }

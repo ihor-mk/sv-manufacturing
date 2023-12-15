@@ -47,9 +47,9 @@ namespace SunVita.Worker.WebApi.Services
         }
 
         private readonly string[] _printers = { "10.61.2.21", "10.61.2.22", "10.61.2.23" };
-        public async Task<LiveViewCountsDto> GetUpdateFromPrinter(int lineId)
+        public async Task<LivePrinterCounts> GetUpdateFromPrinter(int lineId)
         {
-            var newLineCounts = new LiveViewCountsDto { LineId = lineId };
+            var newPrinterCounts = new LivePrinterCounts();
 
             var pinger = new Ping();
             var reply = pinger.Send(_printers[lineId], 500);
@@ -58,6 +58,7 @@ namespace SunVita.Worker.WebApi.Services
                 return null;
 
             using var client = new HttpClient();
+
             try
             {
                 var resultStat = await client.GetStringAsync($"http://{_printers[lineId]}/updatestatistics.masp");
@@ -81,7 +82,7 @@ namespace SunVita.Worker.WebApi.Services
                                 .Split("\t", StringSplitOptions.RemoveEmptyEntries)[0]
                                 .Split("\"", StringSplitOptions.RemoveEmptyEntries)[0];
 
-                            newLineCounts.QuantityFact = int.Parse(countString);
+                            newPrinterCounts.BoxesQuantity = int.Parse(countString);
                         }
 
                         data = resultNomenc.Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -96,8 +97,8 @@ namespace SunVita.Worker.WebApi.Services
                             .Where(x => x.Contains("value"))
                             .FirstOrDefault();
 
-                        //newLineCounts.NomenclatureTitle = str[1].Substring(81, str[1].Length - (81 + 53));
-                        await Console.Out.WriteLineAsync($"{newLineCounts.QuantityFact} - {newLineCounts.NomenclatureTitle}");
+                        newPrinterCounts.NomenclatureOnPrinter = str[1].Substring(81, str[1].Length - (81 + 53));
+                        await Console.Out.WriteLineAsync($"{newPrinterCounts.BoxesQuantity} - {newPrinterCounts.NomenclatureOnPrinter}");
                     }
                 }
             }
@@ -106,7 +107,7 @@ namespace SunVita.Worker.WebApi.Services
                 Console.WriteLine(ex.Message);
             }
 
-            return newLineCounts;
+            return newPrinterCounts;
         }
 
         public async Task SendNewCountsToCore(ICollection<LiveViewCountsDto> updatesCounts)
@@ -125,58 +126,58 @@ namespace SunVita.Worker.WebApi.Services
         }
         public LiveViewCountsDto SetCountsForNewNomenclature(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
         {
-            newCounts.LineId = currentCounts.LineId;
-            newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.StartedAt = DateTime.Now;
             newCounts.FinishedAt = newCounts.StartedAt.AddHours(12);
             newCounts.ProductivityCurrent = 0;
             newCounts.ProductivityTop = 0;
             newCounts.ProductivityAvg = 0;
-            newCounts.QuantityPlan = 2000;
+            newCounts.IsNewPrinterNomenclature = true;
+
+            if (!currentCounts.IsNewNomenclature)
+            {
+                newCounts.NomenclatureTitle = "";
+            }
+            else
+            {
+                newCounts.NomenclatureTitle = currentCounts.NomenclatureTitle;
+                newCounts.IsNewNomenclature = false;
+                newCounts.IsNewPrinterNomenclature = false;
+            }
+            newCounts.QuantityPlan = 0;
 
             return newCounts;
         }
 
         public LiveViewCountsDto CalculateCounts(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts)
         {
-            newCounts.LineId = currentCounts.LineId;
-            newCounts.LineTitle = currentCounts.LineTitle;
+            //newCounts.LineId = currentCounts.LineId;
+            //newCounts.LineTitle = currentCounts.LineTitle;
             newCounts.QuantityPlan = currentCounts.QuantityPlan;
             newCounts.NomenclatureTitle = currentCounts.NomenclatureTitle;  ///////////
-            newCounts.LineCode = currentCounts.LineCode;                    /////////
+            //newCounts.LineCode = currentCounts.LineCode;                    /////////
             newCounts.NomenclatureInBox = currentCounts.NomenclatureInBox;  /////////
-            newCounts.StartedAt = currentCounts.StartedAt;
-            newCounts.WorkTime = (int)(DateTime.Now - currentCounts.StartedAt).TotalSeconds;
+            //newCounts.StartedAt = currentCounts.StartedAt;
+            newCounts.WorkTime = (DateTime.Now - currentCounts.StartedAt).TotalSeconds;
 
             var workTime = (DateTime.Now - currentCounts.StartedAt).TotalSeconds + 60;
 
             if (newCounts.QuantityFact != 0 && currentCounts.QuantityPlan != 0)
             {
-                float quantutyDiff = newCounts.QuantityFact - currentCounts.QuantityFact;
-                float timeDiff = newCounts.WorkTime - currentCounts.WorkTime;
+                var quantutyDiff = newCounts.QuantityFact - currentCounts.QuantityFact;
+                var timeDiff = newCounts.WorkTime - currentCounts.WorkTime;
 
                 if (timeDiff > 0 && quantutyDiff > 0)
                 {
 
-                    float prodCurr = quantutyDiff / (timeDiff / 60);
-
-                    if (prodCurr < 1 && prodCurr > 0)
-                        newCounts.ProductivityCurrent = 1;
-
-                    else newCounts.ProductivityCurrent = (int)prodCurr;
+                    newCounts.ProductivityCurrent = quantutyDiff / (timeDiff / 60);
 
                     if (newCounts.ProductivityCurrent > currentCounts.ProductivityTop)
                     {
                         newCounts.ProductivityTop = newCounts.ProductivityCurrent;
                     }
-                    else
-                    {
-                        newCounts.ProductivityTop = currentCounts.ProductivityTop;
-                    }
                 }
 
-                var prodAvg = newCounts.QuantityFact / (workTime / 60);
-                newCounts.ProductivityAvg = (int)prodAvg;
+                newCounts.ProductivityAvg = newCounts.QuantityFact / (workTime / 60);
                 var timeToFinish = (workTime / newCounts.QuantityFact) * (currentCounts.QuantityPlan - newCounts.QuantityFact);
                 newCounts.FinishedAt = DateTime.Now.AddSeconds(timeToFinish);
             }
@@ -194,8 +195,15 @@ namespace SunVita.Worker.WebApi.Services
                 line.QuantityPlan = liveTaskDto.Quantity;
                 line.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
                 line.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
+                line.IsNewNomenclature = true;
+
+                if (line.IsNewPrinterNomenclature) 
+                {
+                    line.IsNewPrinterNomenclature = false;
+                    line.IsNewNomenclature = false;
+                }
             }
-                
+
         }
     }
 }

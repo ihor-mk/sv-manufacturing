@@ -9,7 +9,7 @@ namespace SunVita.Worker.WebApi.Services
         private readonly IMessageProducer _producer;
         private readonly ILogger<LiveCountReaderHostedService> _logger;
         private readonly ILiveViewCountsUpdateService _updateService;
-        private List<LiveViewCountsDto> _currentLineStatus;
+        private readonly List<LiveViewCountsDto> _currentLineStatus;
         public LiveCountReaderHostedService(IMessageProducer producer, ILogger<LiveCountReaderHostedService> logger, ILiveViewCountsUpdateService updateService)
         {
             _producer = producer;
@@ -32,17 +32,23 @@ namespace SunVita.Worker.WebApi.Services
 
             while (true)
             {
-                newLineStatus = new List<LiveViewCountsDto>() { new LiveViewCountsDto(), new LiveViewCountsDto(), new LiveViewCountsDto() };
+                newLineStatus.Clear();
 
-                await Parallel.ForEachAsync(_currentLineStatus, async (currentLine, cancellationToken) =>
+                foreach (var currentCounts in _updateService.CurrentLineStatus)
+                {
+                    newLineStatus.Add((LiveViewCountsDto)currentCounts.Clone());
+                }
+
+                await Parallel.ForEachAsync(_updateService.CurrentLineStatus, async (currentLine, cancellationToken) =>
                 {
                     var temp = await _updateService.GetUpdateFromPrinter(currentLine.LineId);
 
                     if (temp is not null)
                     {
-                        newLineStatus[currentLine.LineId] = temp;
+                        newLineStatus[currentLine.LineId].QuantityFact = temp.BoxesQuantity * currentLine.NomenclatureInBox;
+                        newLineStatus[currentLine.LineId].NomenclatureOnPrinter = temp.NomenclatureOnPrinter;
 
-                        if (newLineStatus[currentLine.LineId].NomenclatureTitle != currentLine.NomenclatureTitle ||
+                        if (newLineStatus[currentLine.LineId].NomenclatureOnPrinter != currentLine.NomenclatureOnPrinter ||
                             newLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
                         {
                             newLineStatus[currentLine.LineId] =
@@ -61,19 +67,26 @@ namespace SunVita.Worker.WebApi.Services
                         }
                         else
                         {
-                            newLineStatus[currentLine.LineId] = currentLine;
+                            newLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone();
                         }
                     }
-                    else { newLineStatus[currentLine.LineId] = currentLine; }
+                    else { newLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone(); }
                 }
                 );
 
-                if (!Enumerable.SequenceEqual(newLineStatus, _currentLineStatus))
+                if (!Enumerable.SequenceEqual(newLineStatus, _updateService.CurrentLineStatus))
                 {
                     await _updateService.SendNewCountsToCore(newLineStatus);
                     _producer.SendMessage(newLineStatus);
-                    _currentLineStatus = new List<LiveViewCountsDto>(newLineStatus);
-                    newLineStatus.Clear();
+
+                    _updateService.CurrentLineStatus.Clear();
+                    foreach (var newCounts in newLineStatus)
+                    {
+                        _updateService.CurrentLineStatus.Add((LiveViewCountsDto)newCounts.Clone());
+                    }
+
+                    //_updateService.CurrentLineStatus = new List<LiveViewCountsDto>(newLineStatus);
+                    
                 }
             }
         }

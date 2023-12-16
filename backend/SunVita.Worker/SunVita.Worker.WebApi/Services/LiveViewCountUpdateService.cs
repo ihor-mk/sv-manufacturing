@@ -9,6 +9,7 @@ namespace SunVita.Worker.WebApi.Services
     public class LiveViewCountsUpdateService : ILiveViewCountsUpdateService
     {
         public List<LiveViewCountsDto> CurrentLineStatus { get; set; }
+        public List<LiveViewCountsDto> NewLineStatus { get; set; }
 
         public LiveViewCountsUpdateService()
         {
@@ -37,6 +38,7 @@ namespace SunVita.Worker.WebApi.Services
                 new LiveViewCountsDto()
                 {
                     LineId = 2,
+                    LineCode = "000000026",
                     LineTitle = "Цех №5 (Лінія1)",
                     IpAddress = "10.61.2.23",
                     QuantityFact = -1,
@@ -44,6 +46,7 @@ namespace SunVita.Worker.WebApi.Services
                     StartedAt = DateTime.Now
                 }
             };
+            NewLineStatus = new List<LiveViewCountsDto>();
         }
 
         private readonly string[] _printers = { "10.61.2.21", "10.61.2.22", "10.61.2.23" };
@@ -143,7 +146,7 @@ namespace SunVita.Worker.WebApi.Services
                 newCounts.IsNewNomenclature = false;
                 newCounts.IsNewPrinterNomenclature = false;
             }
-            newCounts.QuantityPlan = 0;
+            newCounts.QuantityPlan = 1;
 
             return newCounts;
         }
@@ -187,20 +190,36 @@ namespace SunVita.Worker.WebApi.Services
 
         public void SetNewTaskCounts(LiveTaskDto liveTaskDto)
         {
-            var line = CurrentLineStatus
+            var newLine = NewLineStatus
                 .FirstOrDefault(x => x.LineCode == liveTaskDto.ProductionLineCode);
 
-            if (line is not null)
+            if (newLine is not null)
             {
-                line.QuantityPlan = liveTaskDto.Quantity;
-                line.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
-                line.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
-                line.IsNewNomenclature = true;
+                newLine.QuantityPlan = (int)liveTaskDto.Quantity;
+                newLine.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
+                newLine.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
+                newLine.IsNewNomenclature = true;
 
-                if (line.IsNewPrinterNomenclature) 
+                if (newLine.IsNewPrinterNomenclature) 
                 {
-                    line.IsNewPrinterNomenclature = false;
-                    line.IsNewNomenclature = false;
+                    newLine.IsNewPrinterNomenclature = false;
+                    newLine.IsNewNomenclature = false;
+                }
+            }
+            var currentLine = CurrentLineStatus
+                .FirstOrDefault(x => x.LineCode == liveTaskDto.ProductionLineCode);
+
+            if (currentLine is not null)
+            {
+                currentLine.QuantityPlan = (int)liveTaskDto.Quantity;
+                currentLine.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
+                currentLine.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
+                currentLine.IsNewNomenclature = true;
+
+                if (currentLine.IsNewPrinterNomenclature)
+                {
+                    currentLine.IsNewPrinterNomenclature = false;
+                    currentLine.IsNewNomenclature = false;
                 }
             }
 

@@ -2,7 +2,7 @@
 {
     public class LiveViewCountsDto : ICloneable
     {
-        public int LineId { get; set; } = -1;
+        public int LineId { get; set; }
         public string LineCode { get; set; } = string.Empty;
         public string LineTitle { get; set; } = string.Empty;
         public string IpAddress { get; set; } = string.Empty;

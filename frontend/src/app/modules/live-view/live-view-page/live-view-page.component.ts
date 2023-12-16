@@ -50,7 +50,9 @@ export class LiveViewPageComponent implements OnInit {
       quantityFact: broadcastMessage.QuantityFact,
       startedAt: broadcastMessage.StartedAt,
       finishedAt: broadcastMessage.FinishedAt,
-      workTime: broadcastMessage.WorkTime
+      workTime: broadcastMessage.WorkTime,
+      isNewNomenclature: broadcastMessage.IsNewNomenclature,
+      isNewPrinterNomenclature: broadcastMessage.IsNewPrinterNomenclature,
     }))
   }
 }

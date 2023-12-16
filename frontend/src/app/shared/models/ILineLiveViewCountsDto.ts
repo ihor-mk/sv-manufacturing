@@ -9,5 +9,7 @@ export interface ILiveViewCountsDto {
     QuantityFact?: number,
     StartedAt?: Date,
     FinishedAt?: Date,
-    WorkTime?: number
+    WorkTime?: number,
+    IsNewNomenclature?: boolean,
+    IsNewPrinterNomenclature?: boolean,
 }

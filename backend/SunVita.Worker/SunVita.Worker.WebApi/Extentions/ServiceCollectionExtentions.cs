@@ -14,8 +14,6 @@ namespace SunVita.Worker.WebApi.Extentions
             services.AddSingleton<IConnectionProvider>(_ => new ConnectionProvider(hostname));
             services.AddSingleton<ILiveViewCountsUpdateService, LiveViewCountsUpdateService>();
             services.AddTransient<IMessageProducer, MessageProducer>();
-           
-            //services.AddSingleton<ILiveTaskInformationService, LiveTaskInformationService>();
         }
     }
 }

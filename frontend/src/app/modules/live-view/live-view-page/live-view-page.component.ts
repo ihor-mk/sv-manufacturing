@@ -11,7 +11,7 @@ import { ILiveViewCountsDto } from 'src/app/shared/models/ILineLiveViewCountsDto
 })
 export class LiveViewPageComponent implements OnInit {
 
-  linesLiveViewCounts?: ILiveViewCounts[]
+  linesLiveViewCounts?: ILiveViewCounts[] = [{},{},{}]
 
   constructor(
     public liveViewHub: LiveViewHubService,
@@ -50,7 +50,9 @@ export class LiveViewPageComponent implements OnInit {
       quantityFact: broadcastMessage.QuantityFact,
       startedAt: broadcastMessage.StartedAt,
       finishedAt: broadcastMessage.FinishedAt,
-      workTime: broadcastMessage.WorkTime
+      workTime: broadcastMessage.WorkTime,
+      isNewNomenclature: broadcastMessage.IsNewNomenclature,
+      isNewPrinterNomenclature: broadcastMessage.IsNewPrinterNomenclature,
     }))
   }
 }

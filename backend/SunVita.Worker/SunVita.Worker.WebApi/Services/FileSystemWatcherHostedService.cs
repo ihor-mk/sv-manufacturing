@@ -58,7 +58,7 @@ namespace SunVita.Worker.WebApi.Services
             }
             finally
             {
-                File.Delete(e.FullPath);
+                //File.Delete(e.FullPath);
             }
 
         }
@@ -85,7 +85,7 @@ namespace SunVita.Worker.WebApi.Services
             }
             finally
             {
-                File.Delete(e.FullPath);
+                //File.Delete(e.FullPath);
             }
         }
 

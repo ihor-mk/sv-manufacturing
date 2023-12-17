@@ -7,12 +7,10 @@ namespace SunVita.Worker.WebApi.Services
     public class LiveCountReaderHostedService : BackgroundService
     {
         private readonly IMessageProducer _producer;
-        private readonly ILogger<LiveCountReaderHostedService> _logger;
         private readonly ILiveViewCountsUpdateService _updateService;
-        public LiveCountReaderHostedService(IMessageProducer producer, ILogger<LiveCountReaderHostedService> logger, ILiveViewCountsUpdateService updateService)
+        public LiveCountReaderHostedService(IMessageProducer producer, ILiveViewCountsUpdateService updateService)
         {
             _producer = producer;
-            _logger = logger;
             _updateService = updateService;
 
             _producer.Init("notifications", "");
@@ -31,7 +29,7 @@ namespace SunVita.Worker.WebApi.Services
 
                 await Parallel.ForEachAsync(_updateService.CurrentLineStatus, async (currentLine, cancellationToken) =>
                 {
-                    var temp = await _updateService.GetUpdateFromPrinter(currentLine.LineId);
+                    var temp = await _updateService.GetUpdateFromPrinter(currentLine.IpAddress);
 
                     if (temp is not null)
                     {
@@ -75,6 +73,7 @@ namespace SunVita.Worker.WebApi.Services
                         _updateService.CurrentLineStatus.Add((LiveViewCountsDto)newCounts.Clone());
                     }
                 }
+                
             }
         }
     }

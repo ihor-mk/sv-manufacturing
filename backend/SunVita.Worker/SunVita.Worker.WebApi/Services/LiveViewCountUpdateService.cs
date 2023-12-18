@@ -139,8 +139,7 @@ namespace SunVita.Worker.WebApi.Services
 
                 if (!currentCounts.IsNewNomenclature)
                 {
-                    newCounts.NomenclatureTitle = "Очікується початок роботи на ТСД \n" +
-                        newCounts.NomenclatureOnPrinter;
+                    newCounts.NomenclatureTitle = newCounts.NomenclatureOnPrinter;
 
                     newCounts.QuantityPlan = 1;
                 }

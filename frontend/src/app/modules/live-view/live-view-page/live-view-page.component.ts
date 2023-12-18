@@ -11,7 +11,7 @@ import { ILiveViewCountsDto } from 'src/app/shared/models/ILineLiveViewCountsDto
 })
 export class LiveViewPageComponent implements OnInit {
 
-  linesLiveViewCounts?: ILiveViewCounts[] = [{},{},{}]
+  linesLiveViewCounts?: ILiveViewCounts[]
 
   constructor(
     public liveViewHub: LiveViewHubService,

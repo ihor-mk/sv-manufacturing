@@ -6,7 +6,7 @@ import { ILiveViewCounts } from 'src/app/models/ILiveViewCounts';
   templateUrl: './production-line-live.component.html',
   styleUrls: ['./production-line-live.component.sass']
 })
-export class ProductionLineLiveComponent implements OnInit{
+export class ProductionLineLiveComponent implements OnInit {
 
   @Input() lineLiveViewCounts!: ILiveViewCounts
 
@@ -21,5 +21,12 @@ export class ProductionLineLiveComponent implements OnInit{
     const result = new Date(totalMs).toISOString().slice(11, 19);
 
     return result;
+  }
+
+  isLineError(): boolean {
+    if (this.lineLiveViewCounts.isNewPrinterNomenclature)
+      return true
+    
+    return false
   }
 }

@@ -5,6 +5,7 @@ using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.DoneTask;
 using SunVita.Core.DAL.Context;
 using SunVita.Core.DAL.Entities;
+using System.Threading.Tasks;
 
 namespace SunVita.Core.BLL.Services
 {
@@ -21,7 +22,7 @@ namespace SunVita.Core.BLL.Services
                     .Where(x => x.FullName == emp.FullName)
                     .FirstOrDefaultAsync();
 
-                if (employee == null) 
+                if (employee is null) 
                 {
                     var newEmployee = new Employee { FullName = emp.FullName };
 
@@ -38,34 +39,44 @@ namespace SunVita.Core.BLL.Services
                 .ToList();
 
 
-
             var nomenklature = await _context.Nomenclatures
-                .Where(x => x.Title == file.NomenclatureTitle)
+                .Where(x => x.Number == file.NomenclatureNumber)
                 .FirstOrDefaultAsync();
 
-            if (nomenklature == null)
+            if (nomenklature is null)
             {
-                var newNomencl = new Nomenclature {  Title = file.NomenclatureTitle, Number = file.NomenclatureNumber };
+                var newNomencl = new Nomenclature 
+                {  
+                    Title = file.NomenclatureTitle, 
+                    Number = file.NomenclatureNumber,
+                    NomenclatureInBox = file.NomenclatureInBox,
+                };
                 await _context.Nomenclatures.AddAsync(newNomencl);
                 await _context.SaveChangesAsync();
             }
+
             nomenklature = await _context.Nomenclatures
-                .Where(x => x.Title == file.NomenclatureTitle)
+                .Where(x => x.Number == file.NomenclatureNumber)
                 .FirstOrDefaultAsync();
+
 
             var line = await _context.ProductionLines
-                .Where(x => x.Title == file.ProductionLineTitle)
+                .Where(x => x.Code == file.ProductionLineCode)
                 .FirstOrDefaultAsync();
 
-            if (line == null)
+            if (line is null)
             {
-                var newLine = new ProductionLine { Title = file.ProductionLineTitle };
+                var newLine = new ProductionLine 
+                { 
+                    Title = file.ProductionLineTitle,
+                    Code = file.ProductionLineCode,
+                };
                 await _context.ProductionLines.AddAsync(newLine);
                 await _context.SaveChangesAsync();
             }
 
             line = await _context.ProductionLines
-                .Where(x => x.Title == file.ProductionLineTitle)
+                .Where(x => x.Code == file.ProductionLineCode)
                 .FirstOrDefaultAsync();
 
             var newDoneTask = new DoneTask
@@ -79,11 +90,9 @@ namespace SunVita.Core.BLL.Services
                 Quantity = file.Quantity,
                 StringNumber = file.StringNumber,
                 StartedAt = DateTime.Parse(file.StartedAt),
-                FinishedAt = DateTime.Parse(file.FinishedAt)
+                FinishedAt = DateTime.Parse(file.FinishedAt),
             };
-
             await _context.DoneTasks.AddAsync(newDoneTask);
-
             await _context.SaveChangesAsync();
 
             return file;

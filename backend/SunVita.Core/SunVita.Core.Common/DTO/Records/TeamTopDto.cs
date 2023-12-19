@@ -4,6 +4,6 @@
     {
         public string TeamTitle { get; set; } = string.Empty;
         public int Quantity { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime WorkDay { get; set; }
     }
 }

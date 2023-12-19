@@ -6,6 +6,8 @@ namespace SunVita.Core.DAL.Entities
     {
         public string Title { get; set; } = string.Empty;
         public string IpAddress { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+        public double ProductivityAvg { get; set; } = 1; 
 
     }
 }

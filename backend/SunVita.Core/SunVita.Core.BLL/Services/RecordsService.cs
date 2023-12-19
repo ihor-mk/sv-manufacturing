@@ -4,7 +4,6 @@ using SunVita.Core.BLL.Interfaces;
 using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.Records;
 using SunVita.Core.DAL.Context;
-using SunVita.Core.DAL.Entities;
 
 namespace SunVita.Core.BLL.Services
 {
@@ -15,53 +14,36 @@ namespace SunVita.Core.BLL.Services
 
         public async Task<ICollection<LineRecordProductivityDto>> GetLinesProductivityRating()
         {
-            var productivityTask = await _context.DoneTasks
-                .Join(_context.ProductionLines,
-                t => t.ProductionLineId,
-                l => l.Id,
-                (task, line) =>
+            var result = await _context.DoneTasks
+               .Include(x => x.Employees)
+               .Include(x => x.ProductionLine)
+               .GroupBy(task => task.ProductionLine.Code)
+               .Select(x => x.OrderByDescending(task => task.Productivity).First())
+               .ToListAsync();
+               
+           return result
+                .OrderByDescending(x => x.Productivity)
+                .Select(x =>
                     new LineRecordProductivityDto
                     {
-                        LineTitle = line.Title,
-                        Productivity = task.Quantity / (task.FinishedAt - task.StartedAt).TotalMinutes,
-                        TeamTitle = task.TeamTitle,
-                        DateTime = task.StartedAt,
+                        LineTitle = x.ProductionLine.Title,
+                        Productivity = x.Productivity,
+                        TeamTitle = x.TeamTitle,
+                        DateTime = x.WorkDay,
+                        Employees = x.Employees.Select(x => x.FullName.Split("(")[0]).ToList()
                     })
-                .ToListAsync();
-
-            var result = productivityTask
-                .OrderByDescending(x => x.Productivity)
-                .DistinctBy(x => x.LineTitle)
-                .ToList();
-
-            return result;
+               .ToList(); 
         }
-
-        public async Task<ICollection<DoneTask>> GetTestDate()
-        {
-            var doneTasks = await _context.DoneTasks.ToListAsync();
-
-            var test = doneTasks
-                .OrderByDescending(x => x.StartedAt)
-                .Where(x => (x.StartedAt.Month <= DateTime.Now.Month - 1 && x.StartedAt.Month >= DateTime.Now.Month - 2))
-                .ToList();
-
-
-
-            return test;
-        }
-
         public async Task<ICollection<NomenclatureQuantityDto>> GetNomenclaturesRating()
         {
-            await this.GetTeamRating();
 
             return await _context.DoneTasks
-                .GroupBy(x => x.Nomenclature)
-                .Select(x =>
+                .GroupBy(x => x.Nomenclature,
+                (key, group) =>
                     new NomenclatureQuantityDto
                     {
-                        Quantity = x.Sum(y => y.Quantity),
-                        NomenclatureTitle = x.Key.Title
+                        NomenclatureTitle = key.Title,
+                        Quantity = group.Sum(x => x.Quantity)
                     })
                 .OrderByDescending(x => x.Quantity)
                 .Take(8)
@@ -70,62 +52,18 @@ namespace SunVita.Core.BLL.Services
 
         public async Task<ICollection<TeamTopDto>> GetTeamRating()
         {
-            var doneTasks = await _context.DoneTasks.ToListAsync();
-
-            var teamDay = doneTasks
-                .Where(task => task.StartedAt.Hour >= 6 && task.StartedAt.Hour < 18)
-                .GroupBy(task => (task.StartedAt.Date))
-                .Select(dateGroup =>
-                    new
-                    {
-                        Date = dateGroup.Key,
-                        List = dateGroup.GroupBy(task => task.TeamTitle)
-                            .SelectMany(dateTeamGroup => dateTeamGroup, (dateTeamGroup, task) =>
-                                new
-                                {
-                                    TeamTitle = dateTeamGroup.Key,
-                                    Quantity = dateTeamGroup.Sum(a => a.Quantity)
-                                })
-                    })
-                .SelectMany(dateGroup => dateGroup.List, (dateGroup, team) =>
-                    new TeamTopDto
-                    {
-                        Date = dateGroup.Date,
-                        TeamTitle = team.TeamTitle,
-                        Quantity = team.Quantity
-                    })
-                .ToList();
-
-            var teamNight = doneTasks
-                .Where(task => task.StartedAt.Hour < 6 || task.StartedAt.Hour >= 18)
-                .GroupBy(task => (task.StartedAt.Date))
-                .Select(dateGroup =>
-                    new
-                    {
-                        Date = dateGroup.Key,
-                        List = dateGroup.GroupBy(task => task.TeamTitle)
-                            .SelectMany(dateTeamGroup => dateTeamGroup, (dateTeamGroup, task) =>
-                                new
-                                {
-                                    TeamTitle = dateTeamGroup.Key,
-                                    Quantity = dateTeamGroup.Sum(a => a.Quantity)
-                                })
-                    })
-                .SelectMany(dateGroup => dateGroup.List, (dateGroup, team) =>
-                    new TeamTopDto
-                    {
-                        Date = dateGroup.Date,
-                        TeamTitle = team.TeamTitle,
-                        Quantity = team.Quantity
-                    })
-                .ToList();
-
-            teamDay.AddRange(teamNight.ToList());
-
-            return teamDay
-                .OrderByDescending(team => team.Quantity)
-                .Take(8)
-                .ToList();
+            return await _context.DoneTasks
+              .GroupBy(x => new {x.WorkDay, x.DayPart, x.TeamTitle}, 
+                  (key, group) => 
+                  new TeamTopDto
+                  {
+                      WorkDay = key.WorkDay,
+                      TeamTitle = key.TeamTitle,
+                      Quantity = group.Sum(a => a.Quantity)
+                  })
+              .OrderByDescending(x => x.Quantity)
+              .Take(8)
+              .ToListAsync();
         }
     }
 }

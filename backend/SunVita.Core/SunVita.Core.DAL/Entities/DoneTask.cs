@@ -8,6 +8,7 @@ namespace SunVita.Core.DAL.Entities
         public long NomenclatureId { get; set; }
         public Nomenclature Nomenclature { get; set; } = null!;
         public int Quantity { get; set; }
+        public double Productivity { get; set; }
         public string TeamTitle { get; set; } = string.Empty;
         public ICollection<Employee> Employees { get; set; }
         public long ProductionLineId { get; set; }
@@ -21,6 +22,7 @@ namespace SunVita.Core.DAL.Entities
         public DoneTask()
         {
             Employees = new List<Employee>();
+            Productivity = Quantity / (FinishedAt - StartedAt).TotalMinutes;
         }
     }
 }

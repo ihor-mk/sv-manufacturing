@@ -8,6 +8,7 @@
         public int NomenclatureInBox { get; set; } = 0;
         public int Quantity { get; set; }
         public string ProductionLineTitle { get; set; } = string.Empty;
+        public string ProductionLineCode { get; set; } = string.Empty;
         public string StartedAt { get; set; } = string.Empty;
         public string FinishedAt { get; set; } = string.Empty;
         public string TeamTitle { get; set; } = string.Empty;

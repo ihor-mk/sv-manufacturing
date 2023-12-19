@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SunVita.Core.DAL.Context;
 
@@ -11,9 +12,11 @@ using SunVita.Core.DAL.Context;
 namespace SunVita.Core.DAL.Migrations
 {
     [DbContext(typeof(SunVitaCoreContext))]
-    partial class SunVitaCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231218141427_AddFieldsToEntities")]
+    partial class AddFieldsToEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +48,6 @@ namespace SunVita.Core.DAL.Migrations
 
                     b.Property<long>("ProductionLineId")
                         .HasColumnType("bigint");
-
-                    b.Property<double>("Productivity")
-                        .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -172,7 +172,7 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 1L,
                             Code = "",
-                            CreatedAt = new DateTime(2023, 12, 18, 17, 6, 5, 789, DateTimeKind.Local).AddTicks(9844),
+                            CreatedAt = new DateTime(2023, 12, 18, 16, 14, 26, 993, DateTimeKind.Local).AddTicks(5257),
                             IpAddress = "10.61.2.21",
                             ProductivityAvg = 1.0,
                             Title = "Цех №2  (Лінія1)"
@@ -181,7 +181,7 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 2L,
                             Code = "",
-                            CreatedAt = new DateTime(2023, 12, 18, 17, 6, 5, 789, DateTimeKind.Local).AddTicks(9856),
+                            CreatedAt = new DateTime(2023, 12, 18, 16, 14, 26, 993, DateTimeKind.Local).AddTicks(5265),
                             IpAddress = "10.61.2.22",
                             ProductivityAvg = 1.0,
                             Title = "Цех №2 (Лінія 2)"
@@ -190,7 +190,7 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 3L,
                             Code = "",
-                            CreatedAt = new DateTime(2023, 12, 18, 17, 6, 5, 789, DateTimeKind.Local).AddTicks(9861),
+                            CreatedAt = new DateTime(2023, 12, 18, 16, 14, 26, 993, DateTimeKind.Local).AddTicks(5270),
                             IpAddress = "10.61.2.23",
                             ProductivityAvg = 1.0,
                             Title = "Цех №5"

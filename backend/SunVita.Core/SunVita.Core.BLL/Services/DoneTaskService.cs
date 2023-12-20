@@ -53,11 +53,13 @@ namespace SunVita.Core.BLL.Services
                 };
                 await _context.Nomenclatures.AddAsync(newNomencl);
                 await _context.SaveChangesAsync();
-            }
 
-            nomenklature = await _context.Nomenclatures
+                nomenklature = await _context.Nomenclatures
                 .Where(x => x.Number == file.NomenclatureNumber)
                 .FirstOrDefaultAsync();
+            }
+
+            
 
 
             var line = await _context.ProductionLines
@@ -73,11 +75,13 @@ namespace SunVita.Core.BLL.Services
                 };
                 await _context.ProductionLines.AddAsync(newLine);
                 await _context.SaveChangesAsync();
-            }
 
-            line = await _context.ProductionLines
+                line = await _context.ProductionLines
                 .Where(x => x.Code == file.ProductionLineCode)
                 .FirstOrDefaultAsync();
+            }
+
+            
 
             var newDoneTask = new DoneTask
             {
@@ -91,7 +95,8 @@ namespace SunVita.Core.BLL.Services
                 StringNumber = file.StringNumber,
                 StartedAt = DateTime.Parse(file.StartedAt),
                 FinishedAt = DateTime.Parse(file.FinishedAt),
-            };
+                Productivity = file.Quantity / (DateTime.Parse(file.FinishedAt) - DateTime.Parse(file.StartedAt)).TotalMinutes
+        };
             await _context.DoneTasks.AddAsync(newDoneTask);
             await _context.SaveChangesAsync();
 

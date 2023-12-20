@@ -10,17 +10,15 @@ import { IMainFilter } from '../../../shared/models/IMainFilter';
   styleUrls: ['./rating-page.component.sass']
 })
 export class RatingPageComponent implements OnInit {
-  months: string[] = []
-  selectedValue: string = ""
+  months: string[] =  monthSample;
   employees: IEmployeeQuantity[] = []
   employeesCount: number = 0
-  filter: IMainFilter = { pageNumber: 1, pageSize: 10, month: new Date().getMonth() }
+  filter: IMainFilter = { pageNumber: 1, pageSize: 15, month: new Date().getMonth() + 1 }
+  selectedValue: string = this.months[this.filter.month - 1]
 
   constructor(private ratingService: RatingService) { }
 
   ngOnInit(): void {
-    this.months = monthSample;
-    this.selectedValue = monthSample[(new Date().getMonth()) - 1]
     this.getEmployeesCount()
     this.getEmployeesList()
   }
@@ -57,11 +55,11 @@ export class RatingPageComponent implements OnInit {
   getEmployeesCount() {
     this.ratingService.getEmployeesCounts(this.filter.month).subscribe((data) => {
       this.employeesCount = data
-      this.filter.pageNumber = 1
     })
   }
 
   changeMonth(value: string) {
+    this.filter.pageNumber = 1
     this.filter.month = monthSample.indexOf(value) + 1
     this.getEmployeesCount()
     this.getEmployeesList()

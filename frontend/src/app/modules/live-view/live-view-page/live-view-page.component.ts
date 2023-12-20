@@ -25,14 +25,14 @@ export class LiveViewPageComponent implements OnInit {
     this.liveViewHub.listenMessages((msg) => {
       var listenMessages: ILiveViewCountsDto[] = JSON.parse(msg)
       this.linesLiveViewCounts = this.transformedMessage(listenMessages)
-      console.log(this.linesLiveViewCounts)
+      //console.log(this.linesLiveViewCounts)
     });
   }
 
   loadCurrentCounts() {
     this.liveViewService.getLiveViewCounts().subscribe((data: ILiveViewCounts[]) => {
       this.linesLiveViewCounts = data
-      console.log(this.linesLiveViewCounts)
+      //console.log(this.linesLiveViewCounts)
 
     })
   }

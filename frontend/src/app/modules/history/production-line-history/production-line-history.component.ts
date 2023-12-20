@@ -15,7 +15,6 @@ export class ProductionLineHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductivity()
-    console.log(this.doneTask.employees)
   }
 
   getProductivity() {

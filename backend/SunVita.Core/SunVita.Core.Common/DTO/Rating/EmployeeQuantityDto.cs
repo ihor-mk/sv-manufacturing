@@ -4,5 +4,6 @@
     {
         public string FullName { get; set; } = string.Empty;
         public int Quantity { get; set; }
+        public double Productivity { get; set; }
     }
 }

@@ -18,11 +18,9 @@ namespace SunVita.Core.DAL.Entities
         public DateTime StartedAt { get; set; }
         public DateTime FinishedAt { get; set; }
 
-
         public DoneTask()
         {
             Employees = new List<Employee>();
-            Productivity = Quantity / (FinishedAt - StartedAt).TotalMinutes;
         }
     }
 }

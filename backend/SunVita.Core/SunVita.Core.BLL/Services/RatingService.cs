@@ -21,20 +21,23 @@ namespace SunVita.Core.BLL.Services
             var result = await _context.DoneTasks
                  .Where(x => x.WorkDay >= startDate && x.WorkDay <= endDate)
                  .Include(x => x.Employees)
+                 .Include(x => x.ProductionLine)
                  .SelectMany(x => x.Employees, (task, employee) =>
+                     new
+                     {
+                         employee.FullName,
+                         task.Quantity,
+                         LineProductivity = task.ProductionLine.ProductivityAvg,
+                         TaskProductivity = task.Productivity
+                     })
+                 .GroupBy(x => x.FullName, (key, group) =>
                      new EmployeeQuantityDto
                      {
-                         FullName = employee.FullName,
-                         Quantity = task.Quantity
+                         FullName = key,
+                         Quantity = group.Sum(x => x.Quantity),
+                         Productivity = group.Average(x => (x.TaskProductivity / x.LineProductivity))
                      })
-                 .GroupBy(x => x.FullName)
-                 .Select(group =>
-                     new EmployeeQuantityDto
-                     {
-                         FullName = group.Key,
-                         Quantity = group.Sum(x => x.Quantity)
-                     })
-                 .OrderByDescending(x => x.Quantity)
+                 .OrderByDescending(x => x.Productivity)
                  .Skip((filter.PageNumber - 1) * filter.PageSize)
                  .Take(filter.PageSize)
                  .ToListAsync();
@@ -44,7 +47,8 @@ namespace SunVita.Core.BLL.Services
                     new EmployeeQuantityDto
                     {
                         FullName = x.FullName.Split('(')[0],
-                        Quantity = x.Quantity
+                        Quantity = x.Quantity,
+                        Productivity = x.Productivity
                     })
                 .ToList();
         }

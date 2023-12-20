@@ -9,7 +9,7 @@ namespace SunVita.Core.WebApi.Controllers
     [ApiController]
     public class RecordsController : ControllerBase
     {
-        private IRecordsService _recordsService;
+        private readonly IRecordsService _recordsService;
 
         public RecordsController (IRecordsService recordsService)
         {
@@ -22,14 +22,7 @@ namespace SunVita.Core.WebApi.Controllers
             var result = await _recordsService.GetLinesProductivityRating();
             return Ok(result);
         }
-
-        [HttpGet("test")]
-        public async Task<ActionResult<ICollection<DoneTask>>> GetTest()
-        {
-            var result = await _recordsService.GetTestDate();
-            return Ok(result);
-        }
-
+        
         [HttpGet("nomenclaturesRating")]
         public async Task<ActionResult<ICollection<NomenclatureQuantityDto>>> GetNomenclaturesRating()
         {

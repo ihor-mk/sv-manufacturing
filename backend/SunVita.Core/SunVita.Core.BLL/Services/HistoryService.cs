@@ -23,7 +23,7 @@ namespace SunVita.Core.BLL.Services
             var endDate = new DateTime(DateTime.Now.Year, month, DateTime.DaysInMonth(DateTime.Now.Year, month));
 
             return await _context.DoneTasks
-                .Where(x => x.StartedAt >= startDate && startDate <= endDate)
+                .Where(x => x.StartedAt >= startDate && x.StartedAt <= endDate)
                 .CountAsync();
         }
 

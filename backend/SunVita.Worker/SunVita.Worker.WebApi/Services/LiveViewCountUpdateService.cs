@@ -53,8 +53,6 @@ namespace SunVita.Worker.WebApi.Services
 
             NewLineStatus = new List<LiveViewCountsDto>();
         }
-
-        private readonly string[] _printers = { "10.61.2.21", "10.61.2.22", "10.61.2.23" };
         public async Task<LivePrinterCounts> GetUpdateFromPrinter(string IpAddress)
         {
             var newPrinterCounts = new LivePrinterCounts();
@@ -63,7 +61,7 @@ namespace SunVita.Worker.WebApi.Services
             var reply = pinger.Send(IpAddress, 500);
 
             if (reply.Status != IPStatus.Success)
-                return null;
+                return null!;
 
             using var client = new HttpClient();
 
@@ -178,7 +176,11 @@ namespace SunVita.Worker.WebApi.Services
 
                     newCounts.ProductivityAvg = newCounts.QuantityFact / (newCounts.WorkTime / 60);
                     var timeToFinish = (newCounts.WorkTime / newCounts.QuantityFact) * (currentCounts.QuantityPlan - newCounts.QuantityFact);
-                    newCounts.FinishedAt = DateTime.Now.AddSeconds(timeToFinish);
+
+                    if (newCounts.QuantityFact >= newCounts.QuantityPlan)
+                        newCounts.FinishedAt = DateTime.Now;
+                    else
+                        newCounts.FinishedAt = DateTime.Now.AddSeconds(timeToFinish);
                 }
             }
 

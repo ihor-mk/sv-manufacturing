@@ -16,6 +16,9 @@
                     <span>{{employee.fullName}}</span>
                 </div>
                 <div class="employee-line-data">
+                    <span>{{employee.productivity * 100 | number : '1.2-2'}} %</span>
+                </div>
+                <div class="employee-line-data">
                     <span>{{employee.quantity}}</span>
                 </div>
             </div>

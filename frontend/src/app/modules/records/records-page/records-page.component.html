@@ -14,18 +14,7 @@
             </div>
         </div>
         <div class="lines-records-counts" *ngFor="let line of lineProductivityTop">
-            <div class="line-records-data">
-                <span>{{line.lineTitle}}</span>
-            </div>
-            <div class="line-records-data">
-                <span>{{line.productivity | number : '1.2-2'}} уп./хв</span>
-            </div>
-            <div class="line-records-data">
-                <span>{{line.teamTitle}}</span>
-            </div>
-            <div class="line-records-data">
-                <span>{{line.dateTime | date:'dd.MM.YYYY'}}</span>
-            </div>
+            <app-record-line class="lines-records-counts" [line] = "line"></app-record-line>
         </div>
     </div>
     <div class="counts-records-wrp">
@@ -33,7 +22,7 @@
             <div class="record-title">
                 <span>Кількість випущеної продукції за зміну, шт.</span>
             </div>
-            <div class="group-record-line" *ngFor = "let team of teamsTop">
+            <div class="group-record-line" *ngFor="let team of teamsTop">
                 <div class="team-record-data-team">
                     <span>{{team.teamTitle}}</span>
                 </div>
@@ -49,7 +38,7 @@
             <div class="record-title">
                 <span>Найбільше випущеної продукції</span>
             </div>
-            <div class="group-record-line" *ngFor = "let nomnclature of nomenclaturesTop">
+            <div class="group-record-line" *ngFor="let nomnclature of nomenclaturesTop">
                 <div class="group-record-data">
                     <span>{{nomnclature.nomenclatureTitle}}</span>
                 </div>

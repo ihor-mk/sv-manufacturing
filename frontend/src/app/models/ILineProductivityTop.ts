@@ -3,4 +3,5 @@ export interface ILineProductivityTop {
     productivity: number,
     teamTitle: string,
     dateTime: Date
+    employees: string[]
 }

@@ -1,0 +1,21 @@
+<div class="line-record-wrp" (click)="changeVisability()">
+    <div class="line-records-counts-info">
+        <div class="line-records-data line-title">
+            <span>{{line.lineTitle}}</span>
+        </div>
+        <div class="line-records-data">
+            <span>{{line.productivity | number : '1.2-2'}} уп./хв</span>
+        </div>
+        <div class="line-records-data">
+            <span>{{line.teamTitle}}</span>
+        </div>
+        <div class="line-records-data">
+            <span>{{line.dateTime | date:'dd.MM.YYYY'}}</span>
+        </div>
+    </div>
+    <div class="employee-list-wrp" *ngIf="showEmployeesList">
+        <div class="employee-list" *ngFor="let employee of line.employees">
+            <span>{{employee.split("(")[0]}}</span>
+        </div>
+    </div>
+</div>

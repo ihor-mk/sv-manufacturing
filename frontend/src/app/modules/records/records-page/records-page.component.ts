@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecordsService } from 'src/app/core/services/records.service';
-import { IGroupRecords } from 'src/app/models/IGroupRecords';
 import { ILineProductivityTop } from 'src/app/models/ILineProductivityTop';
-import { ILineRecords } from 'src/app/models/ILineRecords';
 import { INomenclatureQuantity } from 'src/app/models/INomenclatureQuantity';
 import { ITeamQuantity } from 'src/app/models/ITeamQuantity';
 
@@ -16,6 +14,7 @@ export class RecordsPageComponent implements OnInit {
   lineProductivityTop!: ILineProductivityTop[];
   nomenclaturesTop!: INomenclatureQuantity[];
   teamsTop!: ITeamQuantity[];
+  showEmployeesList: boolean = false
 
   constructor(private recordService: RecordsService) { }
 
@@ -32,4 +31,5 @@ export class RecordsPageComponent implements OnInit {
     this.teamsTop = data
     )
   }
+
 }

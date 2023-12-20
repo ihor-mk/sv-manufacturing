@@ -7,66 +7,73 @@ namespace SunVita.Worker.WebApi.Services
     public class LiveCountReaderHostedService : BackgroundService
     {
         private readonly IMessageProducer _producer;
-        private readonly ILogger<LiveCountReaderHostedService> _logger;
         private readonly ILiveViewCountsUpdateService _updateService;
-        private List<LiveViewCountsDto> _currentLineStatus;
-        public LiveCountReaderHostedService(IMessageProducer producer, ILogger<LiveCountReaderHostedService> logger, ILiveViewCountsUpdateService updateService)
+        public LiveCountReaderHostedService(IMessageProducer producer, ILiveViewCountsUpdateService updateService)
         {
             _producer = producer;
-            _logger = logger;
             _updateService = updateService;
 
             _producer.Init("notifications", "");
-
-            _currentLineStatus = new List<LiveViewCountsDto>()
-            {
-                new LiveViewCountsDto() {LineId = 0, QuantityFact = -1, QuantityPlan = 2000},
-                //new LiveViewCountsDto() {LineId = 0, QuantityFact = -1, QuantityPlan = 2000},
-                //new LiveViewCountsDto() {Id = 2, CurrentQuantity = -1}
-            };
-        }
-
-        public override async Task StartAsync(CancellationToken cancellationToken)
-        {
-            await base.StartAsync(cancellationToken);
-        }
-
-        public override async Task StopAsync(CancellationToken cancellationToken)
-        {
-            await base.StopAsync(cancellationToken);
         }
 
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            var newLineStatus = new List<LiveViewCountsDto>();
-
             while (true)
             {
-                newLineStatus = new List<LiveViewCountsDto>();
+                _updateService.NewLineStatus.Clear();
 
-                for (int i = 0; i < _currentLineStatus.Count; i++)
+                foreach (var currentCounts in _updateService.CurrentLineStatus)
                 {
-                    newLineStatus.Add(await _updateService.GetUpdateFromPrinter(i));
-
-                    if (newLineStatus[i].NomenclatureTitle != _currentLineStatus[i].NomenclatureTitle)
-                    {
-                        newLineStatus[i] = _updateService.SetCountsForNewNomenclature(_currentLineStatus[i], newLineStatus[i]);
-                        await Console.Out.WriteLineAsync("New nomenclature");
-                    }
-                    if (newLineStatus[i].QuantityFact != _currentLineStatus[i].QuantityFact)
-                    {
-                        newLineStatus[i] = _updateService.CalculateCounts(_currentLineStatus[i], newLineStatus[i]);
-                        await Console.Out.WriteLineAsync("Update Counts");
-                    }
+                    _updateService.NewLineStatus.Add((LiveViewCountsDto)currentCounts.Clone());
                 }
 
-                if (!Enumerable.SequenceEqual(newLineStatus, _currentLineStatus))
+                await Parallel.ForEachAsync(_updateService.CurrentLineStatus, async (currentLine, cancellationToken) =>
                 {
-                    await _updateService.SendNewCountsToCore(newLineStatus);
-                    _producer.SendMessage(newLineStatus);
-                    _currentLineStatus = new List<LiveViewCountsDto> (newLineStatus);
-                    newLineStatus.Clear();
+                    var temp = await _updateService.GetUpdateFromPrinter(currentLine.IpAddress);
+
+                    if (temp is not null)
+                    {
+                        _updateService.NewLineStatus[currentLine.LineId].QuantityFact = temp.BoxesQuantity * currentLine.NomenclatureInBox;
+                        _updateService.NewLineStatus[currentLine.LineId].NomenclatureOnPrinter = temp.NomenclatureOnPrinter;
+
+                        if (_updateService.NewLineStatus[currentLine.LineId].NomenclatureOnPrinter != currentLine.NomenclatureOnPrinter ||
+                            _updateService.NewLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
+                        {
+                            _updateService.NewLineStatus[currentLine.LineId] =
+                                _updateService.SetCountsForNewNomenclature(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
+
+                            await Console.Out.WriteLineAsync("New nomenclature");
+                            return;
+                        }
+
+                        if (_updateService.NewLineStatus[currentLine.LineId].QuantityFact > currentLine.QuantityFact)
+                        {
+                            _updateService.NewLineStatus[currentLine.LineId] = 
+                                _updateService.CalculateCounts(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
+
+                            await Console.Out.WriteLineAsync("Update Counts");
+                        }
+                        else
+                        {
+                            _updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone();
+                        }
+                    }
+                    else { _updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone(); }
                 }
+                );
+
+                if (!Enumerable.SequenceEqual(_updateService.NewLineStatus, _updateService.CurrentLineStatus))
+                {
+                    await _updateService.SendNewCountsToCore(_updateService.NewLineStatus);
+                    _producer.SendMessage(_updateService.NewLineStatus);
+
+                    _updateService.CurrentLineStatus.Clear();
+                    foreach (var newCounts in _updateService.NewLineStatus)
+                    {
+                        _updateService.CurrentLineStatus.Add((LiveViewCountsDto)newCounts.Clone());
+                    }
+                }
+                
             }
         }
     }

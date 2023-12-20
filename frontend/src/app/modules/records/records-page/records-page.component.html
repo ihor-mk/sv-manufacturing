@@ -13,19 +13,8 @@
                 <span>Дата зміни</span>
             </div>
         </div>
-        <div class="lines-records-counts" *ngFor="let line of lines">
-            <div class="line-records-data">
-                <span>{{line.title}}</span>
-            </div>
-            <div class="line-records-data">
-                <span>{{line.productivity}}</span>
-            </div>
-            <div class="line-records-data">
-                <span>{{line.groupNumber}}</span>
-            </div>
-            <div class="line-records-data">
-                <span>{{line.groupDate | date:'dd.MM.YYYY'}}</span>
-            </div>
+        <div class="lines-records-counts" *ngFor="let line of lineProductivityTop">
+            <app-record-line class="lines-records-counts" [line] = "line"></app-record-line>
         </div>
     </div>
     <div class="counts-records-wrp">
@@ -33,12 +22,15 @@
             <div class="record-title">
                 <span>Кількість випущеної продукції за зміну, шт.</span>
             </div>
-            <div class="group-record-line" *ngFor = "let group of groups">
-                <div class="group-record-data">
-                    <span>{{group.title}}</span>
+            <div class="group-record-line" *ngFor="let team of teamsTop">
+                <div class="team-record-data-team">
+                    <span>{{team.teamTitle}}</span>
                 </div>
-                <div class="group-record-data">
-                    <span>{{group.productCount}}</span>
+                <div class="team-record-data-quantity">
+                    <span>{{team.quantity}}</span>
+                </div>
+                <div class="team-record-data-quantity">
+                    <span>{{team.workDay | date:'dd.MM.YYYY' }}</span>
                 </div>
             </div>
         </div>
@@ -46,12 +38,12 @@
             <div class="record-title">
                 <span>Найбільше випущеної продукції</span>
             </div>
-            <div class="group-record-line" *ngFor = "let group of groups">
+            <div class="group-record-line" *ngFor="let nomnclature of nomenclaturesTop">
                 <div class="group-record-data">
-                    <span>Зміна 4</span>
+                    <span>{{nomnclature.nomenclatureTitle}}</span>
                 </div>
-                <div class="group-record-data">
-                    <span>50</span>
+                <div class="">
+                    <span>{{nomnclature.quantity}}</span>
                 </div>
             </div>
         </div>

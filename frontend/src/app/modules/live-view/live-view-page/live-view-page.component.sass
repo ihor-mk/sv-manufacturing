@@ -5,14 +5,23 @@
     flex-direction: column
     overflow: hidden
     height: 100%
+    width: calc( 100% - 20px )
+    padding: 10px
     background-color: $background-color
+
+.live-view-page-borders
+    display: flex
+    flex-direction: column
+    border: solid 2px $dark-blue
+    border-radius: 10px
+    overflow: hidden
 
 .table-titles-wrp
     display: flex
     flex-direction: row
     justify-content: space-around
     align-items: center
-    margin-bottom: 10px
+    margin: 10px
     font-size: 15px
     background-color: $background-color
     height: 70px
@@ -20,27 +29,27 @@
 .table-titles-header
     text-align: center
 
+.title-line
+    width: 15%
+
 .top-header
     display: flex
     flex-direction: column
-    width: 15%
+    width: 13%
     
 .sub-header
     display: flex
     flex-direction: row
     justify-content: space-around
 
-.title-line
-    width: 15%
-
 .title-nomenclature
-    width: 15%
+    width: 23%
 
 .title-plan
-    width: 9%
+    width: 6%
 
 .title-fact
-    width: 9%
+    width: 6%
 
 .title-progress
     width: 9%

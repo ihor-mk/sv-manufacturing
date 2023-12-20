@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SunVita.Core.BLL.Interfaces;
 using SunVita.Core.Common.DTO.Live;
-using System.Collections.Generic;
 
 namespace SunVita.Core.WebApi.Controllers
 {
@@ -15,6 +14,7 @@ namespace SunVita.Core.WebApi.Controllers
         {
             _liveViewCountsService = liveViewCountsService;
         }
+
         [HttpGet]
         public ICollection<LiveViewCountsDto> Get()
         {

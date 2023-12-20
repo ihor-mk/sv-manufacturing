@@ -1,22 +1,59 @@
 .production-line-history-wrp
     display: flex
+    flex-direction: column
+    justify-content: space-between
+    width: 100%
+    min-height: 50px
+    text-align: center
+    &:hover
+        cursor: pointer
+        
+.production-line-main-info
+    display: flex
     flex-direction: row
     justify-content: space-between
     align-items: center
     width: 100%
-    height: 70px
     text-align: center
 
 .line-title
-    width: calc( 16% + 40px )
+    width: calc( 13% + 40px )
     font-size: 14pt
+    text-align: left
+    padding: 0 0 0 15px
 
 .line-data
     display: flex
     flex-direction: row
     justify-content: space-around
     align-items: center
-    width: calc( 84% - 40px )
+    width: calc( 87% - 40px )
+    text-align: center
 
 .line-widht
-    width: 19%
+    width: 15%
+
+.line-nomenclature
+    width: 50%
+    text-align: left
+    padding: 0 15px 0 15px
+
+.line-quantity
+    width: 10%
+
+.line-prod-avg
+    text-align: center
+    width: 10%
+
+.employee-list-wrp
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    padding: 0 0 0 40px
+    text-align: left
+    font-style: italic
+
+.employee-list > span
+    padding: 7px 0 0 0
+    
+    

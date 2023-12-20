@@ -1,26 +1,28 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SunVita.Core.BLL.Interfaces;
 using SunVita.Core.BLL.Services.Abstract;
 using SunVita.Core.Common.DTO.DoneTask;
 using SunVita.Core.DAL.Context;
 using SunVita.Core.DAL.Entities;
+using System.Threading.Tasks;
 
 namespace SunVita.Core.BLL.Services
 {
     public class DoneTaskService : BaseService, IDoneTaskService
     {
-        public DoneTaskService(SunVitaCoreContext context) : base(context)
+        public DoneTaskService(SunVitaCoreContext context, IMapper mapper) : base(context, mapper)
         {
         }
         public async Task<DoneTaskFileDto> CreateDoneTask(DoneTaskFileDto file)
         {
             foreach(var emp in file.Employees) 
             {
-                var employee = _context.Employees
+                var employee = await _context.Employees
                     .Where(x => x.FullName == emp.FullName)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
-                if (employee == null) 
+                if (employee is null) 
                 {
                     var newEmployee = new Employee { FullName = emp.FullName };
 
@@ -37,39 +39,65 @@ namespace SunVita.Core.BLL.Services
                 .ToList();
 
 
+            var nomenklature = await _context.Nomenclatures
+                .Where(x => x.Number == file.NomenclatureNumber)
+                .FirstOrDefaultAsync();
 
-            var nomenklature = _context.Nomenclatures
-                .Where(x => x.Title == file.NomenclatureTitle)
-                .FirstOrDefault();
-
-            if (nomenklature == null)
+            if (nomenklature is null)
             {
-                var newNomencl = new Nomenclature {  Title = file.NomenclatureTitle, Number = file.NomenclatureNumber };
+                var newNomencl = new Nomenclature 
+                {  
+                    Title = file.NomenclatureTitle, 
+                    Number = file.NomenclatureNumber,
+                    NomenclatureInBox = file.NomenclatureInBox,
+                };
                 await _context.Nomenclatures.AddAsync(newNomencl);
                 await _context.SaveChangesAsync();
+
+                nomenklature = await _context.Nomenclatures
+                .Where(x => x.Number == file.NomenclatureNumber)
+                .FirstOrDefaultAsync();
             }
-            nomenklature = _context.Nomenclatures
-                .Where(x => x.Title == file.NomenclatureTitle)
-                .FirstOrDefault();
 
-            var line = _context.ProductionLines
-                .Where(x => x.Title == file.ProductionLineTitle)
-                .FirstOrDefault();
+            
 
+
+            var line = await _context.ProductionLines
+                .Where(x => x.Code == file.ProductionLineCode)
+                .FirstOrDefaultAsync();
+
+            if (line is null)
+            {
+                var newLine = new ProductionLine 
+                { 
+                    Title = file.ProductionLineTitle,
+                    Code = file.ProductionLineCode,
+                };
+                await _context.ProductionLines.AddAsync(newLine);
+                await _context.SaveChangesAsync();
+
+                line = await _context.ProductionLines
+                .Where(x => x.Code == file.ProductionLineCode)
+                .FirstOrDefaultAsync();
+            }
+
+            
 
             var newDoneTask = new DoneTask
             {
                 Nomenclature = nomenklature!,
                 ProductionLine = line!,
+                TeamTitle = file.TeamTitle,
+                WorkDay = DateTime.Parse(file.WorkDay),
+                DayPart = file.DayPart,
                 Employees = employees!,
                 Quantity = file.Quantity,
                 StringNumber = file.StringNumber,
                 StartedAt = DateTime.Parse(file.StartedAt),
-                FinishedAt = DateTime.Parse(file.FinishedAt)
-            };
-
+                FinishedAt = DateTime.Parse(file.FinishedAt),
+                Productivity = file.Quantity / (DateTime.Parse(file.FinishedAt) - DateTime.Parse(file.StartedAt)).TotalMinutes
+        };
             await _context.DoneTasks.AddAsync(newDoneTask);
-
             await _context.SaveChangesAsync();
 
             return file;

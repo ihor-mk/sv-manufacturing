@@ -1,20 +1,29 @@
-
-<div class="production-line-history-wrp">
-    <div class="line-title">
-        <span>{{lineHistory.title}}</span>
+<div class="production-line-history-wrp" (click)="changeVisability()">
+    <div class="production-line-main-info">
+        <div class="line-title">
+            <span>{{doneTask.lineTitle}}</span>
+        </div>
+        <div class="line-data">
+            <div class="line-nomenclature line-widht">
+                <span>{{doneTask.nomenclatureTitle}}</span>
+            </div>
+            <div class="line-quantity line-widht">
+                <span>{{doneTask.quantity}}</span>
+            </div>
+            <div class="line-started-at line-widht">
+                <span>{{doneTask.startedAt | date:'dd.MM.YY HH:mm'}} </span>
+            </div>
+            <div class="line-finished-at line-widht">
+                <span>{{doneTask.finishedAt | date:'dd.MM.YY HH:mm'}}</span>
+            </div>
+            <div class="line-prod-avg line-widht">
+                <span>{{getProductivity() | number : '1.2-2'}}</span>
+            </div>
+        </div>
     </div>
-    <div class="line-data">
-        <div class="line-prod-count line-widht">
-            <span>{{lineHistory.productionsCount}}</span>
-        </div>
-        <div class="line-speed-top line-widht">
-            <span>{{lineHistory.speedTop}}</span>
-        </div>
-        <div class="line-speed-avg line-widht">
-            <span>{{lineHistory.speedAvg}}</span>
-        </div>
-        <div class="line-prod-avg line-widht">
-            <span>{{lineHistory.productivityAvg}}</span>
+    <div class="employee-list-wrp" *ngIf="showEmployeesList">
+        <div class="employee-list" *ngFor="let employee of doneTask.employees">
+            <span>{{employee.split("(")[0]}}</span>
         </div>
     </div>
 </div>

@@ -1,0 +1,89 @@
+@import "src/styles/colors.sass"
+@import "src/styles/fonts.scss"
+
+.rating-page-wrp
+    overflow: hidden
+    width: calc( 100% - 20px )
+    height: 100%
+    background-color: $background-color
+    text-align: center
+    padding: 10px
+
+.rating-page-borders
+    display: flex
+    flex-direction: column
+    border: solid 2px $dark-blue
+    border-radius: 10px
+    overflow: hidden
+
+.header-wrp
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    font-size: 18px
+    background-color: $background-color
+    width: 100%
+    height: 70px
+
+.select-wrp
+    width: 16%
+    padding: 0px 20px
+
+.select-dropdown
+    border: 2px  solid
+    border-color: black
+    border-radius: 8px
+    padding: 3px 10px
+
+.title-wrp
+    width: calc( 84% - 40px )
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+
+.title-header
+    width: 19%
+
+.employees-list-wrp
+    display: flex
+    flex-direction: column
+    width: 100%
+
+.employee-line
+    display: flex
+    flex-direction: row
+    width: calc( 100% - 20px )
+    height: 40px
+    padding: 0 0 0 20px
+    align-items: center
+
+.employee-line-data
+    width: 33.3%
+    text-align: left
+
+.pagination-wrp
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin-left: auto
+    width: 220px
+    padding: 10px
+    text-align: center
+
+.pagination-wrp > span
+    font-size: 16pt
+    align-self: center
+    text-decoration: underline
+
+
+.mat-mdc-select
+    font-family: 'Geometria' !important
+.mat-mdc-option
+    font-family: 'Geometria' !important
+.mat-mdc-option
+    min-height: 35px !important
+.mdc-button
+    font-family: 'Geometria' !important
+    font-style: normal !important
+    font-stretch: condensed !important

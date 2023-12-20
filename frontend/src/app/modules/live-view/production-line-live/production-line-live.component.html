@@ -1,14 +1,15 @@
-<div class="line-wrp">
+<div class="line-wrp" [class.line-error] = "isLineError()">
     <div class="title-line">
         <span>{{ lineLiveViewCounts.lineTitle }}</span>
     </div>
     <div class="title-prod-online">
-        <span>{{ lineLiveViewCounts.productivityCurrent }}</span>
+        <span>{{ lineLiveViewCounts.productivityCurrent | number : '1.2-2'}}</span>
     </div>
     <div class="title-prod-top">
-        <span>{{ lineLiveViewCounts.productivityTop }}</span>
+        <span>{{ lineLiveViewCounts.productivityTop | number : '1.2-2'}}</span>
     </div>
     <div class="title-nomenclature">
+        <span *ngIf = "lineLiveViewCounts.isNewPrinterNomenclature">Очікується початок роботи на ТСД ... <br> </span>
         <span>{{ lineLiveViewCounts.nomenclatureTitle }}</span>
     </div>
     <div class="title-plan">
@@ -21,10 +22,10 @@
         <span>{{(( lineLiveViewCounts.quantityFact! / lineLiveViewCounts.quantityPlan! ) * 100) | number : '1.2-2' }} %</span>
     </div>
     <div class="title-avg-speed">
-        <span>{{lineLiveViewCounts.productivityAvg}}</span>
+        <span>{{lineLiveViewCounts.productivityAvg | number : '1.2-2'}}</span>
     </div>
     <div class="title-time">
-        <span>{{lineLiveViewCounts.startedAt | date:'HH:mm'}}</span>
+        <span>{{toTimeString(lineLiveViewCounts.workTime)}}</span>
     </div>
     <div class="title-end-time">
         <span>{{lineLiveViewCounts.finishedAt | date:'HH:mm:ss'}}</span>

@@ -22,21 +22,6 @@ namespace SunVita.Core.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DoneTaskEmployee", b =>
-                {
-                    b.Property<long>("DoneTasksId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("EmployeesId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("DoneTasksId", "EmployeesId");
-
-                    b.HasIndex("EmployeesId");
-
-                    b.ToTable("DoneTaskEmployee");
-                });
-
             modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTask", b =>
                 {
                     b.Property<long>("Id")
@@ -48,6 +33,10 @@ namespace SunVita.Core.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DayPart")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("FinishedAt")
                         .HasColumnType("datetime2");
 
@@ -56,6 +45,9 @@ namespace SunVita.Core.DAL.Migrations
 
                     b.Property<long>("ProductionLineId")
                         .HasColumnType("bigint");
+
+                    b.Property<double>("Productivity")
+                        .HasColumnType("float");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -67,6 +59,13 @@ namespace SunVita.Core.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TeamTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("WorkDay")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NomenclatureId");
@@ -74,6 +73,21 @@ namespace SunVita.Core.DAL.Migrations
                     b.HasIndex("ProductionLineId");
 
                     b.ToTable("DoneTasks");
+                });
+
+            modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTaskEmployee", b =>
+                {
+                    b.Property<long>("DoneTaskId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("DoneTaskId", "EmployeeId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("DoneTaskEmployee");
                 });
 
             modelBuilder.Entity("SunVita.Core.DAL.Entities.Employee", b =>
@@ -107,12 +121,12 @@ namespace SunVita.Core.DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NomenclatureInBox")
+                        .HasColumnType("int");
+
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PiecesInBox")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -131,12 +145,19 @@ namespace SunVita.Core.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ProductivityAvg")
+                        .HasColumnType("float");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -150,46 +171,66 @@ namespace SunVita.Core.DAL.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.1",
-                            Title = "Цех №1  (Лінія1)"
+                            Code = "000000040",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2510),
+                            IpAddress = "",
+                            ProductivityAvg = 26.800000000000001,
+                            Title = "Цех №1 (Лінія 1)"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.2",
-                            Title = "Цех №2  (Лінія1)"
+                            Code = "000000009",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2561),
+                            IpAddress = "10.61.2.22",
+                            ProductivityAvg = 44.600000000000001,
+                            Title = "Цех №2 (Лінія 1)"
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.3",
-                            Title = "Цех №3  (Лінія1)"
+                            Code = "000000010",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2567),
+                            IpAddress = "10.61.2.21",
+                            ProductivityAvg = 50.0,
+                            Title = "Цех №2 (Лінія 2)"
                         },
                         new
                         {
                             Id = 4L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IpAddress = "10.0.0.4",
-                            Title = "Цех №3  (Лінія2)"
+                            Code = "000000008",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2573),
+                            IpAddress = "",
+                            ProductivityAvg = 51.700000000000003,
+                            Title = "Цех №4 (Лінія 1, кросфолд 1)"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Code = "000000047",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2578),
+                            IpAddress = "10.61.2.23",
+                            ProductivityAvg = 62.5,
+                            Title = "Цех №5 (Лінія 1)"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Code = "000000026",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2587),
+                            IpAddress = "",
+                            ProductivityAvg = 66.099999999999994,
+                            Title = "Цех №5 (Лінія 2, кросфолд 2)"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Code = "000000048",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2593),
+                            IpAddress = "",
+                            ProductivityAvg = 62.5,
+                            Title = "Цех №5 (Лінія 3)"
                         });
-                });
-
-            modelBuilder.Entity("DoneTaskEmployee", b =>
-                {
-                    b.HasOne("SunVita.Core.DAL.Entities.DoneTask", null)
-                        .WithMany()
-                        .HasForeignKey("DoneTasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SunVita.Core.DAL.Entities.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTask", b =>
@@ -209,6 +250,21 @@ namespace SunVita.Core.DAL.Migrations
                     b.Navigation("Nomenclature");
 
                     b.Navigation("ProductionLine");
+                });
+
+            modelBuilder.Entity("SunVita.Core.DAL.Entities.DoneTaskEmployee", b =>
+                {
+                    b.HasOne("SunVita.Core.DAL.Entities.DoneTask", null)
+                        .WithMany()
+                        .HasForeignKey("DoneTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SunVita.Core.DAL.Entities.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

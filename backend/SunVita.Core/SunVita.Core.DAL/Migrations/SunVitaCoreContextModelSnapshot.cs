@@ -171,29 +171,65 @@ namespace SunVita.Core.DAL.Migrations
                         new
                         {
                             Id = 1L,
-                            Code = "",
-                            CreatedAt = new DateTime(2023, 12, 18, 17, 6, 5, 789, DateTimeKind.Local).AddTicks(9844),
-                            IpAddress = "10.61.2.21",
-                            ProductivityAvg = 1.0,
-                            Title = "Цех №2  (Лінія1)"
+                            Code = "000000040",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7696),
+                            IpAddress = "10.61.2.23",
+                            ProductivityAvg = 26.800000000000001,
+                            Title = "Цех №1 (Лінія 1)"
                         },
                         new
                         {
                             Id = 2L,
-                            Code = "",
-                            CreatedAt = new DateTime(2023, 12, 18, 17, 6, 5, 789, DateTimeKind.Local).AddTicks(9856),
+                            Code = "000000009",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7709),
                             IpAddress = "10.61.2.22",
-                            ProductivityAvg = 1.0,
-                            Title = "Цех №2 (Лінія 2)"
+                            ProductivityAvg = 44.600000000000001,
+                            Title = "Цех №2 (Лінія 1)"
                         },
                         new
                         {
                             Id = 3L,
-                            Code = "",
-                            CreatedAt = new DateTime(2023, 12, 18, 17, 6, 5, 789, DateTimeKind.Local).AddTicks(9861),
+                            Code = "000000010",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7714),
+                            IpAddress = "10.61.2.21",
+                            ProductivityAvg = 50.0,
+                            Title = "Цех №2 (Лінія 2)"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Code = "000000008",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7720),
+                            IpAddress = "10.61.2.22",
+                            ProductivityAvg = 51.700000000000003,
+                            Title = "Цех №4 (Лінія 1, кросфолд 1)"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Code = "000000047",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7725),
                             IpAddress = "10.61.2.23",
-                            ProductivityAvg = 1.0,
-                            Title = "Цех №5"
+                            ProductivityAvg = 62.5,
+                            Title = "Цех №5 (Лінія 1)"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Code = "000000026",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7736),
+                            IpAddress = "10.61.2.23",
+                            ProductivityAvg = 66.099999999999994,
+                            Title = "Цех №5 (Лінія 2, кросфолд 2)"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Code = "000000048",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7742),
+                            IpAddress = "10.61.2.21",
+                            ProductivityAvg = 62.5,
+                            Title = "Цех №5 (Лінія 3)"
                         });
                 });
 

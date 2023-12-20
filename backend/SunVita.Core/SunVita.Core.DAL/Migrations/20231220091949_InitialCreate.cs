@@ -51,6 +51,8 @@ namespace SunVita.Core.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductivityAvg = table.Column<double>(type: "float", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -67,8 +69,11 @@ namespace SunVita.Core.DAL.Migrations
                     StringNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NomenclatureId = table.Column<long>(type: "bigint", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    Productivity = table.Column<double>(type: "float", nullable: false),
                     TeamTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductionLineId = table.Column<long>(type: "bigint", nullable: false),
+                    WorkDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DayPart = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FinishedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -116,12 +121,16 @@ namespace SunVita.Core.DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "ProductionLines",
-                columns: new[] { "Id", "CreatedAt", "IpAddress", "Title" },
+                columns: new[] { "Id", "Code", "CreatedAt", "IpAddress", "ProductivityAvg", "Title" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5947), "10.61.2.21", "Цех №2  (Лінія1)" },
-                    { 2L, new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5955), "10.61.2.22", "Цех №2 (Лінія 2)" },
-                    { 3L, new DateTime(2023, 11, 30, 14, 17, 38, 986, DateTimeKind.Local).AddTicks(5960), "10.61.2.23", "Цех №5" }
+                    { 1L, "000000040", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7696), "10.61.2.23", 26.800000000000001, "Цех №1 (Лінія 1)" },
+                    { 2L, "000000009", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7709), "10.61.2.22", 44.600000000000001, "Цех №2 (Лінія 1)" },
+                    { 3L, "000000010", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7714), "10.61.2.21", 50.0, "Цех №2 (Лінія 2)" },
+                    { 4L, "000000008", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7720), "10.61.2.22", 51.700000000000003, "Цех №4 (Лінія 1, кросфолд 1)" },
+                    { 5L, "000000047", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7725), "10.61.2.23", 62.5, "Цех №5 (Лінія 1)" },
+                    { 6L, "000000026", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7736), "10.61.2.23", 66.099999999999994, "Цех №5 (Лінія 2, кросфолд 2)" },
+                    { 7L, "000000048", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7742), "10.61.2.21", 62.5, "Цех №5 (Лінія 3)" }
                 });
 
             migrationBuilder.CreateIndex(

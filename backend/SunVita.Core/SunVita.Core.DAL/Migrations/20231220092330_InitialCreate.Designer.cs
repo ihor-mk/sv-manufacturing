@@ -12,7 +12,7 @@ using SunVita.Core.DAL.Context;
 namespace SunVita.Core.DAL.Migrations
 {
     [DbContext(typeof(SunVitaCoreContext))]
-    [Migration("20231220091949_InitialCreate")]
+    [Migration("20231220092330_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -175,8 +175,8 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 1L,
                             Code = "000000040",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7696),
-                            IpAddress = "10.61.2.23",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2510),
+                            IpAddress = "",
                             ProductivityAvg = 26.800000000000001,
                             Title = "Цех №1 (Лінія 1)"
                         },
@@ -184,7 +184,7 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 2L,
                             Code = "000000009",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7709),
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2561),
                             IpAddress = "10.61.2.22",
                             ProductivityAvg = 44.600000000000001,
                             Title = "Цех №2 (Лінія 1)"
@@ -193,7 +193,7 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 3L,
                             Code = "000000010",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7714),
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2567),
                             IpAddress = "10.61.2.21",
                             ProductivityAvg = 50.0,
                             Title = "Цех №2 (Лінія 2)"
@@ -202,8 +202,8 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 4L,
                             Code = "000000008",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7720),
-                            IpAddress = "10.61.2.22",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2573),
+                            IpAddress = "",
                             ProductivityAvg = 51.700000000000003,
                             Title = "Цех №4 (Лінія 1, кросфолд 1)"
                         },
@@ -211,7 +211,7 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 5L,
                             Code = "000000047",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7725),
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2578),
                             IpAddress = "10.61.2.23",
                             ProductivityAvg = 62.5,
                             Title = "Цех №5 (Лінія 1)"
@@ -220,8 +220,8 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 6L,
                             Code = "000000026",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7736),
-                            IpAddress = "10.61.2.23",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2587),
+                            IpAddress = "",
                             ProductivityAvg = 66.099999999999994,
                             Title = "Цех №5 (Лінія 2, кросфолд 2)"
                         },
@@ -229,8 +229,8 @@ namespace SunVita.Core.DAL.Migrations
                         {
                             Id = 7L,
                             Code = "000000048",
-                            CreatedAt = new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7742),
-                            IpAddress = "10.61.2.21",
+                            CreatedAt = new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2593),
+                            IpAddress = "",
                             ProductivityAvg = 62.5,
                             Title = "Цех №5 (Лінія 3)"
                         });

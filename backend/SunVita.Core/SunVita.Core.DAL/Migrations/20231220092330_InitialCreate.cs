@@ -124,13 +124,13 @@ namespace SunVita.Core.DAL.Migrations
                 columns: new[] { "Id", "Code", "CreatedAt", "IpAddress", "ProductivityAvg", "Title" },
                 values: new object[,]
                 {
-                    { 1L, "000000040", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7696), "10.61.2.23", 26.800000000000001, "Цех №1 (Лінія 1)" },
-                    { 2L, "000000009", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7709), "10.61.2.22", 44.600000000000001, "Цех №2 (Лінія 1)" },
-                    { 3L, "000000010", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7714), "10.61.2.21", 50.0, "Цех №2 (Лінія 2)" },
-                    { 4L, "000000008", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7720), "10.61.2.22", 51.700000000000003, "Цех №4 (Лінія 1, кросфолд 1)" },
-                    { 5L, "000000047", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7725), "10.61.2.23", 62.5, "Цех №5 (Лінія 1)" },
-                    { 6L, "000000026", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7736), "10.61.2.23", 66.099999999999994, "Цех №5 (Лінія 2, кросфолд 2)" },
-                    { 7L, "000000048", new DateTime(2023, 12, 20, 11, 19, 49, 737, DateTimeKind.Local).AddTicks(7742), "10.61.2.21", 62.5, "Цех №5 (Лінія 3)" }
+                    { 1L, "000000040", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2510), "", 26.800000000000001, "Цех №1 (Лінія 1)" },
+                    { 2L, "000000009", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2561), "10.61.2.22", 44.600000000000001, "Цех №2 (Лінія 1)" },
+                    { 3L, "000000010", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2567), "10.61.2.21", 50.0, "Цех №2 (Лінія 2)" },
+                    { 4L, "000000008", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2573), "", 51.700000000000003, "Цех №4 (Лінія 1, кросфолд 1)" },
+                    { 5L, "000000047", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2578), "10.61.2.23", 62.5, "Цех №5 (Лінія 1)" },
+                    { 6L, "000000026", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2587), "", 66.099999999999994, "Цех №5 (Лінія 2, кросфолд 2)" },
+                    { 7L, "000000048", new DateTime(2023, 12, 20, 11, 23, 30, 687, DateTimeKind.Local).AddTicks(2593), "", 62.5, "Цех №5 (Лінія 3)" }
                 });
 
             migrationBuilder.CreateIndex(

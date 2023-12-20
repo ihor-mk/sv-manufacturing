@@ -72,7 +72,7 @@ namespace SunVita.Worker.WebApi.Services
                 var resultNomenc = await client.GetStringAsync($"http://{IpAddress}/selectjob.masp");
 
 
-                if (resultStat != null)
+                if (resultStat is not null && resultNomenc is not null)
                 {
                     var data = resultStat.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
@@ -103,9 +103,17 @@ namespace SunVita.Worker.WebApi.Services
                             .Where(x => x.Contains("value"))
                             .FirstOrDefault();
 
-                        newPrinterCounts.NomenclatureOnPrinter = str[1].Substring(81, str[1].Length - (81 + 53));
+                        if (hostJobNameProperty is not null)
+                        {
+                            newPrinterCounts.NomenclatureOnPrinter = str[1].Substring(81, str[1].Length - (81 + 53));
+                        }
+
                         await Console.Out.WriteLineAsync($"{newPrinterCounts.BoxesQuantity} - {newPrinterCounts.NomenclatureOnPrinter}");
                     }
+                }
+                else
+                {
+                    return null!;
                 }
             }
             catch (Exception ex)
@@ -163,7 +171,9 @@ namespace SunVita.Worker.WebApi.Services
                     var quantutyDiff = newCounts.QuantityFact - currentCounts.QuantityFact;
                     var timeDiff = newCounts.WorkTime - currentCounts.WorkTime;
 
-                    if (timeDiff > 0 && quantutyDiff > 0 && quantutyDiff < newCounts.NomenclatureInBox * 3)
+                    if (timeDiff > 0 
+                       // && quantutyDiff > 0 
+                        && quantutyDiff < newCounts.NomenclatureInBox * 3)
                     {
 
                         newCounts.ProductivityCurrent = quantutyDiff / (timeDiff / 60);

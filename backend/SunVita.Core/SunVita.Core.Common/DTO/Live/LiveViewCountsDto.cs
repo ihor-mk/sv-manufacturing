@@ -51,7 +51,8 @@
 
             return (this.NomenclatureTitle == item.NomenclatureTitle
                 && this.QuantityFact == item.QuantityFact
-                && this.NomenclatureOnPrinter == item.NomenclatureOnPrinter);
+                && this.NomenclatureOnPrinter == item.NomenclatureOnPrinter
+                && this.WorkTime == item.WorkTime);
         }
 
         public override int GetHashCode()

@@ -29,6 +29,9 @@ namespace SunVita.Worker.WebApi.Services
 
                 await Parallel.ForEachAsync(_updateService.CurrentLineStatus, async (currentLine, cancellationToken) =>
                 {
+                    //Thread.Sleep(5000);
+
+
                     var temp = await _updateService.GetUpdateFromPrinter(currentLine.IpAddress);
 
                     if (temp is not null)
@@ -46,17 +49,17 @@ namespace SunVita.Worker.WebApi.Services
                             return;
                         }
 
-                        if (_updateService.NewLineStatus[currentLine.LineId].QuantityFact > currentLine.QuantityFact)
-                        {
+                        //if (_updateService.NewLineStatus[currentLine.LineId].QuantityFact > currentLine.QuantityFact)
+                        //{
                             _updateService.NewLineStatus[currentLine.LineId] = 
                                 _updateService.CalculateCounts(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
 
                             await Console.Out.WriteLineAsync("Update Counts");
-                        }
-                        else
-                        {
-                            _updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone();
-                        }
+                        //}
+                        //else
+                        //{
+                        //    _updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone();
+                        //}
                     }
                     else { _updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone(); }
                 }

@@ -22,16 +22,6 @@ namespace SunVita.Worker.WebApi.Services
                 new LiveViewCountsDto()
                 {
                     LineId = 0,
-                    LineCode = "000000010",
-                    LineTitle = "Цех №2 (Лінія 2)",
-                    IpAddress = "10.61.2.21",
-                    QuantityFact = -1,
-                    QuantityPlan = 2000,
-                    StartedAt = DateTime.Now
-                },
-                new LiveViewCountsDto()
-                {
-                    LineId = 1,
                     LineCode = "000000009",
                     LineTitle = "Цех №2 (Лінія 1)",
                     IpAddress = "10.61.2.22",
@@ -41,12 +31,62 @@ namespace SunVita.Worker.WebApi.Services
                 },
                 new LiveViewCountsDto()
                 {
+                    LineId = 1,
+                    LineCode = "000000010",
+                    LineTitle = "Цех №2 (Лінія 2)",
+                    IpAddress = "10.61.2.21",
+                    QuantityFact = -1,
+                    QuantityPlan = 2000,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
                     LineId = 2,
                     LineCode = "000000026",
-                    LineTitle = "Цех №5 (Лінія1)",
+                    LineTitle = "Цех №5 (Лінія 1)",
                     IpAddress = "10.61.2.23",
                     QuantityFact = -1,
                     QuantityPlan = 2000,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 3,
+                    LineCode = "000000040",
+                    LineTitle = "Цех №1 (Лінія 1)",
+                    IpAddress = "10.61.2.24",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 4,
+                    LineCode = "000000008",
+                    LineTitle = "Цех №4 (Лінія 1, кросфолд 1)",
+                    IpAddress = "10.61.2.25",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 5,
+                    LineCode = "000000026",
+                    LineTitle = "Цех №5 (Лінія 2, кросфолд 2)",
+                    IpAddress = "10.61.2.26",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 6,
+                    LineCode = "000000048",
+                    LineTitle = "Цех №5 (Лінія 3)",
+                    IpAddress = "10.61.2.26",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
                     StartedAt = DateTime.Now
                 }
             };

@@ -54,7 +54,7 @@ namespace SunVita.Worker.WebApi.Services
                     LineId = 3,
                     LineCode = "000000040",
                     LineTitle = "Цех №1 (Лінія 1)",
-                    IpAddress = "10.61.2.24",
+                    IpAddress = "",
                     QuantityFact = 0,
                     QuantityPlan = 0,
                     StartedAt = DateTime.Now
@@ -64,7 +64,7 @@ namespace SunVita.Worker.WebApi.Services
                     LineId = 4,
                     LineCode = "000000008",
                     LineTitle = "Цех №4 (Лінія 1, кросфолд 1)",
-                    IpAddress = "10.61.2.25",
+                    IpAddress = "",
                     QuantityFact = 0,
                     QuantityPlan = 0,
                     StartedAt = DateTime.Now
@@ -72,9 +72,9 @@ namespace SunVita.Worker.WebApi.Services
                 new LiveViewCountsDto()
                 {
                     LineId = 5,
-                    LineCode = "000000026",
+                    LineCode = "000000047",
                     LineTitle = "Цех №5 (Лінія 2, кросфолд 2)",
-                    IpAddress = "10.61.2.26",
+                    IpAddress = "",
                     QuantityFact = 0,
                     QuantityPlan = 0,
                     StartedAt = DateTime.Now
@@ -84,7 +84,7 @@ namespace SunVita.Worker.WebApi.Services
                     LineId = 6,
                     LineCode = "000000048",
                     LineTitle = "Цех №5 (Лінія 3)",
-                    IpAddress = "10.61.2.26",
+                    IpAddress = "",
                     QuantityFact = 0,
                     QuantityPlan = 0,
                     StartedAt = DateTime.Now
@@ -256,7 +256,10 @@ namespace SunVita.Worker.WebApi.Services
                         newLine.IsNewPrinterNomenclature = false;
                         newLine.IsNewNomenclature = false;
                     }
+                    if (newLine.IpAddress == "")
+                        newLine.StartedAt = DateTime.Now;
                 }
+
                 var currentLine = CurrentLineStatus
                     .FirstOrDefault(x => x.LineCode == liveTaskDto.ProductionLineCode);
 
@@ -272,6 +275,8 @@ namespace SunVita.Worker.WebApi.Services
                         currentLine.IsNewPrinterNomenclature = false;
                         currentLine.IsNewNomenclature = false;
                     }
+                    if (currentLine.IpAddress == "")
+                        currentLine.StartedAt = DateTime.Now;
                 }
             }
 

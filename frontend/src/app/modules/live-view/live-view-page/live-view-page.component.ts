@@ -25,7 +25,7 @@ export class LiveViewPageComponent implements OnInit {
     this.liveViewHub.listenMessages((msg) => {
       var listenMessages: ILiveViewCountsDto[] = JSON.parse(msg)
       this.linesLiveViewCounts = this.transformedMessage(listenMessages)
-      //console.log(this.linesLiveViewCounts)
+      console.log(this.linesLiveViewCounts)
     });
   }
 
@@ -53,6 +53,7 @@ export class LiveViewPageComponent implements OnInit {
       workTime: broadcastMessage.WorkTime,
       isNewNomenclature: broadcastMessage.IsNewNomenclature,
       isNewPrinterNomenclature: broadcastMessage.IsNewPrinterNomenclature,
+      isPrinterOffline: broadcastMessage.IsPrinterOffline
     }))
   }
 }

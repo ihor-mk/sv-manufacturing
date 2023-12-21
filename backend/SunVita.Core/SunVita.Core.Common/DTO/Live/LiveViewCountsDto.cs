@@ -6,6 +6,7 @@
         public string LineCode { get; set; } = string.Empty;
         public string LineTitle { get; set; } = string.Empty;
         public string IpAddress { get; set; } = string.Empty;
+        public bool IsPrinterOffline { get; set; } = false;
         public double ProductivityCurrent { get; set; } = 0;
         public double ProductivityTop { get; set; } = 0;
         public double ProductivityAvg { get; set; } = 0;

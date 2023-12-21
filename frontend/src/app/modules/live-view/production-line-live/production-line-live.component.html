@@ -1,4 +1,4 @@
-<div class="line-wrp" [class.line-error] = "isLineError()">
+<div class="line-wrp" [class.line-error] = "isLineError()" [class.line-offline] = "lineLiveViewCounts.isPrinterOffline">
     <div class="title-line">
         <span>{{ lineLiveViewCounts.lineTitle }}</span>
     </div>

@@ -29,46 +29,39 @@ namespace SunVita.Worker.WebApi.Services
 
                 await Parallel.ForEachAsync(_updateService.CurrentLineStatus, async (currentLine, cancellationToken) =>
                 {
-                    Thread.Sleep(5000);
+                    //Thread.Sleep(5000);
 
-
-                    var temp = await _updateService.GetUpdateFromPrinter(currentLine.IpAddress);
-
-                    if (temp is not null)
+                    if (currentLine.IpAddress != "")
                     {
-                        _updateService.NewLineStatus[currentLine.LineId].QuantityFact = temp.BoxesQuantity * currentLine.NomenclatureInBox;
-                        _updateService.NewLineStatus[currentLine.LineId].NomenclatureOnPrinter = temp.NomenclatureOnPrinter;
+                        var temp = await _updateService.GetUpdateFromPrinter(currentLine.IpAddress);
 
-                        if (_updateService.NewLineStatus[currentLine.LineId].NomenclatureOnPrinter != currentLine.NomenclatureOnPrinter ||
-                            _updateService.NewLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
+                        if (temp is not null)
                         {
-                            _updateService.NewLineStatus[currentLine.LineId] =
-                                _updateService.SetCountsForNewNomenclature(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
+                            currentLine.IsPrinterOffline = false;
 
-                            await Console.Out.WriteLineAsync("New nomenclature");
-                            return;
+                            _updateService.NewLineStatus[currentLine.LineId].QuantityFact = temp.BoxesQuantity * currentLine.NomenclatureInBox;
+                            _updateService.NewLineStatus[currentLine.LineId].NomenclatureOnPrinter = temp.NomenclatureOnPrinter;
+
+                            if (_updateService.NewLineStatus[currentLine.LineId].NomenclatureOnPrinter != currentLine.NomenclatureOnPrinter ||
+                                _updateService.NewLineStatus[currentLine.LineId].QuantityFact < currentLine.QuantityFact)
+                            {
+                                _updateService.NewLineStatus[currentLine.LineId] =
+                                    _updateService.SetCountsForNewNomenclature(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
+
+                                await Console.Out.WriteLineAsync("New nomenclature");
+                                return;
+                            }
                         }
-
-                        //if (_updateService.NewLineStatus[currentLine.LineId].QuantityFact > currentLine.QuantityFact)
-                        //{
-                            _updateService.NewLineStatus[currentLine.LineId] = 
-                                _updateService.CalculateCounts(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
-
-                            await Console.Out.WriteLineAsync("Update Counts");
-                        //}
-                        //else
-                        //{
-                        //    _updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone();
-                        //}
+                        else
+                        {
+                            _updateService.NewLineStatus[currentLine.LineId].IsPrinterOffline = true;
+                        }
                     }
-                    else 
-                    {
-                        _updateService.NewLineStatus[currentLine.LineId] =
-                               _updateService.CalculateCounts(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
 
-                        await Console.Out.WriteLineAsync("Update Counts");
-                        //_updateService.NewLineStatus[currentLine.LineId] = (LiveViewCountsDto)currentLine.Clone(); 
-                    }
+                    _updateService.NewLineStatus[currentLine.LineId] =
+                        _updateService.CalculateCounts(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
+
+                    await Console.Out.WriteLineAsync("Update Counts");
                 }
                 );
 
@@ -83,7 +76,7 @@ namespace SunVita.Worker.WebApi.Services
                         _updateService.CurrentLineStatus.Add((LiveViewCountsDto)newCounts.Clone());
                     }
                 }
-                
+
             }
         }
     }

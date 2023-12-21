@@ -12,4 +12,5 @@ export interface ILiveViewCounts {
     workTime?: number,
     isNewNomenclature?: boolean,
     isNewPrinterNomenclature?: boolean,
+    isPrinterOffline?: boolean
 }

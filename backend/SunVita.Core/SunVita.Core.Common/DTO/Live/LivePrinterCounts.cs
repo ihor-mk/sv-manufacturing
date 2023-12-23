@@ -3,6 +3,6 @@
     public class LivePrinterCounts
     {
         public string NomenclatureOnPrinter { get; set; } = string.Empty;
-        public int BoxesQuantity { get; set; } = 0;
+        public int BoxesQuantity { get; set; } = -1;
     }
 }

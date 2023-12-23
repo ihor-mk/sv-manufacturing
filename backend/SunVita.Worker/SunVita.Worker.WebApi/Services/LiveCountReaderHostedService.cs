@@ -35,7 +35,7 @@ namespace SunVita.Worker.WebApi.Services
                     {
                         var temp = await _updateService.GetUpdateFromPrinter(currentLine.IpAddress);
 
-                        if (temp is not null)
+                        if (temp is not null && temp.BoxesQuantity != -1 && temp.NomenclatureOnPrinter != "")
                         {
                             currentLine.IsPrinterOffline = false;
 
@@ -61,7 +61,6 @@ namespace SunVita.Worker.WebApi.Services
                     _updateService.NewLineStatus[currentLine.LineId] =
                         _updateService.CalculateCounts(currentLine, _updateService.NewLineStatus[currentLine.LineId]);
 
-                    await Console.Out.WriteLineAsync("Update Counts");
                 }
                 );
 

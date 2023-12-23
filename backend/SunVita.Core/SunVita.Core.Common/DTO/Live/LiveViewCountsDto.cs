@@ -53,7 +53,7 @@
             return (this.NomenclatureTitle == item.NomenclatureTitle
                 && this.QuantityFact == item.QuantityFact
                 && this.NomenclatureOnPrinter == item.NomenclatureOnPrinter
-                && this.WorkTime == item.WorkTime);
+                && this.ProductivityAvg == item.ProductivityAvg);
         }
 
         public override int GetHashCode()

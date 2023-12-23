@@ -23,6 +23,13 @@ export class ProductionLineLiveComponent implements OnInit {
     return result;
   }
 
+ getWorkTime(): string {
+  const dateNow = new Date(Date.now()).getTime()
+  const startedAt = new Date(this.lineLiveViewCounts.startedAt!).getTime()
+
+  return new Date(dateNow - startedAt).toISOString().slice(11, 19);
+ }
+
   isLineError(): boolean {
     if (this.lineLiveViewCounts.isNewPrinterNomenclature)
       return true

@@ -22,36 +22,6 @@ namespace SunVita.Worker.WebApi.Services
                 new LiveViewCountsDto()
                 {
                     LineId = 0,
-                    LineCode = "000000009",
-                    LineTitle = "Цех №2 (Лінія 1)",
-                    IpAddress = "10.61.2.22",
-                    QuantityFact = -1,
-                    QuantityPlan = 2000,
-                    StartedAt = DateTime.Now
-                },
-                new LiveViewCountsDto()
-                {
-                    LineId = 1,
-                    LineCode = "000000010",
-                    LineTitle = "Цех №2 (Лінія 2)",
-                    IpAddress = "10.61.2.21",
-                    QuantityFact = -1,
-                    QuantityPlan = 2000,
-                    StartedAt = DateTime.Now
-                },
-                new LiveViewCountsDto()
-                {
-                    LineId = 2,
-                    LineCode = "000000026",
-                    LineTitle = "Цех №5 (Лінія 1)",
-                    IpAddress = "10.61.2.23",
-                    QuantityFact = -1,
-                    QuantityPlan = 2000,
-                    StartedAt = DateTime.Now
-                },
-                new LiveViewCountsDto()
-                {
-                    LineId = 3,
                     LineCode = "000000040",
                     LineTitle = "Цех №1 (Лінія 1)",
                     IpAddress = "",
@@ -61,10 +31,40 @@ namespace SunVita.Worker.WebApi.Services
                 },
                 new LiveViewCountsDto()
                 {
-                    LineId = 4,
+                    LineId = 1,
+                    LineCode = "000000009",
+                    LineTitle = "Цех №2 (Лінія 1)",
+                    IpAddress = "10.61.2.22",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 2,
+                    LineCode = "000000010",
+                    LineTitle = "Цех №2 (Лінія 2)",
+                    IpAddress = "10.61.2.21",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 3,
                     LineCode = "000000008",
                     LineTitle = "Цех №4 (Лінія 1, кросфолд 1)",
                     IpAddress = "",
+                    QuantityFact = 0,
+                    QuantityPlan = 0,
+                    StartedAt = DateTime.Now
+                },
+                new LiveViewCountsDto()
+                {
+                    LineId = 4,
+                    LineCode = "000000026",
+                    LineTitle = "Цех №5 (Лінія 1)",
+                    IpAddress = "10.61.2.23",
                     QuantityFact = 0,
                     QuantityPlan = 0,
                     StartedAt = DateTime.Now
@@ -84,7 +84,7 @@ namespace SunVita.Worker.WebApi.Services
                     LineId = 6,
                     LineCode = "000000048",
                     LineTitle = "Цех №5 (Лінія 3)",
-                    IpAddress = "",
+                    IpAddress = "10.61.2.24",
                     QuantityFact = 0,
                     QuantityPlan = 0,
                     StartedAt = DateTime.Now
@@ -98,7 +98,7 @@ namespace SunVita.Worker.WebApi.Services
             var newPrinterCounts = new LivePrinterCounts();
 
             var pinger = new Ping();
-            var reply = pinger.Send(IpAddress, 500);
+            var reply = pinger.Send(IpAddress, 1000);
 
             if (reply.Status != IPStatus.Success)
                 return null!;
@@ -109,6 +109,8 @@ namespace SunVita.Worker.WebApi.Services
             {
                 var resultStat = await client.GetStringAsync($"http://{IpAddress}/updatestatistics.masp");
 
+                Thread.Sleep(150);
+
                 var resultNomenc = await client.GetStringAsync($"http://{IpAddress}/selectjob.masp");
 
 
@@ -116,11 +118,11 @@ namespace SunVita.Worker.WebApi.Services
                 {
                     var data = resultStat.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
-                    if (data != null)
+                    if (data is not null)
                     {
                         var preCountString = data.Where(x => x.Contains("Качественная партия")).FirstOrDefault();
 
-                        if (preCountString != null)
+                        if (preCountString is not null && preCountString != "")
                         {
                             var stringIndex = Array.IndexOf(data, preCountString);
 
@@ -143,7 +145,7 @@ namespace SunVita.Worker.WebApi.Services
                             .Where(x => x.Contains("value"))
                             .FirstOrDefault();
 
-                        if (hostJobNameProperty is not null)
+                        if (hostJobNameProperty is not null && hostJobNameProperty != "")
                         {
                             newPrinterCounts.NomenclatureOnPrinter = str[1].Substring(81, str[1].Length - (81 + 53));
                         }
@@ -187,7 +189,7 @@ namespace SunVita.Worker.WebApi.Services
                 {
                     newCounts.NomenclatureTitle = newCounts.NomenclatureOnPrinter;
 
-                    newCounts.QuantityPlan = 1;
+                    newCounts.QuantityPlan = 0;
                 }
                 else
                 {
@@ -204,33 +206,39 @@ namespace SunVita.Worker.WebApi.Services
         {
             lock (Locker)
             {
-                newCounts.WorkTime = (DateTime.Now - currentCounts.StartedAt).TotalSeconds;
+                var dateTimeNow = DateTime.Now;
 
-                if (newCounts.QuantityFact != 0 && currentCounts.QuantityPlan != 0)
+                var timeDiff = (dateTimeNow - currentCounts.StartedAt).TotalSeconds - currentCounts.WorkTime;
+
+                if (newCounts.QuantityPlan == 0)
+                    newCounts.QuantityFact = newCounts.QuantityFact / newCounts.NomenclatureInBox;
+
+                if (newCounts.QuantityFact != currentCounts.QuantityFact)
+                    newCounts.WorkTime = (dateTimeNow - currentCounts.StartedAt).TotalSeconds;
+
+                if (newCounts.QuantityFact != 0)
                 {
                     var quantutyDiff = newCounts.QuantityFact - currentCounts.QuantityFact;
-                    var timeDiff = newCounts.WorkTime - currentCounts.WorkTime;
 
-                    if (timeDiff > 0 
-                       // && quantutyDiff > 0 
-                        && quantutyDiff < newCounts.NomenclatureInBox * 3)
+
+                    if (timeDiff > 0 && quantutyDiff < newCounts.NomenclatureInBox * 4)
                     {
+                            newCounts.ProductivityCurrent = (quantutyDiff / (timeDiff / 60) + currentCounts.ProductivityCurrent * 15) / 16;
 
-                        newCounts.ProductivityCurrent = quantutyDiff / (timeDiff / 60);
-
-                        if (newCounts.ProductivityCurrent > currentCounts.ProductivityTop)
-                        {
-                            newCounts.ProductivityTop = newCounts.ProductivityCurrent;
-                        }
+                            if (newCounts.ProductivityCurrent > currentCounts.ProductivityTop)
+                            {
+                                newCounts.ProductivityTop = newCounts.ProductivityCurrent;
+                            }
                     }
 
-                    newCounts.ProductivityAvg = newCounts.QuantityFact / (newCounts.WorkTime / 60);
-                    var timeToFinish = (newCounts.WorkTime / newCounts.QuantityFact) * (currentCounts.QuantityPlan - newCounts.QuantityFact);
+                    newCounts.ProductivityAvg = newCounts.QuantityFact / ((currentCounts.WorkTime + timeDiff) / 60);
+                    var timeToFinish = ((currentCounts.WorkTime + timeDiff) / newCounts.QuantityFact)
+                        * (currentCounts.QuantityPlan - newCounts.QuantityFact);
 
                     if (newCounts.QuantityFact >= newCounts.QuantityPlan)
-                        newCounts.FinishedAt = DateTime.Now;
+                        newCounts.FinishedAt = dateTimeNow;
                     else
-                        newCounts.FinishedAt = DateTime.Now.AddSeconds(timeToFinish);
+                        newCounts.FinishedAt = dateTimeNow.AddSeconds(timeToFinish);
                 }
             }
 

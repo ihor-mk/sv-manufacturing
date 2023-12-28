@@ -221,7 +221,7 @@ namespace SunVita.Worker.WebApi.Services
                     var quantutyDiff = newCounts.QuantityFact - currentCounts.QuantityFact;
 
 
-                    if (timeDiff > 0 && quantutyDiff < newCounts.NomenclatureInBox * 4)
+                    if (timeDiff > 0 && quantutyDiff < newCounts.NomenclatureInBox * 4 && quantutyDiff >= 0)
                     {
                             newCounts.ProductivityCurrent = (quantutyDiff / (timeDiff / 60) + currentCounts.ProductivityCurrent * 15) / 16;
 

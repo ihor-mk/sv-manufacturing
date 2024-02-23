@@ -254,10 +254,11 @@ namespace SunVita.Worker.WebApi.Services
 
                 if (newLine is not null)
                 {
-                    newLine.QuantityPlan = (int)liveTaskDto.Quantity;
+                    newLine.QuantityPlan = liveTaskDto.Quantity;
                     newLine.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
                     newLine.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
                     newLine.IsNewNomenclature = true;
+                    newLine.HasActiveTask = true;
 
                     if (newLine.IsNewPrinterNomenclature)
                     {
@@ -273,10 +274,11 @@ namespace SunVita.Worker.WebApi.Services
 
                 if (currentLine is not null)
                 {
-                    currentLine.QuantityPlan = (int)liveTaskDto.Quantity;
+                    currentLine.QuantityPlan = liveTaskDto.Quantity;
                     currentLine.NomenclatureTitle = liveTaskDto.NomenclatureTitle;
                     currentLine.NomenclatureInBox = liveTaskDto.NomenclatureInBox;
                     currentLine.IsNewNomenclature = true;
+                    currentLine.HasActiveTask = true;
 
                     if (currentLine.IsNewPrinterNomenclature)
                     {
@@ -288,6 +290,36 @@ namespace SunVita.Worker.WebApi.Services
                 }
             }
 
+        }
+
+        public void FinishTask(LiveTaskDto liveTaskDto)
+        {
+            lock (Locker)
+            {
+                var newLine = NewLineStatus
+                   .FirstOrDefault(x => x.LineCode == liveTaskDto.ProductionLineCode);
+
+                if (newLine is not null)
+                {
+                    if (newLine.NomenclatureTitle == liveTaskDto.NomenclatureTitle
+                        && newLine.QuantityPlan == liveTaskDto.Quantity)
+                    {
+                        newLine.HasActiveTask = false;
+                    }
+                }
+
+                var currentLine = CurrentLineStatus
+                    .FirstOrDefault(x => x.LineCode == liveTaskDto.ProductionLineCode);
+
+                if (currentLine is not null)
+                {
+                    if (currentLine.NomenclatureTitle == liveTaskDto.NomenclatureTitle
+                        && currentLine.QuantityPlan == liveTaskDto.Quantity)
+                    {
+                        currentLine.HasActiveTask = false;
+                    }
+                }
+            }
         }
     }
 }

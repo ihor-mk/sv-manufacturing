@@ -10,11 +10,24 @@ export class ProductionLineLiveComponent implements OnInit {
 
   @Input() lineLiveViewCounts!: ILiveViewCounts
 
+  // Temporary part of code
+  lineTitle: string[] = ["C1L1", "C2L1", "C2L2", "C4L1", "C5L1", "C5L2", "C5L3",]
+  //
+
   ngOnInit(): void {
     if (!this.lineLiveViewCounts) {
       console.log("EMPTY")
+
     }
+    else
+      this.changeLineTitle()
   }
+
+  // Temporary part of code
+  changeLineTitle() {
+    this.lineLiveViewCounts.lineTitle = this.lineTitle[this.lineLiveViewCounts.lineId!]
+  }
+  //
 
   toTimeString(totalSeconds: number = 0): string {
     const totalMs = totalSeconds * 1000;
@@ -23,17 +36,17 @@ export class ProductionLineLiveComponent implements OnInit {
     return result;
   }
 
- getWorkTime(): string {
-  const dateNow = new Date(Date.now()).getTime()
-  const startedAt = new Date(this.lineLiveViewCounts.startedAt!).getTime()
+  getWorkTime(): string {
+    const dateNow = new Date(Date.now()).getTime()
+    const startedAt = new Date(this.lineLiveViewCounts.startedAt!).getTime()
 
-  return new Date(dateNow - startedAt).toISOString().slice(11, 19);
- }
+    return new Date(dateNow - startedAt).toISOString().slice(11, 19);
+  }
 
   isLineError(): boolean {
     if (this.lineLiveViewCounts.isNewPrinterNomenclature)
       return true
-    
+
     return false
   }
 }

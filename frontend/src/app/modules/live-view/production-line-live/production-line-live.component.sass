@@ -3,44 +3,62 @@
 .line-wrp
     display: flex
     flex-direction: row
+    justify-content: space-around
     align-items: center
     text-align: center
-    height: 108px
+    height: 126px
     margin: 0px 10px 10px 10px
     border-radius: 10px
+    font-size: 26pt
     
 .line-error
     background-color: $error-red
 
 .line-offline
-    background-color: $offline-yellow !important
-
+    background-color: $offline-yellow
+    color: $offline-yellow
+    
 .title-line
-    width: 15%
+    width: 11%
+    color: black
 
-.title-prod-online
-    width: 6.5%
+.title-data
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: space-around
+    width: 89%
+
+.line-ping-lost
+    width: 89%
+
+.line-ping-lost > span
+    color: gray
+    font-size: 35pt
+    
+// .title-prod-online
+//     width: 6.5%
 
 .title-prod-top
-    width: 6.5%
+    width: 11%
 
 .title-nomenclature
-    width: 23%
+    width: 44%
 
 .title-plan
-    width: 6%
+    width: 11%
 
 .title-fact
-    width: 6%
+    width: 11%
 
 .title-progress
-    width: 9%
+    width: 11%
 
 .title-avg-speed
-    width: 9%
+    width: 11%
 
-.title-time
-    width: 9%
+// .title-time
+//     width: 9%
 
 .title-end-time
-    width: 10%
+    width: 11%

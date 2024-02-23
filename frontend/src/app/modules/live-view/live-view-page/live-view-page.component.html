@@ -4,7 +4,7 @@
             <div class="table-titles-header title-line">
                 <span>Лінія</span>
             </div>
-            <div class="table-titles-header top-header">
+            <!-- <div class="table-titles-header top-header">
                 <span>ПРОДУКТИВНІСТЬ <br>(уп./хв)</span>
                 <div class="sub-header">
                     <div class="table-titles-header">
@@ -14,32 +14,36 @@
                         <span>рекордна</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="table-titles-header title-nomenclature">
-                <span>Номенклатура</span>
-            </div>
-            <div class="table-titles-header title-plan">
-                <span>План <br> (уп.)</span>
-            </div>
-            <div class="table-titles-header title-fact">
-                <span>Факт <br> (уп.)</span>
-            </div>
-            <div class="table-titles-header title-progress">
-                <span>Виконання <br> (%)</span>
-            </div>
-            <div class="table-titles-header title-avg-speed">
-                <span>Середня шв.<br> (уп./хв)</span>
-            </div>
-            <div class="table-titles-header title-time">
+            </div> -->
+            <div class="table-titles-data">
+                <div class="table-titles-header title-nomenclature">
+                    <span>Номенклатура</span>
+                </div>
+                <div class="table-titles-header title-plan">
+                    <span>План <br> (уп.)</span>
+                </div>
+                <div class="table-titles-header title-fact">
+                    <span>Факт <br> (уп.)</span>
+                </div>
+                <div class="table-titles-header title-progress">
+                    <span>Виконання <br> (%)</span>
+                </div>
+                <div class="table-titles-header title-avg-speed">
+                    <span>Середня шв.<br> (уп./хв)</span>
+                </div>
+                <div class="table-titles-header title-avg-speed">
+                    <span>Рекордна шв.<br> (уп./хв)</span>
+                </div>
+                <!-- <div class="table-titles-header title-time">
                 <span>Час в роботі</span>
-            </div>
-            <div class="table-titles-header title-end-time">
-                <span>Час завершення</span>
+            </div> -->
+                <div class="table-titles-header title-end-time">
+                    <span>Час завершення</span>
+                </div>
             </div>
         </div>
         <div *ngFor=" let line of this.linesLiveViewCounts">
-            <app-production-line-live [lineLiveViewCounts]="line"></app-production-line-live>
+            <app-production-line-live [lineLiveViewCounts]="line" *ngIf="line.lineId != 0"></app-production-line-live>
         </div>
     </div>
 </div>

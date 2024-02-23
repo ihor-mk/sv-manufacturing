@@ -15,14 +15,18 @@ namespace SunVita.Worker.WebApi.Services
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            using var doneTaskWatcher = new FileSystemWatcher(@"d:\dev\donejobs");
+            using var doneTaskWatcher = new FileSystemWatcher(@"c:\exchange\donejobs");
             this.SetWatcher(doneTaskWatcher);
             doneTaskWatcher.Created += DoneTaskOnChanged;
 
 
-            using var liveTaskWatcher = new FileSystemWatcher(@"d:\dev\inwork");
-            this.SetWatcher(liveTaskWatcher);
-            liveTaskWatcher.Created += LiveTaskOnChanged;
+            using var startTaskWatcher = new FileSystemWatcher(@"c:\exchange\inwork");
+            this.SetWatcher(startTaskWatcher);
+            startTaskWatcher.Created += StartTaskOnChanged;
+
+            using var finishTaskWatcher = new FileSystemWatcher(@"c:\exchange\outwork");
+            this.SetWatcher(finishTaskWatcher);
+            finishTaskWatcher.Created += StartTaskOnChanged;
 
             while (!stoppingToken.IsCancellationRequested) { }
 
@@ -62,7 +66,7 @@ namespace SunVita.Worker.WebApi.Services
             }
 
         }
-        private void LiveTaskOnChanged(object sender, FileSystemEventArgs e)
+        private void StartTaskOnChanged(object sender, FileSystemEventArgs e)
         {
             Thread.Sleep(500);
 
@@ -88,7 +92,32 @@ namespace SunVita.Worker.WebApi.Services
                 //File.Delete(e.FullPath);
             }
         }
+        private void FinishTaskOnChanged(object sender, FileSystemEventArgs e)
+        {
+            Thread.Sleep(500);
 
+            try
+            {
+                using var streamReader = new StreamReader(e.FullPath);
+
+                var fileText = streamReader.ReadToEnd();
+
+                var liveTaskDto = JsonConvert.DeserializeObject<LiveTaskDto[]>(fileText)![0];
+
+                _countsUpdateService.FinishTask(liveTaskDto);
+
+                Console.WriteLine($"Changed: {e.FullPath}");
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Changed: {ex.Message}");
+            }
+            finally
+            {
+                //File.Delete(e.FullPath);
+            }
+        }
         private void SetWatcher(FileSystemWatcher watcher)
         {
             watcher.NotifyFilter = NotifyFilters.Attributes

@@ -12,5 +12,6 @@ namespace SunVita.Worker.WebApi.Interfaces
         LiveViewCountsDto SetCountsForNewNomenclature(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts);
         LiveViewCountsDto CalculateCounts(LiveViewCountsDto currentCounts, LiveViewCountsDto newCounts);
         void SetNewTaskCounts(LiveTaskDto liveTaskDto);
+        void FinishTask(LiveTaskDto liveTaskDto);
     }
 }

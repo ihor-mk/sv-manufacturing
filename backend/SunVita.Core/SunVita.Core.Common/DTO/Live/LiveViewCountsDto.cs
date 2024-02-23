@@ -14,6 +14,7 @@
         public bool IsNewNomenclature { get; set; } = false;
         public string NomenclatureOnPrinter { get; set; } = string.Empty;
         public bool IsNewPrinterNomenclature { get; set; } = false;
+        public bool HasActiveTask { get; set; } = false;
         public int NomenclatureInBox { get; set; } = 1;
         public int QuantityPlan { get; set; } = 0;
         public int QuantityFact { get; set; } = 0;
@@ -36,6 +37,7 @@
                 IsNewNomenclature = IsNewNomenclature,
                 NomenclatureOnPrinter = NomenclatureOnPrinter,
                 IsNewPrinterNomenclature = IsNewPrinterNomenclature,
+                HasActiveTask = HasActiveTask,
                 NomenclatureInBox = NomenclatureInBox,
                 QuantityPlan = QuantityPlan,
                 QuantityFact = QuantityFact,
@@ -53,7 +55,8 @@
             return (this.NomenclatureTitle == item.NomenclatureTitle
                 && this.QuantityFact == item.QuantityFact
                 && this.NomenclatureOnPrinter == item.NomenclatureOnPrinter
-                && this.ProductivityAvg == item.ProductivityAvg);
+                && this.ProductivityAvg == item.ProductivityAvg
+                && this.HasActiveTask == item.HasActiveTask);
         }
 
         public override int GetHashCode()
